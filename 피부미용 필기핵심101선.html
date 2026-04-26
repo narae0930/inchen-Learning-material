@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Skin Specialist Quiz - LUMINARAE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { getAuth, signInAnonymously, signInWithCustomToken, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+        import { getFirestore, doc, setDoc, getDocs, collection, query, serverTimestamp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        const firebaseConfig = JSON.parse(__firebase_config);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+        const appId = typeof __app_id !== 'undefined' ? __app_id : 'default-app-id';
+
+        window.db = db;
+        window.auth = auth;
+        window.appId = appId;
+        window.firestoreUtils = { collection, doc, setDoc, getDocs, query, serverTimestamp };
+
+        const initAuth = async () => {
+            if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+                await signInWithCustomToken(auth, __initial_auth_token);
+            } else {
+                await signInAnonymously(auth);
+            }
+        };
+        initAuth();
+    </script>
+
+    <style>
+        :root {
+            --primary-navy: #1A2238;
+            --accent-gold: #C5A059;
+            --soft-cream: #F8F9FA;
+        }
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            background-color: #F3F4F6;
+            color: var(--primary-navy);
+            -webkit-tap-highlight-color: transparent;
+        }
+        .serif-font { font-family: 'Noto Serif KR', serif; }
+        .premium-shadow { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05); }
+        .rank-item {
+            background: rgba(197, 160, 89, 0.05);
+            border: 1px solid rgba(197, 160, 89, 0.1);
+            transition: all 0.3s ease;
+        }
+        .rank-item:nth-child(1) { background: rgba(197, 160, 89, 0.15); border-color: var(--accent-gold); }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        .animate-slide-up { animation: slideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        button:disabled { cursor: default; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+    <!-- Login Overlay -->
+    <div id="login-overlay" class="fixed inset-0 z-[100] bg-[#1A2238] flex items-center justify-center p-6 transition-opacity duration-500">
+        <div class="w-full max-w-md bg-white rounded-[2.5rem] p-10 text-center premium-shadow">
+            <div class="mb-6 inline-flex p-4 rounded-full bg-gray-50 border border-gray-100">
+                <i data-lucide="lock" class="w-8 h-8 text-[#C5A059]"></i>
+            </div>
+            <h2 class="serif-font text-2xl font-bold mb-2">STUDENT ACCESS</h2>
+            <p class="text-gray-400 text-sm mb-8">교육생 전용 평가 시스템 입장</p>
+            <div class="space-y-4">
+                <input type="text" id="userName" class="w-full p-5 rounded-xl border-2 border-gray-50 bg-gray-50 focus:border-[#C5A059] outline-none transition-all font-bold text-center" placeholder="성함을 입력하세요">
+                <input type="password" id="userPass" class="w-full p-5 rounded-xl border-2 border-gray-50 bg-gray-50 focus:border-[#C5A059] outline-none transition-all font-bold text-center" placeholder="출석번호를 입력하세요">
+                <button onclick="validateLogin()" class="w-full bg-[#1A2238] text-white py-5 rounded-xl font-bold tracking-[0.2em] shadow-lg hover:bg-[#2D3748] transition-all">ENTER SYSTEM</button>
+            </div>
+            <p id="loginError" class="hidden text-red-500 text-xs mt-4">성함 또는 출석번호가 일치하지 않습니다.</p>
+        </div>
+    </div>
+
+    <!-- Intro Screen -->
+    <div id="intro-screen" class="hidden fixed inset-0 z-50 bg-[#1A2238] flex items-center justify-center p-6">
+        <div class="w-full max-w-lg text-center animate-slide-up">
+            <div class="mb-10 inline-flex p-5 rounded-full border border-white/10 bg-white/5">
+                <i data-lucide="award" class="w-16 h-16 text-[#C5A059]"></i>
+            </div>
+            <h1 class="serif-font text-4xl font-bold text-white mb-4 tracking-widest uppercase">LUMINARAE</h1>
+            <div class="h-px w-20 bg-[#C5A059] mx-auto mb-6"></div>
+            <h2 class="text-xl font-medium text-white/80 mb-10 tracking-tight">피부미용 국가기술자격 실전 분석</h2>
+            <button onclick="startQuiz()" class="w-full bg-[#C5A059] py-6 rounded-xl font-bold text-white tracking-[0.2em] shadow-2xl hover:bg-[#B38E42] transition-all">
+                EXAMINATION START
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Quiz UI -->
+    <div id="quiz-ui" class="hidden flex-col min-h-screen">
+        <header class="bg-white border-b border-gray-100 p-5 flex items-center justify-between sticky top-0 z-20">
+            <div class="flex items-center gap-4">
+                <div class="bg-[#1A2238] p-2.5 rounded-lg">
+                    <i data-lucide="book-open" class="w-5 h-5 text-[#C5A059]"></i>
+                </div>
+                <div>
+                    <h1 class="font-black text-sm text-[#1A2238] tracking-widest serif-font uppercase">Luminarae Academy</h1>
+                    <p id="user-display" class="text-[9px] text-gray-400 font-bold tracking-[0.3em] uppercase">User: Unknown</p>
+                </div>
+            </div>
+            <div class="text-[10px] font-bold text-[#1A2238] border border-[#1A2238]/10 px-3 py-1.5 rounded-full bg-gray-50">
+                PAGE <span id="current-page-num" class="text-base">1</span> / <span id="total-pages-num">101</span>
+            </div>
+        </header>
+
+        <main class="flex-1 p-6 max-w-3xl mx-auto w-full pt-8 pb-48">
+            <div id="question-card" class="animate-slide-up">
+                <div class="bg-white p-8 md:p-12 rounded-[2rem] premium-shadow border border-gray-50 relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-2 h-full bg-[#C5A059]"></div>
+                    <div class="flex items-center justify-between mb-8">
+                        <span class="text-[11px] font-black text-[#C5A059] uppercase tracking-[0.4em]">Question. <span id="display-q-num">1</span></span>
+                    </div>
+                    <h2 id="question-text" class="serif-font text-2xl font-bold leading-relaxed text-[#1A2238] mb-12">분석 중...</h2>
+                    <div id="options-container" class="space-y-4 relative z-10"></div>
+                    <div id="explanation-area" class="hidden mt-12 pt-8 border-t border-gray-50">
+                        <div class="bg-gray-50 p-8 rounded-2xl border border-gray-100">
+                            <div class="flex items-center gap-2 mb-3 text-[#C5A059] font-black text-[10px] tracking-widest uppercase">
+                                <i data-lucide="message-circle" class="w-3 h-3"></i>
+                                Professional Commentary
+                            </div>
+                            <p id="explanation-text" class="text-[#2D3748] text-[15px] leading-relaxed font-medium"></p>
+                        </div>
+                        <button onclick="goToNextQuestion()" class="mt-10 w-full bg-[#1A2238] text-white py-6 rounded-xl font-bold text-sm tracking-[0.3em] flex items-center justify-center gap-3">
+                            <span id="next-btn-text">NEXT EVALUATION</span>
+                            <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </main>
+        
+        <footer class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-md border-t border-gray-100 p-8 z-10">
+            <div class="max-w-3xl mx-auto">
+                <div class="flex justify-between items-end mb-4">
+                    <div>
+                        <p class="text-[9px] font-black text-[#C5A059] uppercase tracking-[0.4em] mb-1">Completion Rate</p>
+                        <div class="flex items-baseline gap-2">
+                            <span id="progress-text" class="text-3xl font-black text-[#1A2238] tracking-tighter">0</span>
+                            <span class="text-xs font-bold text-gray-300">/ <span id="progress-total">101</span> ITEMS</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="h-1.5 w-full bg-gray-100 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="h-full bg-[#C5A059] transition-all duration-700 ease-out rounded-full" style="width: 0%"></div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Result & Ranking Screen -->
+    <div id="result-screen" class="hidden fixed inset-0 bg-[#1A2238]/95 backdrop-blur-xl z-[60] items-center justify-center p-6 overflow-y-auto">
+        <div class="bg-white rounded-[3rem] p-8 md:p-12 w-full max-w-lg text-center shadow-2xl relative my-auto">
+            <div class="absolute top-0 left-0 w-full h-2 bg-[#C5A059]"></div>
+            <h2 class="serif-font text-3xl font-bold mb-2 text-[#1A2238]">전수 분석 결과</h2>
+            <p id="result-user-name" class="text-[#C5A059] font-bold text-sm mb-8 tracking-widest uppercase"></p>
+            <div class="grid grid-cols-2 gap-4 mb-8">
+                <div class="bg-gray-50 p-6 rounded-2xl">
+                    <p class="text-[10px] text-gray-400 font-black mb-1">SCORE</p>
+                    <p class="text-3xl font-black text-[#1A2238] tracking-tighter"><span id="final-score">0</span><span class="text-xs text-gray-300 ml-1">/ <span class="total-score-label">101</span></span></p>
+                </div>
+                <div class="bg-gray-50 p-6 rounded-2xl">
+                    <p class="text-[10px] text-gray-400 font-black mb-1">ACCURACY</p>
+                    <p id="final-percent" class="text-3xl font-black text-[#1A2238]">0%</p>
+                </div>
+            </div>
+            <div class="mb-10 text-left">
+                <div class="flex items-center gap-2 mb-4 border-b border-gray-50 pb-2">
+                    <i data-lucide="crown" class="w-4 h-4 text-[#C5A059]"></i>
+                    <span class="text-[11px] font-black text-[#1A2238] tracking-widest uppercase">Leaderboard (Top 5)</span>
+                </div>
+                <div id="ranking-list" class="space-y-2">
+                    <p class="text-center text-gray-300 py-4 text-xs">데이터 집계 중...</p>
+                </div>
+            </div>
+            <button onclick="location.reload()" class="w-full bg-[#1A2238] text-white py-6 rounded-xl font-bold text-sm tracking-[0.2em] shadow-lg">RETAKE EXAM</button>
+        </div>
+    </div>
+
+    <script>
+        // --- 101문항 기출 데이터 및 해설 ---
+        const ALL_QUESTIONS = [
+            { id: 1, q: "다음 피부 유형에 대한 설명 중 옳은 것은?", options: ["지성피부는 잔주름이 잘 나타나지 않으며 피지분비량이 많고 메이크업이 쉽게 잘 지워진다.", "건성피부는 모세혈관벽을 강화시켜주고 피부건강을 개선시켜 주어야 한다.", "주사비는 주로 입이나 턱 주위에 발생한다.", "복합성 피부는 가장 이상적인 피부로 적당한 촉촉함이 있고 피부결도 섬세하고 매끄럽다."], ans: 0, exp: "지성 피부는 피지 분비가 왕성하여 피부 보호막이 두터워 노화 지연 효과가 있으나 메이크업 지속력이 떨어집니다." },
+            { id: 2, q: "피부 분석의 방법인 문진법을 적용하기에 가장 거리가 먼 것은?", options: ["고객의 피부 배열 상태, 모공의 크기, 피부 투명도", "고객의 알레르기 유무, 피부 당김 현상, 가려움증, 여드름 발생 빈도", "고객의 건강상태와 진통제, 항생제 등 의약품 복용 여부", "고객의 연령, 직업, 결혼 유무, 취미"], ans: 0, exp: "모공 크기와 투명도 관찰은 시각을 사용하는 '견진법'에 해당합니다." },
+            { id: 3, q: "피부 관리 작업단계가 옳은 것은?", options: ["피부분석 – 클렌징 – 매뉴얼테크닉 – 딥클렌징 – 팩 – 마무리", "클렌징 – 딥클렌징 – 팩 – 매뉴얼테크닉 – 마무리 – 피부분석", "클렌징 – 피부분석 – 딥클렌징 – 매뉴얼테크닉 – 팩 – 마무리", "피부분석 - 클렌징 – 딥클렌징 – 매뉴얼테크닉 – 팩 – 마무리"], ans: 2, exp: "정확한 피부분석은 클렌징으로 표면 노폐물을 제거한 직후에 시행하는 것이 원칙입니다." },
+            { id: 4, q: "클렌징에 대한 설명이 아닌 것은?", options: ["피부의 피지, 메이크업 잔여물을 없애기 위한 작업이다.", "모공 깊숙이 있는 불순물과 피부 표면의 각질의 제거를 주목적으로 한다.", "제품 흡수를 효율적으로 도와준다.", "피부의 생리적인 기능을 정상적으로 도와준다."], ans: 1, exp: "각질 제거와 모공 깊숙한 세정은 '딥클렌징'의 주된 목적입니다." },
+            { id: 5, q: "소독약제의 살균력시험 기준이 되는 것은?", options: ["과산화수소", "석탄산", "크레졸", "승홍수"], ans: 1, exp: "석탄산(Phenol)은 살균력을 비교하는 지표인 '석탄산 계수'의 기준 물질입니다." },
+            { id: 6, q: "림프 드레니지의 주된작용은?", options: ["노폐물과 독소물질을 림프절로 운반", "림프순환 저하", "피부조직 강화", "혈액순환과 신진대사 저하"], ans: 0, exp: "림프 드레니쥐는 림프액의 흐름을 도와 체내 노폐물과 독소를 정화하는 역할을 합니다." },
+            { id: 7, q: "우리나라의 피부미용과 관련 없는 것은?", options: ["조선시대에는 화장기 없는 깨끗한 피부가 선호되었다.", "단군신화에는 미백을 위해 쑥과 마늘을 사용하였다는 기록이 있다.", "삼국시대에는 박가분이 제조, 판매 되었다.", "조선시대에는 미용관리법이 소개되어있는 규합총서라는 서적이 있었다."], ans: 2, exp: "박가분은 삼국시대가 아닌 1910년대(근대)에 등장한 우리나라 최초의 공산품 화장품입니다." },
+            { id: 8, q: "매뉴얼 테크닉의 효과가 아닌 것은?", options: ["피지선의 활성화", "혈액순환 촉진", "심리적인 안정", "근육통증 치료"], ans: 3, exp: "매뉴얼 테크닉은 미용 목적으로서, 의학적인 '통증 치료'와는 구분되어야 합니다." },
+            { id: 9, q: "성분(라벤더, 로즈마리, 카오린, 티트리)과 효과(수분공급, 청정효과)에 가장 적합한 피부유형은?", options: ["지성, 여드름피부", "색소침착피부", "노화, 건성피부", "민감성피부"], ans: 0, exp: "티트리와 카오린은 피지 조절 및 살균 효과가 있어 지성 및 여드름 피부에 최적입니다." },
+            { id: 10, q: "갑상선의 기능과 관련이 있으며, 모세혈관 기능을 정상화시키는 것은?", options: ["요오드", "칼슘", "철분", "인"], ans: 0, exp: "요오드는 갑상선 호르몬의 주요 성분으로 신진대사와 혈관 건강에 기여합니다." },
+            { id: 11, q: "항산화성 비타민으로 불리는 지용성 비타민은?", options: ["비타민 E", "비타민 A", "비타민 C", "비타민 B"], ans: 0, exp: "비타민 E(토코페롤)는 세포막의 산화를 방지하는 강력한 지용성 항산화제입니다." },
+            { id: 12, q: "온습포에 대한 설명으로 틀린 것은?", options: ["피지 분비선을 자극해준다.", "여드름 및 모세혈관 확장 피부에는 주의가 필요하다.", "혈액순환을 촉진시킨다.", "모공을 축소시켜 노폐물, 불순물 등을 깨끗이 닦아낸다."], ans: 3, exp: "온습포는 모공을 '확장'시켜 배출을 돕는 역할을 하며, 축소는 냉습포의 역할입니다." },
+            { id: 13, q: "다음의 유화제품 중 O/W(수중유형) 에멀전은?", options: ["헤어크림", "나이트크림", "클렌징크림", "모이스처라이징 로션"], ans: 3, exp: "모이스처라이징 로션은 수분 베이스인 O/W형이 일반적이며 산뜻한 사용감을 줍니다." },
+            { id: 14, q: "지방의 분해효소는?", options: ["글리세롤", "리파아제", "아밀라아제", "트립신"], ans: 1, exp: "리파아제는 췌장에서 분비되어 지방을 지방산과 글리세롤로 분해하는 핵심 효소입니다." },
+            { id: 15, q: "무열광선이면서 살균작용이 있으며 비타민D의 형성을 돕는 것은?", options: ["형광선", "가시광선", "자외선", "적외선"], ans: 2, exp: "자외선(UV)은 인체 내 비타민 D 합성을 유도하며 강력한 살균력을 가집니다." },
+            { id: 16, q: "중추신경계의 구성으로 옳은 것은?", options: ["중뇌와 대뇌", "뇌간과 척수", "교감 신경과 뇌간", "뇌와 척수"], ans: 3, exp: "인간의 중추신경계는 통합 기능을 담당하는 뇌와 신호 전달 통로인 척수로 구성됩니다." },
+            { id: 17, q: "골격계에 기능이 아닌 것은?", options: ["열생산기능", "지지기능", "보호기능", "저장기능"], ans: 0, exp: "열 생산은 근육의 수축 작용을 통해 이루어지는 근육계의 주요 기능입니다." },
+            { id: 18, q: "이온토포레시스의 설명으로 옳은 것은?", options: ["피부 속으로 침투하기 어려운 수용액을 이온화시켜 흡수시킨다.", "모낭 내의 노폐물을 세정하는 것이다.", "피부 표면에 살균효과를 주어 여드름을 치료하는 것이다.", "리프팅 작용을 위해 근육을 단련시키는 것이다."], ans: 0, exp: "전기적 반발력을 이용해 유효 성분을 진피층까지 깊숙이 도달하게 하는 원리입니다." },
+            { id: 19, q: "프리마톨의 사용법으로 틀린 것은?", options: ["화농성 여드름 피부와 모세혈관 확장 피부 등은 피하는 것이 좋다.", "회전하는 브러쉬를 피부와 45° 각도로 하여 사용한다.", "피부 상태에 따라 브러쉬의 회전 속도를 조절한다.", "브러쉬 사용 후 중성세제로 세척한다."], ans: 1, exp: "회전 브러시는 피부면과 수직(90도 접촉)을 이루어야 자극 없이 고르게 세정됩니다." },
+            { id: 20, q: "화장품 품질 특성 중 '사용성'에 대한 설명으로 옳은 것은?", options: ["안전성 : 미생물 오염이 없을 것", "보습성 : 피부표면의 건조함을 막아줄 것", "안정성 : 독성이 없을 것", "사용성 : 사용이 편리해야 할 것"], ans: 3, exp: "사용성은 발림성, 향취, 용기의 편의성 등 소비자가 느끼는 심미적/실용적 만족도를 뜻합니다." },
+            { id: 21, q: "보건행정의 특성과 거리가 먼 것은?", options: ["과학성과 기술성", "조장성과 교육성", "독립성과 독창성", "공공성과 사회성"], ans: 2, exp: "보건행정은 국가의 정책과 긴밀히 연결되며 일반 행정 및 의학적 체계와 상호 의존적입니다." },
+            { id: 22, q: "한 나라의 건강수준을 나타내며 세계보건기구(WHO)가 제시한 주요 지표는?", options: ["비례사망지수", "질병이환율", "국민소득", "인구증가율"], ans: 0, exp: "비례사망지수(PMI)는 50세 이상 사망자 비중을 나타내며 국가 건강수준의 척도로 쓰입니다." },
+            { id: 23, q: "이·미용업소의 실내 바닥을 닦을 때 가장 적합한 소독제는?", options: ["크레졸수", "과산화수소", "알코올", "염소"], ans: 0, exp: "크레졸은 살균력이 강하고 유기물 존재 하에서도 안정적이라 바닥 소독에 적합합니다." },
+            { id: 24, q: "접촉이나 오염된 식품, 바퀴벌레 등을 매개로 하는 경구감염 전파 질병은?", options: ["이질", "B형 간염", "결핵", "파상풍"], ans: 0, exp: "이질은 전형적인 수인성/식품 매개 경구 감염병으로 위생 관리가 매우 중요합니다." },
+            { id: 25, q: "감염병 예방법상 '즉시 신고' 대상이 아닌 것은?", options: ["두창", "디프테리아", "중증급성호흡기증후군(SARS)", "말라리아"], ans: 3, exp: "말라리아는 3급 감염병으로서 발생을 계속 감시할 필요가 있는 질병입니다." },
+            { id: 26, q: "이·미용업소에서 비말전염으로 가장 쉽게 옮겨질 수 있는 감염병은?", options: ["장티푸스", "인플루엔자", "뇌염", "대장균"], ans: 1, exp: "독감(인플루엔자)은 호흡기 비말을 통해 빠르게 전파되므로 다중이용시설에서 주의해야 합니다." },
+            { id: 27, q: "공중위생감시원의 업무 중 틀린 것은?", options: ["시설 및 설비 위생 상태 검사", "위생교육 이행 여부 확인", "이·미용업의 개선 향상에 필요한 연구 및 지도", "개선명령 이행 여부 확인"], ans: 2, exp: "연구 및 지도는 전문 연구기관이나 행정 주체의 역할이며, 감시원은 주로 법적 준수 여부를 감독합니다." },
+            { id: 28, q: "이·미용사의 면허는 누구로부터 발급받는가?", options: ["고용노동부장관", "시·도지사", "시장·군수·구청장", "보건복지부장관"], ans: 2, exp: "실제 면허증 발급 및 관리는 소재지 시장·군수·구청장의 권한입니다." },
+            { id: 29, q: "면허정지 처분 기간 중 업무를 수행한 경우 1차 위반 처분은?", options: ["면허정지 3월", "면허취소", "영업장 폐쇄", "면허정지 6월"], ans: 1, exp: "정지 기간 중의 업무 수행은 법적 명령 불복종으로 보아 즉각적인 '면허 취소' 대상입니다." },
+            { id: 30, q: "영업소 폐쇄명령 후 관계공무원이 조치할 수 없는 사항은?", options: ["면허증을 부착할 수 없게 하는 봉인", "간판 등 영업표지물의 제거", "위법 영업소 게시물 부착", "기구 및 시설물 봉인"], ans: 0, exp: "면허증 자체를 봉인하는 것이 아니라 영업에 사용되는 '기구'나 '간판'을 물리적으로 제재합니다." },
+            { id: 31, q: "공중위생 영업소의 위생서비스 평가 계획을 수립하는 자는?", options: ["대통령", "시·도지사", "행정자치부장관", "시장·군수·구청장"], ans: 1, exp: "광역 지방자치단체장인 시·도지사가 해당 지역의 평가 계획을 수립합니다." },
+            { id: 32, q: "면허 취소 후 계속하여 업무를 행한 자에 대한 벌칙은?", options: ["300만원 이하의 벌금", "200만원 이하의 벌금", "6월 이하 징역 또는 500만원 이하 벌금", "500만원 이하의 벌금"], ans: 0, exp: "무면허 영업 행위에 해당하여 벌금이 부과됩니다." },
+            { id: 33, q: "공중위생영업자가 폐업한 날로부터 신고해야 하는 기한은?", options: ["20일", "15일", "30일", "7일"], ans: 0, exp: "폐업 후 사후 관리를 위해 20일 이내에 신고를 완료해야 합니다." },
+            { id: 34, q: "미용가위의 손질법으로 옳지 않은 것은?", options: ["크레졸 또는 알코올로 소독한다.", "소독 후 마른수건으로 닦는다.", "보관 시 기름을 깨끗이 닦아낸다.", "무딘 것은 연마하여 사용한다."], ans: 2, exp: "금속 도구인 가위는 부식 방지를 위해 보관 시 얇은 기름막을 유지하는 것이 좋습니다." },
+            { id: 35, q: "여드름 화장품 성분이 아닌 것은?", options: ["살리실산", "알부틴", "위치하젤", "글리콜릭산"], ans: 1, exp: "알부틴은 미백 효능 성분이며, 살리실산과 AHA 등은 여드름 관리에 쓰입니다." },
+            { id: 36, q: "AHA 천연산 종류 연결 중 옳지 않은 것은?", options: ["글리콜릭산-사탕수수", "젖산-우유", "주석산-포도", "구연산-사과"], ans: 3, exp: "구연산(시트릭산)은 감귤류에서 추출하며, 사과에서 추출하는 산은 '사과산(말릭산)'입니다." },
+            { id: 37, q: "귓볼뚫기, 문신 등 의료행위를 한 경우의 1차 행정처분은?", options: ["영업정지 1월", "영업정지 2월", "영업정지 3월", "영업장 폐쇄명령"], ans: 1, exp: "의료법 위반 사항으로 미용업소에서 절대 금지되는 행위입니다." },
+            { id: 38, q: "하수도 및 쓰레기통의 소독제로 가장 적합한 것은?", options: ["알코올", "석탄산수", "크레졸수", "생석회"], ans: 3, exp: "생석회는 습한 하수도나 오물 더미의 수분을 흡수하며 강력한 살균/구충 효과를 냅니다." },
+            { id: 39, q: "고주파기기에 대한 설명으로 옳은 것은?", options: ["뼈와 신경 자극으로 통증 완화", "전기 자극으로 지방 연소", "조직 온도 상승으로 제품 흡수율 증대", "진동으로 지방 분해"], ans: 2, exp: "심부열을 발생시켜 혈행을 돕고 화장품의 영양 성분이 잘 흡수되도록 유도합니다." },
+            { id: 40, q: "생균/사균 백신 접종 등으로 형성되는 면역의 종류는?", options: ["자연능동면역", "자연수동면역", "인공능동면역", "인공수동면역"], ans: 2, exp: "의도적으로 항원을 주입(백신)하여 신체가 스스로 항체를 만들게 하는 방식입니다." },
+            { id: 41, q: "골격근에 대한 설명 중 틀린 것은?", options: ["인체의 약 60%를 차지한다.", "횡문근이라고도 한다.", "수의근이라고도 한다.", "대부분 골격에 부착되어 있다."], ans: 0, exp: "성인 골격근은 체중의 약 40~50% 수준을 차지하는 것이 일반적입니다." },
+            { id: 42, q: "신경계의 기본 단위가 되는 세포는?", options: ["혈액", "뉴런", "미토콘드리아", "DNA"], ans: 1, exp: "뉴런(Neuron)은 신호의 수용과 전달을 담당하는 신경계의 구조적/기능적 단위입니다." },
+            { id: 43, q: "조직 사이에서 영양 공급과 노폐물 교환이 직접 일어나는 혈관은?", options: ["동맥", "정맥", "모세혈관", "림프관"], ans: 2, exp: "모세혈관은 매우 얇은 벽을 통해 물질 교환이 일어나는 가장 미세한 혈관입니다." },
+            { id: 44, q: "컬러테라피에서 생명력과 에너지를 활성화시키는 색은?", options: ["보라", "빨강", "노랑", "주황"], ans: 1, exp: "빨강색은 혈액순환을 자극하고 신체적 활력을 증진시키는 역동적인 색입니다." },
+            { id: 45, q: "우드램프 분석 결과 중 틀린 것은?", options: ["흰색-죽은 세포와 각질", "연보라-건조 피부", "오렌지-여드름과 피지", "암갈색-산화된 피지"], ans: 3, exp: "우드램프 아래서 암갈색은 주로 '색소 침착(멜라닌)'을 나타냅니다." },
+            { id: 46, q: "다음 중 호흡기계 감염병에 해당하는 것은?", options: ["콜레라", "장티푸스", "유행성간염", "백일해"], ans: 3, exp: "백일해는 기침 등을 통해 전파되는 대표적인 급성 호흡기 감염병입니다." },
+            { id: 47, q: "솔라닌(Solanine) 중독과 관련 있는 식품은?", options: ["버섯", "복어", "감자", "모시조개"], ans: 2, exp: "감자의 싹이나 초록색 부분에 포함된 자연 독소 성분입니다." },
+            { id: 48, q: "다음 중 건열멸균법(Dry Heat)이 아닌 것은?", options: ["화염멸균법", "자비소독법", "건열멸균법", "소각소독법"], ans: 1, exp: "자비소독(끓이기)은 뜨거운 물을 사용하는 '습열소독' 방식입니다." },
+            { id: 49, q: "이·미용업소의 수건 소독법으로 가장 적합한 것은?", options: ["석탄산 소독", "크레졸 소독", "자비소독", "적외선 소독"], ans: 2, exp: "삶는 방식(자비소독)은 섬유 조직 깊숙이 침투한 균을 제거하는 가장 보편적인 방법입니다." },
+            { id: 50, q: "소독약품과 적정 농도 연결 중 거리가 먼 것은?", options: ["승홍수-1%", "알코올-70%", "석탄산-3%", "크레졸-3%"], ans: 0, exp: "승홍수는 독성이 매우 강해 보통 0.1% (1,000배 희석) 농도로 사용합니다." },
+            { id: 51, q: "소독하지 않은 면도기로 주로 전염될 수 있는 질환은?", options: ["파상풍", "B형 간염", "트라코마", "결핵"], ans: 1, exp: "B형 간염은 혈액이나 체액을 통해 감염되므로 면도기의 위생 관리가 결정적입니다." },
+            { id: 52, q: "겨드랑이 냄새를 유발하는 땀샘의 종류는?", options: ["아포크린선", "에크린선", "피지선", "소한선"], ans: 0, exp: "아포크린선(대한선)의 땀은 세균과 만나 불쾌한 냄새(암내)를 생성합니다." },
+            { id: 53, q: "공중위생관리법규상 위생관리등급의 구분이 바르게 짝지어진 것은?", options: ["최우수업소:녹색", "우수업소:백색", "일반관리:황색", "관리미흡:적색"], ans: 0, exp: "녹색 등급은 위생 기준을 완벽히 충족한 최우수 업소를 상징합니다." },
+            { id: 54, q: "세균 증식에 최적인 수소이온농도(pH)는?", options: ["강산성", "약산성", "강알칼리성", "중성"], ans: 3, exp: "대부분의 병원성 세균은 pH 7.0 전후의 중성 및 약알칼리 상태에서 가장 잘 자랍니다." },
+            { id: 55, q: "딥클렌징의 주된 효과와 거리가 먼 것은?", options: ["기미 완화", "영양 침투 보조", "각질 제거", "피부 재생 유도"], ans: 0, exp: "기미는 멜라닌의 문제이며, 딥클렌징은 각질과 모공 청소를 통해 영양 흡수를 돕습니다." },
+            { id: 56, q: "다음 미생물 중 크기가 가장 작은 것은?", options: ["세균", "곰팡이", "리케차", "바이러스"], ans: 3, exp: "바이러스는 전자현미경으로만 관찰 가능한 초미세 여과성 미생물입니다." },
+            { id: 57, q: "다음 중 클렌징 기기가 아닌 것은?", options: ["프리마톨", "디스인크러스테이션", "이온토포레시스", "스티머"], ans: 2, exp: "이온토포레시스는 세정 후 유효 성분을 '투입'하는 기능의 기기입니다." },
+            { id: 58, q: "비누, 샴푸 등에 주된 세정제로 쓰이는 계면활성제는?", options: ["양이온성", "음이온성", "비이온성", "양쪽성"], ans: 1, exp: "음이온성 계면활성제는 세정력과 거품 형성력이 우수해 세안제에 널리 쓰입니다." },
+            { id: 59, q: "이·미용실의 쾌적한 실내 온도로 가장 적합한 범위는?", options: ["10도", "14도", "21도", "26도"], ans: 2, exp: "상온(21도 내외)은 고객과 작업자 모두에게 가장 적합한 쾌적 온도입니다." },
+            { id: 60, q: "이·미용 기구(가위, 레이저) 소독에 가장 적당한 것은?", options: ["70~80% 알코올", "역성비누 희석액", "5% 크레졸액", "50% 페놀액"], ans: 0, exp: "알코올은 증발이 빨라 금속 기구 소독에 편리하고 효과적입니다." },
+            { id: 61, q: "기후의 4대 요소로 옳게 연결된 것은?", options: ["기온, 기습, 기류, 복사열", "기온, 강우, 기습, 복사량", "기온, 기습, 강우, 복사열", "기습, 기류, 강우, 냉각력"], ans: 0, exp: "인간의 온열감에 영향을 주는 주요 기상 인자 4가지를 뜻합니다." },
+            { id: 62, q: "전기 및 전하에 대한 설명 중 틀린 것은?", options: ["음이온은 전자를 얻은 상태이다.", "전류는 음극에서 양극으로 흐른다.", "같은 극끼리는 밀어낸다.", "전자는 음극에서 양극으로 이동한다."], ans: 1, exp: "전류의 방향은 관습적으로 양극(+)에서 음극(-)으로 흐르는 것으로 정해져 있습니다." },
+            { id: 63, q: "영업소 외 업무가 허용되는 예외 사유가 아닌 것은?", options: ["질병으로 거동 불가 자", "혼례 참가자", "긴급 국외 출타 자", "시장/군수가 인정한 경우"], ans: 2, exp: "단순한 출국 일정은 출장 미용의 정당한 법적 예외 사유가 아닙니다." },
+            { id: 64, q: "림프 순환에서 다른 사지와는 다른 경로인 부분은?", options: ["우측 상지", "좌측 상지", "우측 하지", "좌측 하지"], ans: 0, exp: "오른쪽 팔과 머리 오른쪽 부분의 림프는 우림프관으로 따로 집결됩니다." },
+            { id: 65, q: "온열 석고 마스크의 특징 중 틀린 것은?", options: ["영양 성분 흡수 촉진", "민감 피부 진정 효과", "탄력 증진", "노폐물 배출"], ans: 1, exp: "석고 마스크는 열(최대 40도 이상)이 발생하므로 민감/화상 피부에는 부적합합니다." },
+            { id: 66, q: "인구의 사회증가를 나타낸 것은?", options: ["고정인구-전출인구", "출생인구-사망인구", "전입인구-전출인구", "생산인구-소비인구"], ans: 2, exp: "전입 인구에서 전출 인구를 뺀 값이 사회적 증감분을 결정합니다." },
+            { id: 67, q: "습포의 효과와 가장 거리가 먼 것은?", options: ["온습포는 모공 확장에 도움", "온습포는 혈액순환 촉진", "냉습포는 진정 및 수축", "온습포는 팩 제거 후 마무리로 적합"], ans: 3, exp: "팩을 제거한 후 마무리 단계에서는 모공 수축을 위해 '냉습포'를 주로 씁니다." },
+            { id: 68, q: "화장수(토너)의 주요 작용이 아닌 것은?", options: ["잔여물 제거", "pH 밸런스 조정", "집중 영양 공급", "진정 및 쿨링"], ans: 2, exp: "집중 영양 공급은 에센스나 앰플, 영양 크림의 주된 역할입니다." },
+            { id: 69, q: "매뉴얼테크닉 시 주의사항이 아닌 것은?", options: ["피부결 방향 동작", "찬물에 손 씻은 후 즉시 마사지", "짧은 손톱 유지", "붉어진 피부 또는 상처 피부 금지"], ans: 1, exp: "시술자의 손은 고객이 차갑게 느끼지 않도록 따뜻하게 온도를 유지해야 합니다." },
+            { id: 70, q: "지성 및 여드름 피부의 노폐물 제거에 가장 효과적인 팩은?", options: ["오이팩", "석고팩", "머드팩", "알로에겔팩"], ans: 2, exp: "머드(진흙)는 입자가 미세하여 과잉 피지를 강력하게 흡착하는 기능이 있습니다." },
+            { id: 71, q: "진공 흡입기의 적용 방법 중 틀린 것은?", options: ["약한 압력 적용", "장시간 적용 금지", "정맥류 부위 적극 사용", "오일 도포 후 사용"], ans: 2, exp: "정맥류나 모세혈관 확장 피부에 흡입기를 쓰면 혈관 손상이 악화될 수 있습니다." },
+            { id: 72, q: "원발진(Primary Lesion)에 해당하는 피부 변화는?", options: ["가피", "미란", "태선화", "구진"], ans: 3, exp: "구진은 여드름 1기 단계로 피부 표면에 솟아오른 초기 병변으로 원발진에 속합니다." },
+            { id: 73, q: "영업소의 구조 및 시설 변경 시 행정 조치 사항은?", options: ["변경 허가", "단순 통보", "시·도지사 허가", "변경 신고"], ans: 3, exp: "시설 변경은 허가가 아닌 사후/사전 신고제로 운영됩니다." },
+            { id: 74, q: "감염병 관리상 추적이 가장 어려운 대상은?", options: ["만성 환자", "급성 환자", "건강 보균자", "사망자"], ans: 2, exp: "건강 보균자는 겉보기에 멀쩡하여 스스로도 인지 못한 채 감염을 확산시킵니다." },
+            { id: 75, q: "천연팩 재료와 효과 연결이 올바른 것은?", options: ["딸기/키위-진정", "오이/감자-청결", "꿀/계란노른자-영양", "요구르트/우유-미백"], ans: 2, exp: "꿀과 계란 노른자는 단백질과 유분이 풍부하여 노화/건성 피부 영양에 좋습니다." },
+            { id: 76, q: "광노화(Photo-aging) 현상이 아닌 것은?", options: ["표피 두께 증가", "멜라닌 항진", "체내 수분 증가", "모세혈관 확장"], ans: 2, exp: "노화의 공통적 특징은 피부 내 수분과 결합 조직(콜라겐 등)의 감소입니다." },
+            { id: 77, q: "짧은 자극이 합쳐져 큰 힘을 내는 근육의 지속적 수축 현상은?", options: ["강직", "강축", "세동", "긴장"], ans: 1, exp: "강축(Tetanus)은 빈번한 자극에 의해 근육이 이완되지 못하고 강한 힘을 내는 상태입니다." },
+            { id: 78, q: "공중위생감시원의 자격 요건이 아닌 자는?", options: ["위생사", "미용 전공 대졸자", "외국 환경기사 면허자", "1년 이상 행정 종사자"], ans: 1, exp: "미용 전공자라 하더라도 위생사 자격이나 별도의 행정 경력이 있어야 감시원으로 임용됩니다." },
+            { id: 79, q: "혈액 중 혈액응고를 담당하는 핵심 세포는?", options: ["백혈구", "적혈구", "혈소판", "혈장"], ans: 2, exp: "혈소판은 상처 부위에 응고 인자를 방출하여 지혈을 돕습니다." },
+            { id: 80, q: "셀룰라이트에 대한 설명 중 틀린 것은?", options: ["주로 여성에게 나타남", "허벅지/둔부 위주", "스트레스가 주 원인", "오렌지 껍질 모양"], ans: 2, exp: "셀룰라이트의 주원인은 혈액 순환 장애로 인한 조직 변성입니다." },
+            { id: 81, q: "샤워코롱의 적정 부향률은?", options: ["6~8%", "1~3%", "9~12%", "4~6%"], ans: 1, exp: "샤워코롱은 가장 낮은 향료 농도를 가져 전신에 가볍게 쓰입니다." },
+            { id: 82, q: "소장에 대한 설명으로 틀린 것은?", options: ["미즙 상태로 만들어 십이지장으로 보냄", "소화와 흡수 마무리", "장액에 의해 흡수 및 이동", "융모 모세혈관에서 영양 흡수"], ans: 0, exp: "음식물을 미즙 상태로 만드는 초기 소화 기관은 '위'입니다." },
+            { id: 83, q: "건강한 성인의 안정 시 1분 심장 박동수는?", options: ["약 60회", "약 85회", "약 77회", "약 80회"], ans: 0, exp: "일반적으로 성인의 정상 맥박은 1분당 60회 입니다." },
+            { id: 84, q: "음란 물건 관람/열람 제공 시 2차 위반 행정처분은?", options: ["영업정지 1월", "영업정지 2월", "영업정지 20일", "영업정지 15일"], ans: 3, exp: "1차 행정처분은 경고, 2차는 영업정지 15일, 3차는 영업정지 1개월, 4차는 영업장폐쇄명령 입니다." },
+            { id: 85, q: "성매매 알선 등 행위 시 영업소에 대한 1차 위반 처분은?", options: ["영업장 폐쇄", "영업정지 2월", "면허취소", "영업정지 3월"], ans: 3, exp: "중대 범죄 사항이나 1차는 3개월 정지, 이후 더 강력한 처분이 내려집니다." },
+            { id: 86, q: "마스크 설명 중 틀린 것은?", options: ["석고 마스크 아이 패드 필수", "벨벳 마스크 전 유분 도포", "파라핀 마스크 도포 전 거즈 사용", "알긴 마스크는 해초에서 추출"], ans: 1, exp: "콜라겐 벨벳은 수용성 성분의 침투가 중요하므로 유분이 많은 제품은 방해가 됩니다." },
+            { id: 87, q: "림프 순환 장애로 인한 비만형 피부 현상은?", options: ["쿠퍼로제", "켈로이드", "셀룰라이트", "알레르기"], ans: 2, exp: "노폐물이 배출되지 못하고 지방층과 엉키면 셀룰라이트가 됩니다." },
+            { id: 88, q: "실내 공기 오염의 대표적 지표는?", options: ["이산화질소", "일산화탄소", "이산화탄소", "아황산가스"], ans: 2, exp: "CO2 농도는 실내 환기 상태를 파악하는 가장 일반적인 기준입니다." },
+            { id: 89, q: "팩의 목적 및 효과가 아닌 것은?", options: ["모공 이완작용", "피부 보습작용", "영양 흡수 촉진", "진정작용"], ans: 0, exp: "팩은 보통 피부 진정이나 모공 수축(수렴)을 목표로 합니다." },
+            { id: 90, q: "피부상담의 목적과 거리가 먼 것은?", options: ["방문 목적 확인", "사생활 파악으로 안정 유도", "관리 계획 수립", "문제 원인 파악"], ans: 1, exp: "상담은 피부 개선을 위한 정보를 얻는 과정이지 과도한 사생활 파악은 부적절합니다." },
+            { id: 91, q: "자율신경의 지배를 받는 불수의근(민무늬근)은?", options: ["승모근", "심근", "골격근", "평활근"], ans: 3, exp: "내장 기관을 구성하는 평활근은 내 의지대로 움직일 수 없는 자율신경계 지배 하에 있습니다." },
+            { id: 92, q: "왁스 제모방법 중 옳은 설명은?", options: ["털 자란 방향으로 도포", "자란 방향으로 제거", "유분기 제거 안 함", "효과가 1주로 짧음"], ans: 0, exp: "왁스는 털 방향으로 발라 밀착시키고, 제거는 반대 방향으로 빠르게 떼어냅니다." },
+            { id: 93, q: "SPF(자외선 차단 지수) 설명 중 틀린 것은?", options: ["UV-B 방어 효과", "홍반 발생량 대비 지수", "오존층 차단도 측정용", "Sun Protection Factor 약자"], ans: 2, exp: "SPF는 화장품의 자외선 차단 성능을 나타내는 수치이며 오존층 연구와는 무관합니다." },
+            { id: 94, q: "세포 내 소화와 자가용해를 담당하는 기관은?", options: ["리소좀", "리보솜", "골지체", "미토콘드리아"], ans: 0, exp: "가수분해 효소를 가져 세포 내 이물질을 처리하는 '청소기' 역할을 합니다." },
+            { id: 95, q: "다음 중 감수성 지수(전염력)가 가장 높은 질병은?", options: ["디프테리아", "성홍열", "백일해", "홍역"], ans: 3, exp: "홍역은 접촉 시 면역이 없는 사람의 95% 이상이 감염될 정도로 강력한 전파력을 가집니다." },
+            { id: 96, q: "동일 조건에서 살균이 가장 까다로운 균의 형태는?", options: ["포도상구균", "아포형성균", "연쇄상구균", "대장균"], ans: 1, exp: "아포(포자)는 열과 화학 약품에 극도로 강해 고압증기멸균 등이 필수입니다." },
+            { id: 97, q: "이·미용업주가 이수해야 할 법정 위생교육 시간은?", options: ["매년 3시간", "분기별 3시간", "매년 6시간", "분기별 6시간"], ans: 0, exp: "공중위생 영업자는 매년 1회, 3시간의 교육을 이수해야 할 의무가 있습니다." },
+            { id: 98, q: "피부의 면역 기능(항원 전달)에 관여하는 세포는?", options: ["머켈 세포", "말피기 세포", "랑게르한스 세포", "각질형성 세포"], ans: 2, exp: "표피의 유극층에 위치하며 면역 반응을 조절하는 핵심 세포입니다." },
+            { id: 99, q: "가장 빠르고 완벽한 멸균을 제공하는 소독 방법은?", options: ["유통증기법", "건열소독", "간헐살균법", "고압증기법"], ans: 3, exp: "오토클레이브(고압증기)는 고온 고압을 이용해 아포까지 파괴하는 가장 확실한 멸균법입니다." },
+            { id: 100, q: "1회용 면도날 2인 이상 사용 시 1차 위반 처분은?", options: ["정지 10일", "폐쇄명령", "정지 5일", "경고"], ans: 3, exp: "위생 기준 위반이나 최초 위반 시에는 시정 명령 성격의 '경고'가 부여됩니다." },
+            { id: 101, q: "인체 내 수분 배출량이 가장 많은 순서로 바른 것은?", options: ["폐/피부-소변-땀-대변", "소변-대변-땀-폐/피부", "소변-땀-대변-폐/피부", "소변-폐/피부-땀-대변"], ans: 3, exp: "일반적으로 신장을 통한 소변 배출이 가장 많고, 그 다음 호흡과 피부를 통한 불감 증설이 뒤를 잇습니다." }
+        ];
+
+        // --- 앱 상태 관리 ---
+        let questions = [];
+        let currentIndex = 0;
+        let score = 0;
+        let isAnswered = false;
+        let currentStudent = "";
+
+        // --- 로그인 및 인증 로직 (교육생 명부 업데이트) ---
+        function validateLogin() {
+            const nameInput = document.getElementById('userName').value.trim();
+            const passInput = document.getElementById('userPass').value.trim();
+            const errorMsg = document.getElementById('loginError');
+
+            // 실장님 지시사항: 최신 교육생 명부 21명 반영
+            const attendanceBook = {
+                "김다솜": "1",
+                "김민": "2",
+                "김윤아": "3",
+                "김은서": "4",
+                "김지은": "5",
+                "노시윤": "6",
+                "박서휘": "7",
+                "서정화": "9",
+                "손권희": "10",
+                "신지영": "11",
+                "윤태연": "12",
+               "임초은": "13",
+                "장윤정": "14",
+                "정서영": "15",
+                "정예지": "16",
+                "최지원": "17",
+                "황수빈": "18",
+                "송미림": "19",
+                "홍길동": "21",
+                "루미나래": "1019"
+            };
+
+            if (attendanceBook[nameInput] && attendanceBook[nameInput] === passInput) {
+                currentStudent = nameInput;
+                sessionStorage.setItem('lum_user', nameInput);
+                document.getElementById('user-display').innerText = `User: ${nameInput}`;
+                document.getElementById('login-overlay').style.opacity = '0';
+                setTimeout(() => {
+                    document.getElementById('login-overlay').style.display = 'none';
+                    document.getElementById('intro-screen').classList.remove('hidden');
+                    document.getElementById('intro-screen').classList.add('flex');
+                }, 500);
+            } else {
+                errorMsg.classList.remove('hidden');
+                document.getElementById('userPass').value = "";
+            }
+        }
+
+        function startQuiz() {
+            questions = [...ALL_QUESTIONS];
+            currentIndex = 0; score = 0;
+            
+            document.getElementById('total-pages-num').innerText = questions.length;
+            document.getElementById('progress-total').innerText = questions.length;
+            document.querySelectorAll('.total-score-label').forEach(el => el.innerText = questions.length);
+
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('quiz-ui').classList.remove('hidden');
+            document.getElementById('quiz-ui').classList.add('flex');
+            renderQuestion();
+        }
+
+        function renderQuestion() {
+            if (currentIndex >= questions.length) { showResults(); return; }
+            const q = questions[currentIndex];
+            isAnswered = false;
+
+            document.getElementById('current-page-num').innerText = currentIndex + 1;
+            document.getElementById('display-q-num').innerText = currentIndex + 1;
+            document.getElementById('question-text').innerText = q.q;
+            document.getElementById('explanation-area').classList.add('hidden');
+            
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            q.options.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = `w-full p-5 text-left rounded-xl border-2 border-gray-50 bg-white flex items-center gap-4 transition-all premium-shadow group`;
+                btn.innerHTML = `
+                    <span class="w-8 h-8 rounded-full border border-gray-100 flex items-center justify-center text-[10px] font-black group-hover:bg-[#C5A059] group-hover:text-white transition-all">${idx + 1}</span>
+                    <span class="font-bold text-[#1A2238] text-[15px]">${opt}</span>
+                `;
+                btn.onclick = () => handleAnswer(idx);
+                container.appendChild(btn);
+            });
+
+            const progress = (currentIndex / questions.length) * 100;
+            document.getElementById('progress-bar').style.width = `${progress}%`;
+            document.getElementById('progress-text').innerText = currentIndex;
+
+            lucide.createIcons();
+            window.scrollTo({top:0, behavior:'smooth'});
+        }
+
+        function handleAnswer(idx) {
+            if (isAnswered) return;
+            isAnswered = true;
+            const q = questions[currentIndex];
+            const isCorrect = q.ans === idx;
+            if (isCorrect) score++;
+
+            const btns = document.getElementById('options-container').children;
+            for(let i=0; i<btns.length; i++) {
+                btns[i].disabled = true;
+                if (i === q.ans) btns[i].classList.add('border-green-500', 'bg-green-50/50');
+                else if (i === idx) btns[i].classList.add('border-red-500', 'bg-red-50/50');
+                else btns[i].classList.add('opacity-40');
+            }
+
+            document.getElementById('explanation-text').innerText = q.exp;
+            document.getElementById('explanation-area').classList.remove('hidden');
+            if (currentIndex === questions.length - 1) document.getElementById('next-btn-text').innerText = "SEE PERFORMANCE REPORT";
+            lucide.createIcons();
+        }
+
+        function goToNextQuestion() {
+            if (currentIndex < questions.length - 1) { currentIndex++; renderQuestion(); }
+            else { showResults(); }
+        }
+
+        async function saveScore() {
+            if (!auth.currentUser) return;
+            const docRef = firestoreUtils.doc(db, 'artifacts', appId, 'public', 'data', 'scores', currentStudent);
+            await firestoreUtils.setDoc(docRef, {
+                userName: currentStudent,
+                score: score,
+                timestamp: firestoreUtils.serverTimestamp()
+            });
+        }
+
+        async function fetchRankings() {
+            const list = document.getElementById('ranking-list');
+            try {
+                const querySnapshot = await firestoreUtils.getDocs(firestoreUtils.collection(db, 'artifacts', appId, 'public', 'data', 'scores'));
+                let data = [];
+                querySnapshot.forEach(doc => data.push(doc.data()));
+                data.sort((a, b) => b.score - a.score);
+                const top5 = data.slice(0, 5);
+                list.innerHTML = top5.map((r, i) => `
+                    <div class="rank-item flex items-center justify-between p-4 rounded-xl">
+                        <div class="flex items-center gap-4">
+                            <span class="font-black text-[#C5A059] text-sm">${i + 1}</span>
+                            <span class="font-bold text-[#1A2238] text-sm">${r.userName}</span>
+                        </div>
+                        <span class="font-black text-[#1A2238] text-sm">${r.score}<span class="text-[10px] text-gray-300 ml-0.5">pts</span></span>
+                    </div>
+                `).join('');
+            } catch (e) { list.innerHTML = '<p class="text-center text-red-300 py-4 text-[10px]">Failed to load.</p>'; }
+            lucide.createIcons();
+        }
+
+        async function showResults() {
+            document.getElementById('final-score').innerText = score;
+            document.getElementById('final-percent').innerText = `${Math.round((score / questions.length) * 100)}%`;
+            document.getElementById('result-user-name').innerText = `Performance Report: ${currentStudent}`;
+            document.getElementById('result-screen').classList.remove('hidden');
+            document.getElementById('result-screen').classList.add('flex');
+            await saveScore();
+            await fetchRankings();
+        }
+
+        window.onload = () => {
+            const saved = sessionStorage.getItem('lum_user');
+            if (saved) {
+                currentStudent = saved;
+                document.getElementById('user-display').innerText = `User: ${saved}`;
+                document.getElementById('login-overlay').style.display = 'none';
+                document.getElementById('intro-screen').classList.remove('hidden');
+                document.getElementById('intro-screen').classList.add('flex');
+            }
+            lucide.createIcons();
+        };
+    </script>
+</body>
+</html>
