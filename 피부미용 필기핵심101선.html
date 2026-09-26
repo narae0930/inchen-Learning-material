@@ -7,16 +7,45 @@
 
     <script src="https://unpkg.com/lucide@latest"></script>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    
+
 
     <style>
 @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Rajdhani:wght@500;600;700&display=swap');
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
 :root{color-scheme:dark;--primary-navy:#e3f7f2;--accent-gold:#e6b349;--soft-cream:#031512}
 *{box-sizing:border-box}body{margin:0;color:#e3f7f2;font-family:Pretendard,'Noto Sans KR',sans-serif;background:radial-gradient(ellipse at 12% 0%,#0b3e32aa,transparent 45%),radial-gradient(ellipse at 95% 80%,#06514744,transparent 45%),#020c0a;min-height:100vh}body:before{content:'';position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(#2cf5e208 1px,transparent 1px),linear-gradient(90deg,#2cf5e208 1px,transparent 1px);background-size:64px 64px;z-index:-1}.hidden{display:none!important}.flex{display:flex}.flex-col{flex-direction:column}.items-center{align-items:center}.justify-between{justify-content:space-between}.justify-center{justify-content:center}.gap-4{gap:16px}.gap-2{gap:8px}.gap-3{gap:12px}.w-full{width:100%}.text-center{text-align:center}.text-left{text-align:left}.font-bold,.font-black{font-weight:700}.serif-font{font-family:Cinzel,Pretendard,serif}.uppercase{text-transform:uppercase}.relative{position:relative}.overflow-hidden{overflow:hidden}.opacity-40{opacity:.4}.space-y-2>*+*{margin-top:8px}.space-y-4>*+*{margin-top:14px}h1,h2,p{margin:0}button{font:inherit;cursor:pointer;color:#e3f7f2;transition:all .25s}button:focus-visible{outline:2px solid #2cf5e2;outline-offset:5px}button:disabled{cursor:default}svg{width:20px;height:20px}i[data-lucide]{display:inline-block;min-width:10px}header{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:22px 5%;position:sticky;top:0;z-index:20;background:#031512dd;border-bottom:1px solid #0f483e;backdrop-filter:blur(24px)}header h1{font-size:16px;letter-spacing:2px}header p{font:600 11px Rajdhani,sans-serif;color:#7fa39b;letter-spacing:2px;margin-top:6px}header>div:last-child{font:600 12px Rajdhani,sans-serif;border:1px solid #1b685a;border-radius:30px;padding:10px 16px;color:#7fa39b}#current-page-num{font-size:22px;color:#00ff9d}main{flex:1;width:100%;max-width:880px;margin:auto;padding:48px 24px 190px}#question-card>div,#result-screen>div{position:relative;overflow:hidden;padding:44px;border:1px solid #1b685a;border-radius:28px;background:linear-gradient(135deg,rgba(8,45,39,.85),rgba(3,20,17,.95));backdrop-filter:blur(24px);box-shadow:0 25px 80px #0007,inset 0 1px #2cf5e225,0 0 35px #00ff9d08}#question-card>div:before{content:'';position:absolute;top:0;left:-30%;height:2px;width:30%;background:linear-gradient(90deg,transparent,#2cf5e2,transparent);box-shadow:0 0 18px #00ff9d;animation:scan 7s linear infinite}#question-card>div>div.absolute{display:none}#question-card>div>div.flex{margin-bottom:26px;color:#e6b349;font:600 13px Rajdhani,sans-serif;letter-spacing:3px}#question-text{font-family:Pretendard,sans-serif;font-size:26px;line-height:1.65;letter-spacing:-.6px;margin-bottom:32px}#options-container button{display:flex;align-items:center;gap:16px;padding:21px;text-align:left;width:100%;border:1px solid #0f483e;border-radius:16px;background:#03151299;box-shadow:inset 0 1px #ffffff03}#options-container button:not(:disabled):hover{border-color:#2cf5e2;background:#0d3c31;transform:translateY(-2px);box-shadow:0 0 24px #00ff9d0d}#options-container button span:first-child{display:flex;flex-shrink:0;align-items:center;justify-content:center;width:32px;height:32px;border:1px solid #1b685a;border-radius:50%;font:600 15px Rajdhani;color:#2cf5e2}#options-container button span:last-child{font-size:15px;line-height:1.7;font-weight:500}#options-container .border-green-500{border-color:#00ff9d;background:#00ff9d15;box-shadow:0 0 20px #00ff9d12}#options-container .border-red-500{border-color:#fa8585;background:#fa858515}#explanation-area{margin-top:32px;padding-top:28px;border-top:1px solid #0f483e}#explanation-area>div{padding:26px;border:1px solid #1b685a;border-radius:18px;background:#2cf5e208}#explanation-area>div>div{color:#e6b349;font:600 12px Rajdhani;letter-spacing:2px;margin-bottom:12px}#explanation-text{font-size:15px;line-height:1.9;color:#c9e0d9}#explanation-area button,#result-screen button,#intro-screen button{margin-top:26px;width:100%;padding:21px;border:1px solid #00ff9d66;border-radius:16px;background:linear-gradient(110deg,#075b43,#073c36);color:#e3f7f2;letter-spacing:2px;font:700 15px Rajdhani;box-shadow:0 0 28px #00ff9d12}footer{position:fixed;bottom:0;left:0;right:0;z-index:10;background:#031512ed;backdrop-filter:blur(20px);border-top:1px solid #0f483e;padding:22px 24px}footer>div{max-width:784px;margin:auto}footer p{color:#7fa39b;font:600 11px Rajdhani;letter-spacing:3px;margin-bottom:5px}footer .items-baseline{display:flex;align-items:baseline;gap:10px;color:#7fa39b;font:600 12px Rajdhani}#progress-text{font:600 32px Rajdhani;color:#2cf5e2}footer>div>div:last-child{height:4px;border-radius:8px;background:#0f483e;margin-top:14px}#progress-bar{height:4px;border-radius:8px;background:linear-gradient(90deg,#00ff9d,#2cf5e2);box-shadow:0 0 12px #00ff9d66;transition:width .4s}#intro-screen,#result-screen{position:fixed;inset:0;padding:24px;background:#020c0af2;z-index:60;overflow:auto;align-items:center;justify-content:center}#result-screen>div{width:100%;max-width:570px;margin:auto}#result-screen h2{font-size:28px;margin-bottom:12px}#result-user-name{font:600 13px Rajdhani;color:#e6b349;letter-spacing:2px;margin-bottom:28px}#result-screen .grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:28px}#result-screen .grid>div{padding:24px;background:#020c0a77;border:1px solid #0f483e;border-radius:18px}#result-screen .grid p:first-child{font:600 12px Rajdhani;color:#7fa39b;margin-bottom:8px}#result-screen .grid p:last-child{font:700 36px Rajdhani;color:#2cf5e2}#result-screen .grid p:last-child>span+span{font-size:12px;color:#7fa39b}#result-screen .text-left>div:first-child{font:600 13px Rajdhani;color:#e6b349;margin-bottom:16px}.rank-item{padding:16px;border-radius:12px;background:#031512;border:1px solid #0f483e}.rank-item:nth-child(1){border-color:#e6b34980;background:#e6b3490a}.rank-item span{font-size:14px}#result-screen>div>.absolute{display:none}@keyframes scan{to{left:100%}}@media(max-width:600px){header{padding:16px}header h1{font-size:12px;letter-spacing:1px}header>div:last-child{padding:8px 12px}main{padding:24px 14px 160px}#question-card>div{padding:26px 20px;border-radius:24px}#question-text{font-size:21px;margin-bottom:26px}#options-container button{padding:16px 12px;gap:12px}#options-container button span:last-child{font-size:14px}#result-screen>div{padding:28px 20px}footer{padding:16px 24px}}@media(prefers-reduced-motion:reduce){*,*:before{animation:none!important;transition:none!important}}
+.review-toolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px;font-size:13px;color:#7fa39b}.review-toolbar button{border:1px solid #1b685a;border-radius:12px;padding:12px 16px;background:#083128;color:#2cf5e2}.review-toolbar button:disabled{opacity:.45}.storage-note{font-size:12px;line-height:1.7;color:#7fa39b;margin:10px 0 18px}#retry-wrong:disabled{opacity:.45}#result-screen #retry-wrong{background:linear-gradient(110deg,#087c55,#075b43)}#result-screen{align-items:flex-start;padding-top:32px;padding-bottom:32px}
+.chapter-screen{max-width:900px;margin:auto;padding:64px 24px;min-height:100vh}.chapter-heading p{font:600 13px Rajdhani;letter-spacing:4px;color:#e6b349}.chapter-heading h1{font-size:32px;margin:16px 0}.chapter-heading span{color:#2cf5e2;font-size:14px}.chapter-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;margin:28px 0}.chapter-tile{border:1px solid #1b685a;border-radius:24px;padding:26px;background:linear-gradient(135deg,#082d27dd,#031411f2);box-shadow:0 16px 40px #0003}.chapter-tile h2{font:600 22px Rajdhani;color:#e3f7f2}.chapter-tile p{font-size:13px;color:#7fa39b;line-height:1.8;margin:12px 0}.chapter-action,.chapter-tile button{border:1px solid #1b685a;background:#08513d;color:#e3f7f2;border-radius:12px;padding:13px 18px;font-size:14px;width:100%}.chapter-tile button+button{margin-top:8px;background:transparent;color:#7fa39b}.chapter-meter{height:4px;background:#0f483e;border-radius:4px;margin:18px 0}.chapter-meter span{display:block;height:100%;background:#00ff9d;border-radius:4px}.review-toolbar{flex-wrap:wrap}.chapter-action:disabled{opacity:.45}@media(max-width:600px){.chapter-screen{padding:36px 18px}.chapter-list{grid-template-columns:1fr}.chapter-heading h1{font-size:27px}}
+/* Responsive chapter layout: desktop 3 + 2, mobile single column */
+@media(min-width:901px){
+.chapter-screen{max-width:1240px;padding:64px 36px}
+.chapter-list{grid-template-columns:repeat(6,minmax(0,1fr));gap:24px}
+.chapter-tile{grid-column:span 2;padding:30px}
+.chapter-tile:nth-child(n+4){grid-column:span 3}
+}
+@media(min-width:601px) and (max-width:900px){
+.chapter-list{grid-template-columns:1fr}
+}
+/* Full-width desktop chapters with equal-sized cards */
+@media(min-width:901px){
+.chapter-screen{width:100%;max-width:none;margin:0;padding:40px clamp(24px,3vw,64px)}
+.chapter-list{grid-template-columns:repeat(3,minmax(0,1fr));grid-auto-rows:1fr;gap:24px;align-items:stretch}
+.chapter-tile,.chapter-tile:nth-child(n+4){grid-column:auto;min-width:0;min-height:260px;padding:30px;display:flex;flex-direction:column}
+.chapter-tile .chapter-meter{margin-top:auto}
+.chapter-tile button{flex-shrink:0}
+}
 </style>
 </head>
 <body class="min-h-screen flex flex-col">
 
+    <section id="chapter-screen" class="chapter-screen">
+      <div class="chapter-heading"><p>LUMINARAE ACADEMY</p><h1>피부미용 실전 학습</h1><span>5개 챕터 · 101문항</span></div>
+      <p class="storage-note" id="chapter-storage">챕터별 풀이가 자동 저장됩니다. 원하는 챕터부터 시작하거나 이어서 풀어보세요.</p>
+      <div id="chapter-list" class="chapter-list"></div>
+      <button class="chapter-action" id="chapter-wrong" onclick="startWrongReview()">저장된 오답 다시 풀기</button>
+      <p class="storage-note">기록은 이 기기의 같은 브라우저에 저장됩니다. 브라우저 데이터를 삭제하면 기록도 지워집니다.</p>
+    </section>
     <!-- Intro Screen -->
     <div id="intro-screen" class="hidden fixed inset-0 z-50 bg-[#1A2238] flex items-center justify-center p-6">
         <div class="w-full max-w-lg text-center animate-slide-up">
@@ -26,7 +55,7 @@
             <h1 class="serif-font text-4xl font-bold text-white mb-4 tracking-widest uppercase">LUMINARAE</h1>
             <div class="h-px w-20 bg-[#C5A059] mx-auto mb-6"></div>
             <h2 class="text-xl font-medium text-white/80 mb-10 tracking-tight">피부미용 국가기술자격 실전 분석</h2>
-            <button onclick="startQuiz()" class="w-full bg-[#C5A059] py-6 rounded-xl font-bold text-white tracking-[0.2em] shadow-2xl hover:bg-[#B38E42] transition-all">
+            <button onclick="showChapters()" class="w-full bg-[#C5A059] py-6 rounded-xl font-bold text-white tracking-[0.2em] shadow-2xl hover:bg-[#B38E42] transition-all">
                 EXAMINATION START
             </button>
         </div>
@@ -50,6 +79,8 @@
         </header>
 
         <main class="flex-1 p-6 max-w-3xl mx-auto w-full pt-8 pb-48">
+            <div class="review-toolbar"><button onclick="showChapters()">← 챕터 선택</button><span id="mode-label">전체 문제</span><button id="saved-review" onclick="startWrongReview()">저장된 오답 0개</button></div>
+            <p id="storage-note" class="storage-note"></p>
             <div id="question-card" class="animate-slide-up">
                 <div class="bg-white p-8 md:p-12 rounded-[2rem] premium-shadow border border-gray-50 relative overflow-hidden">
                     <div class="absolute top-0 left-0 w-2 h-full bg-[#C5A059]"></div>
@@ -112,13 +143,15 @@
             <div class="mb-10 text-left">
                 <div class="flex items-center gap-2 mb-4 border-b border-gray-50 pb-2">
                     <i data-lucide="crown" class="w-4 h-4 text-[#C5A059]"></i>
-                    <span class="text-[11px] font-black text-[#1A2238] tracking-widest uppercase">Leaderboard (Top 5) · 이 브라우저 기록</span>
+                    <span class="text-[11px] font-black text-[#1A2238] tracking-widest uppercase">챕터별 학습 현황</span>
                 </div>
                 <div id="ranking-list" class="space-y-2">
                     <p class="text-center text-gray-300 py-4 text-xs">데이터 집계 중...</p>
                 </div>
             </div>
-            <button onclick="location.reload()" class="w-full bg-[#1A2238] text-white py-6 rounded-xl font-bold text-sm tracking-[0.2em] shadow-lg">RETAKE EXAM</button>
+            <p id="review-summary" class="storage-note"></p>
+            <button id="retry-wrong" onclick="startWrongReview()">틀린 문제만 다시 풀기</button>
+            <button onclick="showChapters()" class="w-full bg-[#1A2238] text-white py-6 rounded-xl font-bold text-sm tracking-[0.2em] shadow-lg">챕터 선택으로 돌아가기</button>
         </div>
     </div>
 
@@ -167,7 +200,7 @@
             { id: 40, q: "생균/사균 백신 접종 등으로 형성되는 면역의 종류는?", options: ["자연능동면역", "자연수동면역", "인공능동면역", "인공수동면역"], ans: 2, exp: "의도적으로 항원을 주입(백신)하여 신체가 스스로 항체를 만들게 하는 방식입니다." },
             { id: 41, q: "골격근에 대한 설명 중 틀린 것은?", options: ["인체의 약 60%를 차지한다.", "횡문근이라고도 한다.", "수의근이라고도 한다.", "대부분 골격에 부착되어 있다."], ans: 0, exp: "성인 골격근은 체중의 약 40~50% 수준을 차지하는 것이 일반적입니다." },
             { id: 42, q: "신경계의 기본 단위가 되는 세포는?", options: ["혈액", "뉴런", "미토콘드리아", "DNA"], ans: 1, exp: "뉴런(Neuron)은 신호의 수용과 전달을 담당하는 신경계의 구조적/기능적 단위입니다." },
-            { id: 43, q: "조직 사이에서 영양 공급과 노폐물 교환이 직접 일어나는 혈관은?", options: ["동맥", "정맥", "림프관", "모세혈관"], ans: 3, exp: "모세혈관은 매우 얇은 벽을 통해 물질 교환이 일어나는 가장 미세한 혈관입니다." },
+            { id: 43, q: "조직 사이에서 영양 공급과 노폐물 교환이 직접 일어나는 혈관은?", options: ["동맥", "정맥", "모세혈관", "림프관"], ans: 2, exp: "모세혈관은 매우 얇은 벽을 통해 물질 교환이 일어나는 가장 미세한 혈관입니다." },
             { id: 44, q: "컬러테라피에서 생명력과 에너지를 활성화시키는 색은?", options: ["보라", "빨강", "노랑", "주황"], ans: 1, exp: "빨강색은 혈액순환을 자극하고 신체적 활력을 증진시키는 역동적인 색입니다." },
             { id: 45, q: "우드램프 분석 결과 중 틀린 것은?", options: ["흰색-죽은 세포와 각질", "연보라-건조 피부", "오렌지-여드름과 피지", "암갈색-산화된 피지"], ans: 3, exp: "우드램프 아래서 암갈색은 주로 '색소 침착(멜라닌)'을 나타냅니다." },
             { id: 46, q: "다음 중 호흡기계 감염병에 해당하는 것은?", options: ["콜레라", "장티푸스", "유행성간염", "백일해"], ans: 3, exp: "백일해는 기침 등을 통해 전파되는 대표적인 급성 호흡기 감염병입니다." },
@@ -235,18 +268,116 @@
         let isAnswered = false;
         let currentStudent = "Guest";
 
-        function startQuiz() {
-            questions = [...ALL_QUESTIONS];
+        const WRONG_KEY = 'lumora_wrong_v1';
+        let wrongIds = new Set();
+        let reviewMode = false;
+        let resultShown = false;
+        let storageAvailable = true;
+        try {
+            const saved = JSON.parse(localStorage.getItem(WRONG_KEY) || '[]');
+            if (Array.isArray(saved)) wrongIds = new Set(saved.filter(id => ALL_QUESTIONS.some(q => q.id === id)));
+            localStorage.setItem(WRONG_KEY, JSON.stringify([...wrongIds]));
+        } catch(e) { storageAvailable = false; }
+        function updateReviewUI() {
+            const button = document.getElementById('saved-review');
+            button.innerText = `저장된 오답 ${wrongIds.size}개 다시 풀기`;
+            button.disabled = wrongIds.size === 0;
+            document.getElementById('storage-note').innerText = storageAvailable
+                ? '풀이 기록과 오답은 자동 저장됩니다. 다시 접속해 챕터를 선택하면 다음 미풀이 문제부터 이어집니다.'
+                : '이 브라우저에서는 저장이 제한되어 있습니다. 현재 화면에서는 오답 재풀이가 가능하지만, 닫으면 기록이 사라질 수 있습니다.';
+        }
+        function persistWrong() {
+            try { localStorage.setItem(WRONG_KEY, JSON.stringify([...wrongIds])); }
+            catch(e) { storageAvailable = false; }
+            updateReviewUI();
+        }
+        const CHAPTER_KEY = 'lumora_chapters_v1';
+        const CHAPTERS = [ [1,20], [21,40], [41,60], [61,80], [81,101] ];
+        let chapterStates = {};
+        let activeChapter = 0;
+        let activeAnswers = {};
+        try {
+            const saved = JSON.parse(localStorage.getItem(CHAPTER_KEY) || '{}');
+            if (saved && typeof saved === 'object' && !Array.isArray(saved)) chapterStates = saved;
+        } catch(e) { storageAvailable = false; }
+        function chapterQuestions(n) {
+            const [first,last] = CHAPTERS[n];
+            return ALL_QUESTIONS.filter(q => q.id >= first && q.id <= last);
+        }
+        function getState(n) {
+            const raw = chapterStates[n] || {};
+            const answers = {};
+            chapterQuestions(n).forEach(q => {
+                const a = raw.answers && raw.answers[q.id];
+                if (Number.isInteger(a) && a >= 0 && a < q.options.length) answers[q.id] = a;
+            });
+            return {answers};
+        }
+        function persistChapter() {
+            if (reviewMode) return;
+            chapterStates[activeChapter] = {answers: {...activeAnswers}};
+            try { localStorage.setItem(CHAPTER_KEY, JSON.stringify(chapterStates)); }
+            catch(e) { storageAvailable = false; updateReviewUI(); }
+        }
+        function showChapters() {
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('quiz-ui').classList.add('hidden');
+            document.getElementById('intro-screen').classList.add('hidden');
+            document.getElementById('chapter-screen').classList.remove('hidden');
+            document.getElementById('chapter-list').innerHTML = CHAPTERS.map(([first,last],n) => {
+                const qs = chapterQuestions(n), a = getState(n).answers;
+                const done = Object.keys(a).length;
+                const correct = qs.filter(q => a[q.id] === q.ans).length;
+                const label = done === qs.length ? '결과 보기' : done ? '이어서 풀기' : '시작하기';
+                const next = qs.find(q => a[q.id] === undefined);
+                return `<article class="chapter-tile"><h2>CHAPTER 0${n+1}</h2><p>${first}–${last}번 · ${qs.length}문제<br>${done}/${qs.length} 완료 · 정답 ${correct}개${done && next ? ` · 다음 ${next.id}번` : ''}</p><div class="chapter-meter"><span style="width:${done/qs.length*100}%"></span></div><button onclick="startChapter(${n})">${label}</button>${done ? `<button onclick="restartChapter(${n})">이 챕터 처음부터 다시 풀기</button>` : ''}</article>`;
+            }).join('');
+            document.getElementById('chapter-wrong').innerText = `저장된 오답 ${wrongIds.size}개 다시 풀기`;
+            document.getElementById('chapter-wrong').disabled = !wrongIds.size;
+            document.getElementById('chapter-storage').innerText = storageAvailable
+                ? '답을 선택할 때마다 자동 저장됩니다. 원하는 챕터부터 시작하거나 이어서 풀어보세요.'
+                : '현재 브라우저에서는 저장이 제한됩니다. 창을 닫으면 학습 기록이 사라질 수 있습니다.';
+            window.scrollTo({top:0});
+        }
+        function restartChapter(n) {
+            if (!window.confirm('이 챕터의 풀이 기록을 초기화하고 다시 시작할까요? 저장된 오답은 유지됩니다.')) return;
+            chapterStates[n] = {answers:{}};
+            startChapter(n);
+            persistChapter();
+        }
+        function startChapter(n) {
+            activeChapter = n;
+            reviewMode = false;
+            questions = chapterQuestions(n);
+            activeAnswers = getState(n).answers;
+            score = questions.filter(q => activeAnswers[q.id] === q.ans).length;
+            currentIndex = questions.findIndex(q => activeAnswers[q.id] === undefined);
+            const complete = currentIndex === -1;
+            if (complete) currentIndex = questions.length - 1;
+            setupQuiz();
+            if (complete) showResults(); else renderQuestion();
+        }
+        function startWrongReview() {
+            if (!wrongIds.size) return;
+            reviewMode = true;
+            questions = ALL_QUESTIONS.filter(q => wrongIds.has(q.id));
+            activeAnswers = {};
             currentIndex = 0; score = 0;
-            
+            setupQuiz(); renderQuestion();
+        }
+        function setupQuiz() {
+            resultShown = false;
+            document.getElementById('chapter-screen').classList.add('hidden');
+            document.getElementById('result-screen').classList.add('hidden');
+            document.getElementById('mode-label').innerText = reviewMode ? '오답 다시 풀기' : `챕터 ${activeChapter+1}`;
+            document.getElementById('result-screen').querySelector('h2').innerText = reviewMode ? '오답 재풀이 결과' : `챕터 ${activeChapter+1} 학습 결과`;
+            updateReviewUI();
             document.getElementById('total-pages-num').innerText = questions.length;
             document.getElementById('progress-total').innerText = questions.length;
             document.querySelectorAll('.total-score-label').forEach(el => el.innerText = questions.length);
-
             document.getElementById('intro-screen').classList.add('hidden');
             document.getElementById('quiz-ui').classList.remove('hidden');
             document.getElementById('quiz-ui').classList.add('flex');
-            renderQuestion();
         }
 
         function renderQuestion() {
@@ -255,7 +386,8 @@
             isAnswered = false;
 
             document.getElementById('current-page-num').innerText = currentIndex + 1;
-            document.getElementById('display-q-num').innerText = currentIndex + 1;
+            document.getElementById('display-q-num').innerText = q.id;
+            document.getElementById('next-btn-text').innerText = 'NEXT EVALUATION';
             document.getElementById('question-text').innerText = q.q;
             document.getElementById('explanation-area').classList.add('hidden');
             
@@ -285,7 +417,11 @@
             isAnswered = true;
             const q = questions[currentIndex];
             const isCorrect = q.ans === idx;
-            if (isCorrect) score++;
+            if (isCorrect) { score++; wrongIds.delete(q.id); }
+            else { wrongIds.add(q.id); }
+            activeAnswers[q.id] = idx;
+            persistChapter();
+            persistWrong();
 
             const btns = document.getElementById('options-container').children;
             for(let i=0; i<btns.length; i++) {
@@ -302,49 +438,40 @@
         }
 
         function goToNextQuestion() {
+            if (!isAnswered) return;
             if (currentIndex < questions.length - 1) { currentIndex++; renderQuestion(); }
             else { showResults(); }
         }
 
-        let localScores = [];
-        async function saveScore() {
-            try { localScores = JSON.parse(localStorage.getItem('lumora_scores') || '[]'); } catch(e) { localScores = []; }
-            localScores.push({userName: 'Guest', score, timestamp: Date.now()});
-            try { localStorage.setItem('lumora_scores', JSON.stringify(localScores)); } catch(e) {}
-        }
-
         async function fetchRankings() {
-            const list = document.getElementById('ranking-list');
-            try {
-                let data = [...localScores];
-                data.sort((a, b) => b.score - a.score);
-                const top5 = data.slice(0, 5);
-                list.innerHTML = top5.map((r, i) => `
-                    <div class="rank-item flex items-center justify-between p-4 rounded-xl">
-                        <div class="flex items-center gap-4">
-                            <span class="font-black text-[#C5A059] text-sm">${i + 1}</span>
-                            <span class="font-bold text-[#1A2238] text-sm">${r.userName}</span>
-                        </div>
-                        <span class="font-black text-[#1A2238] text-sm">${r.score}<span class="text-[10px] text-gray-300 ml-0.5">pts</span></span>
-                    </div>
-                `).join('');
-            } catch (e) { list.innerHTML = '<p class="text-center text-red-300 py-4 text-[10px]">Failed to load.</p>'; }
-            if (window.lucide) lucide.createIcons();
+            document.getElementById('ranking-list').innerHTML = CHAPTERS.map((_,n) => {
+                const qs=chapterQuestions(n), answers=getState(n).answers;
+                const done=Object.keys(answers).length;
+                const correct=qs.filter(q=>answers[q.id]===q.ans).length;
+                return `<div class="rank-item flex items-center justify-between"><span>챕터 ${n+1} · ${done}/${qs.length} 완료</span><span>정답 ${correct}개</span></div>`;
+            }).join('');
         }
 
         async function showResults() {
+            if (resultShown) return;
+            resultShown = true;
+            document.getElementById('progress-bar').style.width = '100%';
+            document.getElementById('progress-text').innerText = questions.length;
+            document.getElementById('retry-wrong').disabled = wrongIds.size === 0;
+            document.getElementById('retry-wrong').innerText = wrongIds.size ? `틀린 문제 ${wrongIds.size}개 다시 풀기` : '남은 오답이 없습니다';
+            document.getElementById('review-summary').innerText = `이번 풀이 오답 ${questions.length - score}개 · 저장된 오답 ${wrongIds.size}개. ` + (wrongIds.size ? '정답을 맞히면 오답 목록에서 자동으로 제외됩니다.' : '모든 오답을 해결하셨습니다!');
             document.getElementById('final-score').innerText = score;
             document.getElementById('final-percent').innerText = `${Math.round((score / questions.length) * 100)}%`;
             document.getElementById('result-user-name').innerText = `Performance Report: ${currentStudent}`;
             document.getElementById('result-screen').classList.remove('hidden');
             document.getElementById('result-screen').classList.add('flex');
-            await saveScore();
+
             await fetchRankings();
         }
 
         window.onload = () => {
             document.getElementById('user-display').innerText = 'User: Guest';
-            startQuiz();
+            showChapters();
         };
     </script>
 </body>
