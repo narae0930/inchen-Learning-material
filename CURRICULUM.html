@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMINARAE | Cyber-Medical Skin Science Master Portfolio</title>
+  
+  <!-- Fonts: Cinzel (Luxury Serif), Rajdhani (Cyber/Medical Tech), Pretendard (Korean Sans) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Rajdhani:wght@500;600;700&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            lumora: {
+              void: '#020c0a',
+              deep: '#031512',
+              surface: 'rgba(8, 45, 39, 0.85)',
+              border: '#0f483e',
+              borderGlow: '#1b685a',
+              neonMint: '#00ff9d',
+              neonCyan: '#2cf5e2',
+              amberGold: '#e6b349',
+              whiteMint: '#e3f7f2',
+              muteGreen: '#7fa39b'
+            }
+          },
+          fontFamily: {
+            cinzel: ['"Cinzel"', 'serif'],
+            tech: ['"Rajdhani"', 'monospace'],
+            script: ['"Playfair Display"', 'serif'],
+            sans: ['"Pretendard"', 'sans-serif']
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    :root {
+      color-scheme: dark;
+    }
+
+    body {
+      background-color: #020c0a;
+      background-image: 
+        radial-gradient(ellipse 90% 60% at 50% -10%, rgba(0, 255, 157, 0.12), transparent 70%),
+        radial-gradient(circle 800px at 15% 45%, rgba(44, 245, 226, 0.08), transparent),
+        radial-gradient(circle 900px at 85% 65%, rgba(15, 72, 62, 0.25), transparent),
+        linear-gradient(rgba(2, 12, 10, 0.94), rgba(2, 12, 10, 0.97)),
+        linear-gradient(to right, rgba(0, 255, 157, 0.03) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(44, 245, 226, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+      background-attachment: fixed;
+      font-family: 'Pretendard', sans-serif;
+    }
+
+    /* Cyber Glass Card */
+    .cyber-glass-card {
+      background: linear-gradient(135deg, rgba(8, 45, 39, 0.72) 0%, rgba(3, 20, 17, 0.92) 100%);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(15, 72, 62, 0.85);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.6), inset 0 1px 0 0 rgba(227, 247, 242, 0.1);
+    }
+
+    .cyber-glass-card:hover {
+      transform: translateY(-8px);
+      border-color: rgba(0, 255, 157, 0.6);
+      box-shadow: 
+        0 20px 40px -12px rgba(0, 255, 157, 0.25),
+        0 0 25px -4px rgba(44, 245, 226, 0.35),
+        inset 0 0 20px rgba(0, 255, 157, 0.08);
+    }
+
+    /* Scanning beam animation over card */
+    .cyber-glass-card::before {
+      content: '';
+      position: absolute;
+      top: -150%;
+      left: -50%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(
+        180deg,
+        transparent,
+        rgba(0, 255, 157, 0.07) 50%,
+        rgba(44, 245, 226, 0.2) 51%,
+        rgba(0, 255, 157, 0.02) 52%,
+        transparent
+      );
+      transform: rotate(20deg);
+      transition: all 0.75s ease;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .cyber-glass-card:hover::before {
+      top: 150%;
+      opacity: 1;
+    }
+
+    /* Target Reticle Corners */
+    .reticle-corner {
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-color: rgba(44, 245, 226, 0.3);
+      pointer-events: none;
+      transition: all 0.3s ease;
+    }
+    .reticle-tl { top: 7px; left: 7px; border-top: 2px solid; border-left: 2px solid; }
+    .reticle-tr { top: 7px; right: 7px; border-top: 2px solid; border-right: 2px solid; }
+    .reticle-bl { bottom: 7px; left: 7px; border-bottom: 2px solid; border-left: 2px solid; }
+    .reticle-br { bottom: 7px; right: 7px; border-bottom: 2px solid; border-right: 2px solid; }
+
+    .cyber-glass-card:hover .reticle-corner {
+      border-color: #00ff9d;
+      box-shadow: 0 0 8px rgba(0, 255, 157, 0.8);
+    }
+
+    /* Top HUD Scanning line */
+    @keyframes hudScan {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(200%); }
+    }
+    .hud-scanner-bar {
+      position: relative;
+      overflow: hidden;
+    }
+    .hud-scanner-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 50%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, #00ff9d, #2cf5e2, transparent);
+      animation: hudScan 4s infinite linear;
+    }
+
+    /* Ambient pulse */
+    @keyframes bioPulse {
+      0%, 100% { transform: scale(1); opacity: 0.8; }
+      50% { transform: scale(1.25); opacity: 1; filter: drop-shadow(0 0 8px #00ff9d); }
+    }
+    .bio-pulse {
+      animation: bioPulse 2.4s infinite cubic-bezier(0.4, 0, 0.6, 1);
+    }
+  </style>
+</head>
+<body class="min-h-screen text-lumora-whiteMint flex flex-col justify-between selection:bg-lumora-neonMint selection:text-black antialiased relative">
+
+  <!-- Top Global Medical HUD Bar -->
+  <header class="w-full pt-10 pb-6 px-4 relative z-10">
+    <div class="max-w-6xl mx-auto flex flex-col items-center">
+      
+      <!-- System Telemetry Status Bar -->
+      <div class="inline-flex items-center gap-3 px-4 py-1 rounded-full border border-lumora-border bg-lumora-deep/90 backdrop-blur-xl mb-6 shadow-[0_0_20px_rgba(0,255,157,0.12)]">
+        <span class="w-2 h-2 rounded-full bg-lumora-neonMint bio-pulse"></span>
+        <span class="font-tech text-xs tracking-[0.25em] text-lumora-neonCyan uppercase font-semibold">
+          SYSTEM ACTIVE • BIO-MEDICAL ARCHIVE v4.2
+        </span>
+        <span class="w-1.5 h-1.5 rounded-full bg-lumora-amberGold"></span>
+      </div>
+
+      <!-- Main Luxury Cyber Brand Title -->
+      <div class="relative text-center">
+        <h1 class="font-cinzel tracking-[0.32em] text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-b from-white via-lumora-whiteMint to-lumora-neonCyan drop-shadow-[0_4px_24px_rgba(0,255,157,0.35)]">
+          L U M I N A R A E
+        </h1>
+        <div class="h-0.5 w-48 sm:w-72 mx-auto mt-2 bg-gradient-to-r from-transparent via-lumora-neonMint to-transparent opacity-80 hud-scanner-bar"></div>
+      </div>
+      
+      <!-- Script Medical Subtitle (한 줄 여백 후 CURRICULUM) -->
+      <p class="font-script italic text-2xl sm:text-3xl md:text-4xl text-lumora-neonCyan/90 mt-5 font-medium tracking-widest drop-shadow-[0_2px_12px_rgba(44,245,226,0.3)]">
+        CURRICULUM
+      </p>
+
+      <!-- Center Medical Academy Badge (Kept without the ALL MASTER CURRICULUM pill) -->
+      <div class="mt-5 inline-flex items-center gap-2.5 px-6 py-2 rounded-full border border-[#1b685a] bg-gradient-to-r from-[rgba(8,45,39,0.9)] to-[rgba(3,20,17,0.95)] backdrop-blur-xl text-lumora-whiteMint text-xs sm:text-sm font-medium tracking-wider shadow-lg">
+        <svg class="w-4 h-4 text-lumora-neonMint animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+        </svg>
+        <span>인천직업전문학교 · CLINICAL DERMA PORTFOLIO</span>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- 8 Cards Grid: 1 col on mobile, 2 cols on tablet, 4 cols on desktop -->
+  <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex-grow relative z-10">
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 lg:gap-6">
+
+      <!-- CARD 01 : 101.HTML - Orientation -->
+      <a href="101.html" class="cyber-glass-card rounded-2xl p-6 flex flex-col justify-between items-center text-center group cursor-pointer">
+        <div class="reticle-corner reticle-tl"></div>
+        <div class="reticle-corner reticle-tr"></div>
+        <div class="reticle-corner reticle-bl"></div>
+        <div class="reticle-corner reticle-br"></div>
+        
+        <!-- Top Status Tag -->
+        <div class="w-full flex justify-between items-center text-[10px] font-tech text-lumora-muteGreen tracking-widest mb-3">
+          <span class="text-lumora-neonMint flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-lumora-neonMint"></span>SEC-01
+          </span>
+          <span class="text-lumora-amberGold font-semibold">ONBOARDING</span>
+        </div>
+
+        <!-- Tech Medical Icon -->
+        <div class="w-16 h-16 rounded-2xl bg-[#042822]/90 border border-lumora-border flex items-center justify-center text-lumora-neonMint mb-5 group-hover:scale-110 group-hover:border-lumora-neonMint group-hover:bg-[#07473a] group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+          </svg>
+        </div>
+        
+        <!-- Text Content: Korean Title Top, English Subtitle Bottom -->
+        <div class="w-full flex-grow flex flex-col justify-center">
+          <h2 class="text-lumora-whiteMint font-bold text-lg group-hover:text-lumora-neonMint transition-colors tracking-tight">
+            01. 오리엔테이션
+          </h2>
+          <p class="text-xs text-lumora-muteGreen mt-1.5 font-tech tracking-widest uppercase">
+            Course Orientation & Protocol
+          </p>
+        </div>
+
+        <!-- Cyber Action Button -->
+        <div class="mt-6 w-full py-2.5 px-4 rounded-xl border border-lumora-border bg-[#031d18]/70 text-xs font-tech font-bold tracking-[0.2em] text-lumora-neonCyan group-hover:border-lumora-neonMint group-hover:bg-gradient-to-r group-hover:from-lumora-neonMint group-hover:to-lumora-neonCyan group-hover:text-black group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300 uppercase">
+          ACCESS PROTOCOL
+        </div>
+      </a>
+
+      <!-- CARD 02 : 102.HTML - Learning Roadmap -->
+      <a href="102.html" class="cyber-glass-card rounded-2xl p-6 flex flex-col justify-between items-center text-center group cursor-pointer">
+        <div class="reticle-corner reticle-tl"></div>
+        <div class="reticle-corner reticle-tr"></div>
+        <div class="reticle-corner reticle-bl"></div>
+        <div class="reticle-corner reticle-br"></div>
+
+        <div class="w-full flex justify-between items-center text-[10px] font-tech text-lumora-muteGreen tracking-widest mb-3">
+          <span class="text-lumora-neonMint flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-lumora-neonMint"></span>SEC-02
+          </span>
+          <span class="text-lumora-neonCyan font-semibold">SYLLABUS</span>
+        </div>
+
+        <div class="w-16 h-16 rounded-2xl bg-[#042822]/90 border border-lumora-border flex items-center justify-center text-lumora-neonMint mb-5 group-hover:scale-110 group-hover:border-lumora-neonMint group-hover:bg-[#07473a] group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+          </svg>
+        </div>
+        
+        <div class="w-full flex-grow flex flex-col justify-center">
+          <h2 class="text-lumora-whiteMint font-bold text-lg group-hover:text-lumora-neonMint transition-colors tracking-tight">
+            02. 학습 성과 로드맵
+          </h2>
+          <p class="text-xs text-lumora-muteGreen mt-1.5 font-tech tracking-widest uppercase">
+            Learning Outcome Roadmap
+          </p>
+        </div>
+
+        <div class="mt-6 w-full py-2.5 px-4 rounded-xl border border-lumora-border bg-[#031d18]/70 text-xs font-tech font-bold tracking-[0.2em] text-lumora-neonCyan group-hover:border-lumora-neonMint group-hover:bg-gradient-to-r group-hover:from-lumora-neonMint group-hover:to-lumora-neonCyan group-hover:text-black group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300 uppercase">
+          VIEW ROADMAP
+        </div>
+      </a>
+
+      <!-- CARD 03 : 103.HTML - Club Activities -->
+      <a href="103.html" class="cyber-glass-card rounded-2xl p-6 flex flex-col justify-between items-center text-center group cursor-pointer">
+        <div class="reticle-corner reticle-tl"></div>
+        <div class="reticle-corner reticle-tr"></div>
+        <div class="reticle-corner reticle-bl"></div>
+        <div class="reticle-corner reticle-br"></div>
+
+        <div class="w-full flex justify-between items-center text-[10px] font-tech text-lumora-muteGreen tracking-widest mb-3">
+          <span class="text-lumora-neonMint flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-lumora-neonMint"></span>SEC-03
+          </span>
+          <span class="text-lumora-amberGold font-semibold">COMMUNITY</span>
+        </div>
+
+        <div class="w-16 h-16 rounded-2xl bg-[#042822]/90 border border-lumora-border flex items-center justify-center text-lumora-neonMint mb-5 group-hover:scale-110 group-hover:border-lumora-neonMint group-hover:bg-[#07473a] group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+          </svg>
+        </div>
+        
+        <div class="w-full flex-grow flex flex-col justify-center">
+          <h2 class="text-lumora-whiteMint font-bold text-lg group-hover:text-lumora-neonMint transition-colors tracking-tight">
+            03. 동아리 활동
+          </h2>
+          <p class="text-xs text-lumora-muteGreen mt-1.5 font-tech tracking-widest uppercase">
+            Club Activities Report
+          </p>
+        </div>
+
+        <div class="mt-6 w-full py-2.5 px-4 rounded-xl border border-lumora-border bg-[#031d18]/70 text-xs font-tech font-bold tracking-[0.2em] text-lumora-neonCyan group-hover:border-lumora-neonMint group-hover:bg-gradient-to-r group-hover:from-lumora-neonMint group-hover:to-lumora-neonCyan group-hover:text-black group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300 uppercase">
+          EXPLORE LAB
+        </div>
+      </a>
+
+      <!-- CARD 04 : 104.HTML - Skills Competition -->
+      <a href="104.html" class="cyber-glass-card rounded-2xl p-6 flex flex-col justify-between items-center text-center group cursor-pointer">
+        <div class="reticle-corner reticle-tl"></div>
+        <div class="reticle-corner reticle-tr"></div>
+        <div class="reticle-corner reticle-bl"></div>
+        <div class="reticle-corner reticle-br"></div>
+
+        <div class="w-full flex justify-between items-center text-[10px] font-tech text-lumora-muteGreen tracking-widest mb-3">
+          <span class="text-lumora-neonMint flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-lumora-neonMint"></span>SEC-04
+          </span>
+          <span class="text-lumora-neonCyan font-semibold">CONTEST</span>
+        </div>
+
+        <div class="w-16 h-16 rounded-2xl bg-[#042822]/90 border border-lumora-border flex items-center justify-center text-lumora-neonMint mb-5 group-hover:scale-110 group-hover:border-lumora-neonMint group-hover:bg-[#07473a] group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z"></path>
+          </svg>
+        </div>
+        
+        <div class="w-full flex-grow flex flex-col justify-center">
+          <h2 class="text-lumora-whiteMint font-bold text-lg group-hover:text-lumora-neonMint transition-colors tracking-tight">
+            04. 기능경기대회
+          </h2>
+          <p class="text-xs text-lumora-muteGreen mt-1.5 font-tech tracking-widest uppercase">
+            Skills Competition Awards
+          </p>
+        </div>
+
+        <div class="mt-6 w-full py-2.5 px-4 rounded-xl border border-lumora-border bg-[#031d18]/70 text-xs font-tech font-bold tracking-[0.2em] text-lumora-neonCyan group-hover:border-lumora-neonMint group-hover:bg-gradient-to-r group-hover:from-lumora-neonMint group-hover:to-lumora-neonCyan group-hover:text-black group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300 uppercase">
+          AWARDS ARCHIVE
+        </div>
+      </a>
+
+      <!-- CARD 05 : 105.HTML - Certifications -->
+      <a href="105.html" class="cyber-glass-card rounded-2xl p-6 flex flex-col justify-between items-center text-center group cursor-pointer">
+        <div class="reticle-corner reticle-tl"></div>
+        <div class="reticle-corner reticle-tr"></div>
+        <div class="reticle-corner reticle-bl"></div>
+        <div class="reticle-corner reticle-br"></div>
+
+        <div class="w-full flex justify-between items-center text-[10px] font-tech text-lumora-muteGreen tracking-widest mb-3">
+          <span class="text-lumora-neonMint flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-lumora-neonMint"></span>SEC-05
+          </span>
+          <span class="text-lumora-amberGold font-semibold">VERIFIED</span>
+        </div>
+
+        <div class="w-16 h-16 rounded-2xl bg-[#042822]/90 border border-lumora-border flex items-center justify-center text-lumora-neonMint mb-5 group-hover:scale-110 group-hover:border-lumora-neonMint group-hover:bg-[#07473a] group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+          </svg>
+        </div>
+        
+        <div class="w-full flex-grow flex flex-col justify-center">
+          <h2 class="text-lumora-whiteMint font-bold text-lg group-hover:text-lumora-neonMint transition-colors tracking-tight">
+            05. 민간 자격증
+          </h2>
+          <p class="text-xs text-lumora-muteGreen mt-1.5 font-tech tracking-widest uppercase">
+            Professional Certifications
+          </p>
+        </div>
+
+        <div class="mt-6 w-full py-2.5 px-4 rounded-xl border border-lumora-border bg-[#031d18]/70 text-xs font-tech font-bold tracking-[0.2em] text-lumora-neonCyan group-hover:border-lumora-neonMint group-hover:bg-gradient-to-r group-hover:from-lumora-neonMint group-hover:to-lumora-neonCyan group-hover:text-black group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300 uppercase">
+          VERIFY CREDENTIALS
+        </div>
+      </a>
+
+      <!-- CARD 06 : 106.HTML - AI Skin Analysis App -->
+      <a href="106.html" class="cyber-glass-card rounded-2xl p-6 flex flex-col justify-between items-center text-center group cursor-pointer">
+        <div class="reticle-corner reticle-tl"></div>
+        <div class="reticle-corner reticle-tr"></div>
+        <div class="reticle-corner reticle-bl"></div>
+        <div class="reticle-corner reticle-br"></div>
+
+        <div class="w-full flex justify-between items-center text-[10px] font-tech text-lumora-muteGreen tracking-widest mb-3">
+          <span class="text-lumora-neonMint flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-lumora-neonMint"></span>SEC-06
+          </span>
+          <span class="text-lumora-neonCyan font-semibold">AI ENGINE</span>
+        </div>
+
+        <div class="w-16 h-16 rounded-2xl bg-[#042822]/90 border border-lumora-border flex items-center justify-center text-lumora-neonMint mb-5 group-hover:scale-110 group-hover:border-lumora-neonMint group-hover:bg-[#07473a] group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        
+        <div class="w-full flex-grow flex flex-col justify-center">
+          <h2 class="text-lumora-whiteMint font-bold text-lg group-hover:text-lumora-neonMint transition-colors tracking-tight">
+            06. AI 피부 분석앱 제작
+          </h2>
+          <p class="text-xs text-lumora-muteGreen mt-1.5 font-tech tracking-widest uppercase">
+            AI Skin Analysis Application
+          </p>
+        </div>
+
+        <div class="mt-6 w-full py-2.5 px-4 rounded-xl border border-lumora-border bg-[#031d18]/70 text-xs font-tech font-bold tracking-[0.2em] text-lumora-neonCyan group-hover:border-lumora-neonMint group-hover:bg-gradient-to-r group-hover:from-lumora-neonMint group-hover:to-lumora-neonCyan group-hover:text-black group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300 uppercase">
+          LAUNCH AI DEMO
+        </div>
+      </a>
+
+      <!-- CARD 07 : 107.HTML - Portfolio Showcase -->
+      <a href="107.html" class="cyber-glass-card rounded-2xl p-6 flex flex-col justify-between items-center text-center group cursor-pointer">
+        <div class="reticle-corner reticle-tl"></div>
+        <div class="reticle-corner reticle-tr"></div>
+        <div class="reticle-corner reticle-bl"></div>
+        <div class="reticle-corner reticle-br"></div>
+
+        <div class="w-full flex justify-between items-center text-[10px] font-tech text-lumora-muteGreen tracking-widest mb-3">
+          <span class="text-lumora-neonMint flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-lumora-neonMint"></span>SEC-07
+          </span>
+          <span class="text-lumora-amberGold font-semibold">PRESENTATION</span>
+        </div>
+
+        <div class="w-16 h-16 rounded-2xl bg-[#042822]/90 border border-lumora-border flex items-center justify-center text-lumora-neonMint mb-5 group-hover:scale-110 group-hover:border-lumora-neonMint group-hover:bg-[#07473a] group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path>
+          </svg>
+        </div>
+        
+        <div class="w-full flex-grow flex flex-col justify-center">
+          <h2 class="text-lumora-whiteMint font-bold text-lg group-hover:text-lumora-neonMint transition-colors tracking-tight">
+            07. 포트폴리오 제작 및 발표
+          </h2>
+          <p class="text-xs text-lumora-muteGreen mt-1.5 font-tech tracking-widest uppercase">
+            Portfolio Showcase & Presentation
+          </p>
+        </div>
+
+        <div class="mt-6 w-full py-2.5 px-4 rounded-xl border border-lumora-border bg-[#031d18]/70 text-xs font-tech font-bold tracking-[0.2em] text-lumora-neonCyan group-hover:border-lumora-neonMint group-hover:bg-gradient-to-r group-hover:from-lumora-neonMint group-hover:to-lumora-neonCyan group-hover:text-black group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300 uppercase">
+          VIEW PORTFOLIO
+        </div>
+      </a>
+
+      <!-- CARD 08 : 108.HTML - Industry Lecture & Interview -->
+      <a href="108.html" class="cyber-glass-card rounded-2xl p-6 flex flex-col justify-between items-center text-center group cursor-pointer">
+        <div class="reticle-corner reticle-tl"></div>
+        <div class="reticle-corner reticle-tr"></div>
+        <div class="reticle-corner reticle-bl"></div>
+        <div class="reticle-corner reticle-br"></div>
+
+        <div class="w-full flex justify-between items-center text-[10px] font-tech text-lumora-muteGreen tracking-widest mb-3">
+          <span class="text-lumora-neonMint flex items-center gap-1.5">
+            <span class="w-1.5 h-1.5 rounded-full bg-lumora-neonMint"></span>SEC-08
+          </span>
+          <span class="text-lumora-neonCyan font-semibold">CAREER</span>
+        </div>
+
+        <div class="w-16 h-16 rounded-2xl bg-[#042822]/90 border border-lumora-border flex items-center justify-center text-lumora-neonMint mb-5 group-hover:scale-110 group-hover:border-lumora-neonMint group-hover:bg-[#07473a] group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300">
+          <svg class="w-8 h-8" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+          </svg>
+        </div>
+        
+        <div class="w-full flex-grow flex flex-col justify-center">
+          <h2 class="text-lumora-whiteMint font-bold text-lg group-hover:text-lumora-neonMint transition-colors tracking-tight">
+            08. 기업 특강 및 면접
+          </h2>
+          <p class="text-xs text-lumora-muteGreen mt-1.5 font-tech tracking-widest uppercase">
+            Industry Lecture & Interview
+          </p>
+        </div>
+
+        <div class="mt-6 w-full py-2.5 px-4 rounded-xl border border-lumora-border bg-[#031d18]/70 text-xs font-tech font-bold tracking-[0.2em] text-lumora-neonCyan group-hover:border-lumora-neonMint group-hover:bg-gradient-to-r group-hover:from-lumora-neonMint group-hover:to-lumora-neonCyan group-hover:text-black group-hover:shadow-[0_0_20px_rgba(0,255,157,0.4)] transition-all duration-300 uppercase">
+          INTERVIEW PREP
+        </div>
+      </a>
+
+    </div>
+  </main>
+
+  <!-- Footer with Cyber-Medical Lab Signature -->
+  <footer class="w-full py-6 mt-6 border-t border-lumora-border/60 text-lumora-muteGreen text-xs tracking-wider relative z-10 backdrop-blur-md bg-lumora-void/70">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center gap-3">
+        <span class="font-tech text-lumora-neonMint font-bold text-sm tracking-widest">LUMINARAE DERMA LAB</span>
+        <span class="w-1 h-3 bg-lumora-border"></span>
+        <span class="text-[11px] text-lumora-muteGreen/80 font-mono">ENCRYPTED CLINICAL DIRECTORY</span>
+      </div>
+      
+      <!-- ECG Pulse Graphic simulation -->
+      <div class="hidden md:flex items-center gap-2 opacity-70">
+        <span class="text-[10px] font-tech text-lumora-neonCyan">BIO-TELEMETRY</span>
+        <svg class="w-24 h-4 text-lumora-neonMint" viewBox="0 0 100 20" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M0 10 H30 L35 2 L40 18 L45 8 L50 12 L55 10 H100" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="text-[10px] font-tech text-lumora-neonMint">99.8% READY</span>
+      </div>
+
+      <p class="text-lumora-muteGreen/70 text-center sm:text-right font-tech text-[11px]">
+        PORTFOLIO ACCESS MODULES: <span class="text-lumora-neonCyan font-mono font-semibold">101.HTML ~ 108.HTML</span>
+      </p>
+    </div>
+  </footer>
+
+  <!-- Instant Navigation Feedback Toast -->
+  <div id="toast" class="fixed bottom-6 right-6 hidden transform transition-all duration-300 ease-out z-50">
+    <div class="bg-lumora-deep/95 border border-lumora-neonMint/60 text-lumora-whiteMint text-xs px-4 py-3 rounded-xl shadow-[0_0_25px_rgba(0,255,157,0.3)] flex items-center gap-3 backdrop-blur-xl">
+      <div class="w-2 h-2 rounded-full bg-lumora-neonMint bio-pulse"></div>
+      <span id="toast-text" class="font-tech tracking-wider">CONNECTING TO LAB MODULE...</span>
+    </div>
+  </div>
+
+  <script>
+    // 클릭 시 바로 101.html ~ 108.html로 이동하며 사이버 피드백 효과 연출
+    document.querySelectorAll('.cyber-glass-card').forEach(card => {
+      card.addEventListener('click', (e) => {
+        const link = card.getAttribute('href');
+        const toast = document.getElementById('toast');
+        const toastText = document.getElementById('toast-text');
+        
+        toastText.textContent = `REDIRECTING TO MODULE: ${link.toUpperCase()}`;
+        toast.classList.remove('hidden');
+      });
+    });
+  </script>
+</body>
+</html>
