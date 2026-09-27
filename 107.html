@@ -3,958 +3,542 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LUMINARAE — Clinical Esthetic & AI Dermatology Portfolio</title>
-  
-  <!-- Fonts -->
+  <title>LUMINARAE | Clinical Dermatology Portfolio Showcase</title>
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts & Font Awesome Icons -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Rajdhani:wght@500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-  <style>
-    :root {
-      --bg-deep: #020c0a;
-      --bg-dark: #031512;
-      --card-gradient: linear-gradient(135deg, rgba(8, 45, 39, 0.88) 0%, rgba(3, 20, 17, 0.96) 100%);
-      --border-emerald: #0f483e;
-      --border-emerald-glow: #1b685a;
-      --neon-mint: #00ff9d;
-      --neon-cyan: #2cf5e2;
-      --amber-gold: #e6b349;
-      --text-main: #e3f7f2;
-      --text-sub: #7fa39b;
-      --text-dim: #4d7068;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      background-color: var(--bg-deep);
-      background-image: 
-        radial-gradient(circle at 50% 0%, rgba(44, 245, 226, 0.08) 0%, transparent 60%),
-        radial-gradient(circle at 10% 40%, rgba(0, 255, 157, 0.04) 0%, transparent 40%),
-        radial-gradient(circle at 90% 70%, rgba(230, 179, 73, 0.04) 0%, transparent 40%),
-        linear-gradient(to bottom, #020c0a, #031512);
-      color: var(--text-main);
-      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
-      min-height: 100vh;
-      line-height: 1.6;
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* Ambient Tech Grid Pattern */
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        linear-gradient(rgba(15, 72, 62, 0.1) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 72, 62, 0.1) 1px, transparent 1px);
-      background-size: 40px 40px;
-      pointer-events: none;
-      z-index: 0;
-    }
-
-    /* Top Subtle Static Accent Line (No downwards motion) */
-    .top-accent-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, rgba(0, 255, 157, 0.4), rgba(44, 245, 226, 0.6), transparent);
-      z-index: 100;
-    }
-
-    .container {
-      position: relative;
-      z-index: 1;
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 48px 24px 80px 24px;
-    }
-
-    header {
-      text-align: center;
-      margin-bottom: 56px;
-      position: relative;
-    }
-
-    .hud-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 6px 18px;
-      background: rgba(15, 72, 62, 0.45);
-      border: 1px solid var(--border-emerald-glow);
-      border-radius: 9999px;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      letter-spacing: 2px;
-      color: var(--neon-cyan);
-      box-shadow: 0 0 15px rgba(44, 245, 226, 0.12);
-      margin-bottom: 18px;
-      text-transform: uppercase;
-    }
-
-    .hud-badge i {
-      font-size: 11px;
-      color: var(--neon-mint);
-    }
-
-    .brand-title {
-      font-family: 'Cinzel', serif;
-      font-size: 48px;
-      font-weight: 800;
-      letter-spacing: 6px;
-      background: linear-gradient(135deg, #ffffff 20%, var(--neon-cyan) 60%, var(--amber-gold) 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-shadow: 0 0 35px rgba(44, 245, 226, 0.2);
-      margin-bottom: 12px;
-    }
-
-    .brand-subtitle {
-      font-size: 16px;
-      color: var(--text-sub);
-      letter-spacing: 0.5px;
-      max-width: 720px;
-      margin: 0 auto;
-    }
-
-    .status-ribbon {
-      display: flex;
-      justify-content: center;
-      gap: 32px;
-      margin-top: 28px;
-      padding: 12px 24px;
-      background: rgba(3, 21, 18, 0.65);
-      border: 1px solid var(--border-emerald);
-      border-radius: 16px;
-      backdrop-filter: blur(12px);
-      width: fit-content;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .status-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 14px;
-      color: var(--text-sub);
-    }
-
-    .status-item span.highlight {
-      color: var(--neon-mint);
-      font-weight: 700;
-    }
-
-    .grid-container {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 32px;
-      margin-top: 20px;
-    }
-
-    @media (max-width: 1100px) {
-      .grid-container {
-        grid-template-columns: repeat(1, 1fr);
-        max-width: 680px;
-        margin-left: auto;
-        margin-right: auto;
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              darkest: '#020c0a',
+              dark: '#031512',
+              cardBorder: '#0f483e',
+              borderLight: '#1b685a',
+              mint: '#00ff9d',
+              cyan: '#2cf5e2',
+              gold: '#e6b349',
+              textMain: '#e3f7f2',
+              textMuted: '#7fa39b'
+            }
+          },
+          fontFamily: {
+            serifTitle: ['Cinzel', 'serif'],
+            tech: ['Rajdhani', 'sans-serif'],
+            body: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+          }
+        }
       }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #020c0a;
+      color: #e3f7f2;
+      font-family: 'Pretendard', sans-serif;
+      overflow-x: hidden;
+      background-image: 
+        radial-gradient(circle at 15% 10%, rgba(0, 255, 157, 0.04) 0%, transparent 40%),
+        radial-gradient(circle at 85% 60%, rgba(44, 245, 226, 0.04) 0%, transparent 45%),
+        linear-gradient(rgba(15, 72, 62, 0.08) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(15, 72, 62, 0.08) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
     }
 
-    .team-card {
-      background: var(--card-gradient);
-      border: 1px solid var(--border-emerald);
-      border-radius: 28px;
+    .glass-card {
+      background: linear-gradient(135deg, rgba(8, 45, 39, 0.88), rgba(3, 20, 17, 0.96));
       backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6), 0 0 20px rgba(15, 72, 62, 0.2);
-      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      border: 1px solid #0f483e;
+      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.8), 0 0 18px rgba(0, 255, 157, 0.06);
+      transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+
+    .glass-card:hover {
+      border-color: #2cf5e2;
+      box-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.9), 0 0 26px rgba(44, 245, 226, 0.16);
+      transform: translateY(-4px);
+    }
+
+    .video-container {
       position: relative;
-    }
-
-    .team-card:hover {
-      transform: translateY(-6px);
-      border-color: var(--border-emerald-glow);
-      box-shadow: 0 24px 50px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 255, 157, 0.15), 0 0 18px rgba(44, 245, 226, 0.12);
-    }
-
-    .card-hud-bar {
-      height: 3px;
-      width: 100%;
-      background: linear-gradient(90deg, transparent, var(--neon-mint), var(--neon-cyan), transparent);
-      opacity: 0.6;
-      transition: opacity 0.3s;
-    }
-
-    .team-card:hover .card-hud-bar {
-      opacity: 1;
-      box-shadow: 0 0 10px var(--neon-mint);
-    }
-
-    /* Banner container without moving scan animation */
-    .banner-container {
-      position: relative;
-      width: 100%;
-      height: 240px;
-      background: #02120e;
       overflow: hidden;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border-bottom: 1px solid rgba(27, 104, 90, 0.4);
+      background: #020907;
+      aspect-ratio: 16 / 9;
     }
 
-    .banner-img {
+    .video-container video {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      object-position: center;
-      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s;
+      display: block;
     }
 
-    .team-card:hover .banner-img {
-      transform: scale(1.04);
-      filter: brightness(1.06);
+    /* Modal Backdrop */
+    .modal-backdrop {
+      background-color: rgba(1, 10, 8, 0.92);
+      backdrop-filter: blur(14px);
     }
 
-    .banner-tag {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      z-index: 3;
-      padding: 5px 12px;
-      background: rgba(2, 12, 10, 0.85);
-      border: 1px solid var(--neon-mint);
-      border-radius: 8px;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--neon-mint);
-      letter-spacing: 1px;
-      backdrop-filter: blur(8px);
-      box-shadow: 0 0 12px rgba(0, 255, 157, 0.25);
+    /* Custom subtle scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
     }
-
-    .banner-click-prompt {
-      position: absolute;
-      bottom: 14px;
-      right: 14px;
-      z-index: 3;
-      padding: 6px 14px;
-      background: rgba(3, 21, 18, 0.9);
-      border: 1px solid var(--neon-cyan);
-      border-radius: 20px;
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      color: var(--neon-cyan);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      backdrop-filter: blur(8px);
-      transition: all 0.3s;
+    ::-webkit-scrollbar-track {
+      background: #020c0a;
     }
-
-    .team-card:hover .banner-click-prompt {
-      background: var(--neon-cyan);
-      color: #020c0a;
-      box-shadow: 0 0 14px var(--neon-cyan);
+    ::-webkit-scrollbar-thumb {
+      background: #0f483e;
+      border-radius: 9999px;
     }
-
-    .fallback-banner {
-      display: none;
-      width: 100%;
-      height: 100%;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      background: linear-gradient(135deg, #052620 0%, #02120e 100%);
-      color: var(--text-sub);
-    }
-
-    .fallback-banner i {
-      font-size: 42px;
-      color: var(--border-emerald-glow);
-    }
-
-    .fallback-banner p {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 14px;
-      letter-spacing: 1.5px;
-    }
-
-    .card-body {
-      padding: 28px 24px 24px 24px;
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-
-    .team-header {
-      margin-bottom: 18px;
-    }
-
-    .team-identity {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 6px;
-    }
-
-    .team-badge {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--amber-gold);
-      letter-spacing: 1px;
-    }
-
-    .team-name {
-      font-family: 'Cinzel', 'Pretendard', serif;
-      font-size: 26px;
-      font-weight: 700;
-      color: #ffffff;
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-    }
-
-    .team-desc {
-      font-size: 14px;
-      color: var(--text-sub);
-      line-height: 1.5;
-    }
-
-    .spec-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-      padding: 14px;
-      background: rgba(2, 12, 10, 0.55);
-      border: 1px solid rgba(15, 72, 62, 0.6);
-      border-radius: 16px;
-      margin-bottom: 20px;
-    }
-
-    .spec-item {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .spec-label {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 11px;
-      color: var(--text-dim);
-      letter-spacing: 1px;
-      text-transform: uppercase;
-    }
-
-    .spec-value {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-main);
-    }
-
-    .spec-value.neon {
-      color: var(--neon-mint);
-    }
-
-    .highlights-title {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 12px;
-      font-weight: 700;
-      letter-spacing: 1.5px;
-      color: var(--neon-cyan);
-      margin-bottom: 10px;
-      text-transform: uppercase;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .highlight-list {
-      list-style: none;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      margin-bottom: 22px;
-    }
-
-    .highlight-list li {
-      font-size: 13px;
-      color: var(--text-sub);
-      display: flex;
-      align-items: flex-start;
-      gap: 8px;
-      line-height: 1.45;
-    }
-
-    .highlight-list li i {
-      font-size: 11px;
-      color: var(--neon-mint);
-      margin-top: 4px;
-    }
-
-    .highlight-list li strong {
-      color: var(--text-main);
-      font-weight: 600;
-    }
-
-    .member-box {
-      margin-top: auto;
-      padding-top: 14px;
-      border-top: 1px dashed rgba(27, 104, 90, 0.4);
-      margin-bottom: 20px;
-    }
-
-    .member-title {
-      font-family: 'Rajdhani', sans-serif;
-      font-size: 11px;
-      color: var(--text-dim);
-      letter-spacing: 1px;
-      margin-bottom: 6px;
-      text-transform: uppercase;
-    }
-
-    .member-chips {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 6px;
-    }
-
-    .member-chip {
-      padding: 4px 10px;
-      background: rgba(15, 72, 62, 0.3);
-      border: 1px solid rgba(27, 104, 90, 0.5);
-      border-radius: 6px;
-      font-size: 12px;
-      color: var(--text-main);
-    }
-
-    .pdf-action-btn {
-      width: 100%;
-      padding: 14px 20px;
-      background: linear-gradient(135deg, rgba(15, 72, 62, 0.6) 0%, rgba(3, 20, 17, 0.8) 100%);
-      border: 1px solid var(--border-emerald-glow);
-      border-radius: 14px;
-      color: var(--neon-mint);
-      font-family: 'Rajdhani', 'Pretendard', sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      letter-spacing: 1px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      text-decoration: none;
-      transition: all 0.3s;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.4);
-    }
-
-    .pdf-action-btn:hover {
-      background: linear-gradient(135deg, var(--neon-mint) 0%, var(--neon-cyan) 100%);
-      border-color: transparent;
-      color: #020c0a;
-      box-shadow: 0 0 25px rgba(0, 255, 157, 0.35), 0 0 15px rgba(44, 245, 226, 0.25);
-      transform: translateY(-2px);
-    }
-
-    .pdf-action-btn i {
-      transition: transform 0.3s;
-    }
-
-    .pdf-action-btn:hover i {
-      transform: translateX(4px);
-    }
-
-    /* Modal PDF Viewer */
-    .pdf-modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(2, 12, 10, 0.88);
-      backdrop-filter: blur(16px);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
-      padding: 24px;
-    }
-
-    .pdf-modal.active {
-      display: flex;
-    }
-
-    .modal-content {
-      width: 100%;
-      max-width: 1100px;
-      height: 88vh;
-      background: #031512;
-      border: 1px solid var(--neon-cyan);
-      border-radius: 20px;
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-      box-shadow: 0 0 50px rgba(44, 245, 226, 0.18);
-    }
-
-    .modal-header {
-      padding: 16px 24px;
-      background: rgba(8, 45, 39, 0.95);
-      border-bottom: 1px solid var(--border-emerald-glow);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .modal-title {
-      font-family: 'Cinzel', serif;
-      font-size: 18px;
-      color: var(--neon-cyan);
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .modal-close-btn {
-      background: none;
-      border: 1px solid var(--border-emerald-glow);
-      color: var(--text-sub);
-      padding: 6px 14px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-family: 'Rajdhani', sans-serif;
-      font-weight: 700;
-      transition: all 0.2s;
-    }
-
-    .modal-close-btn:hover {
-      background: var(--neon-mint);
-      color: #020c0a;
-      border-color: var(--neon-mint);
-    }
-
-    .modal-iframe-wrap {
-      flex-grow: 1;
-      position: relative;
-    }
-
-    .modal-iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    footer {
-      margin-top: 80px;
-      text-align: center;
-      border-top: 1px solid rgba(15, 72, 62, 0.5);
-      padding-top: 32px;
-      color: var(--text-dim);
-      font-size: 13px;
-    }
-
-    footer p.hud-footer {
-      font-family: 'Rajdhani', sans-serif;
-      letter-spacing: 2px;
-      color: var(--text-sub);
-      margin-bottom: 8px;
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00ff9d;
     }
   </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between selection:bg-brand-mint selection:text-black">
 
-  <!-- Static Top Accent Bar -->
-  <div class="top-accent-bar"></div>
-
-  <div class="container">
-    
-    <header>
-      <div class="hud-badge">
-        <i class="fa-solid fa-circle-radiation"></i>
-        <span>Clinical Dermatology & Esthetic Research Hub</span>
+  <header class="sticky top-0 z-40 border-b border-brand-cardBorder/60 bg-[#020c0a]/90 backdrop-blur-md">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <div class="w-10 h-10 rounded-xl border border-brand-mint/40 bg-brand-dark flex items-center justify-center shadow-[0_0_12px_rgba(0,255,157,0.25)]">
+          <i class="fa-solid fa-dna text-brand-mint text-lg"></i>
+        </div>
+        <div>
+          <span class="font-serifTitle text-xl tracking-[0.25em] text-white font-bold block leading-none">LUMINARAE</span>
+          <span class="font-tech text-xs tracking-widest text-brand-mint uppercase">Aesthetic Clinical Symposium</span>
+        </div>
       </div>
-      <h1 class="brand-title">LUMINARAE</h1>
-      <p class="brand-subtitle">
-        정밀 데이터 분석과 AI 메디컬 스킨사이언스를 접목한 피부미용 실무 역량 포트폴리오 제작발표회
+
+      <div class="flex items-center space-x-4">
+        <div class="hidden sm:flex items-center space-x-2 text-xs font-tech text-brand-textMuted bg-[#031c17] px-3.5 py-1.5 rounded-full border border-brand-cardBorder">
+          <span class="inline-block w-2 h-2 rounded-full bg-brand-mint animate-pulse"></span>
+          <span>RESEARCH ARCHIVE ONLINE</span>
+        </div>
+        <button onclick="openAllPdfsInfo()" class="text-xs font-medium px-4 py-2 rounded-xl bg-brand-borderLight/30 hover:bg-brand-mint hover:text-black border border-brand-mint/30 transition duration-200">
+          <i class="fa-regular fa-file-pdf mr-1.5"></i>전체 발표 자료
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
+    <!-- Intro Banner -->
+    <section class="text-center max-w-3xl mx-auto mb-14">
+      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-brand-mint/30 bg-[#06241f] text-brand-mint text-xs font-tech tracking-wider mb-4">
+        <i class="fa-solid fa-microscope text-brand-cyan"></i>
+        <span>CLINICAL COMPETENCY PRESENTATION</span>
+      </div>
+      <h1 class="font-serifTitle text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
+        피부미용 실무 역량 <br class="hidden sm:inline" />포트폴리오 제작발표회
+      </h1>
+      <p class="text-brand-textMuted text-sm sm:text-base leading-relaxed">
+        AI 스마트 진단과 체계적 임상 테크닉을 결합한 3개 연구팀의 포트폴리오 쇼케이스입니다. <br class="hidden md:inline" />
+        배너 영상을 재생하거나 카드를 클릭하여 팀별 상세 <span class="text-brand-mint font-semibold">PDF 포트폴리오</span>를 열람하세요.
       </p>
+    </section>
 
-      <div class="status-ribbon">
-        <div class="status-item">
-          <i class="fa-solid fa-microscope" style="color: var(--neon-mint);"></i>
-          <span>PROTOCOL: <span class="highlight">CLINICAL AI 4.0</span></span>
-        </div>
-        <div class="status-item">
-          <i class="fa-solid fa-layer-group" style="color: var(--neon-cyan);"></i>
-          <span>TEAMS: <span class="highlight">3 GROUPS</span></span>
-        </div>
-        <div class="status-item">
-          <i class="fa-solid fa-shield-halved" style="color: var(--amber-gold);"></i>
-          <span>STATUS: <span class="highlight">VERIFIED</span></span>
-        </div>
-      </div>
-    </header>
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
-    <div class="grid-container">
+      <!-- 1조 : 루미아 (LUMIA) -->
+      <article class="glass-card rounded-3xl overflow-hidden flex flex-col group border border-brand-cardBorder">
+        <!-- Video Banner -->
+        <div class="video-container rounded-t-3xl border-b border-brand-cardBorder/70">
+          <video id="video-team1" loop muted playsinline preload="metadata" class="w-full h-full object-cover">
+            <source src="1조1.mp4" type="video/mp4">
+            브라우저가 HTML5 비디오를 지원하지 않습니다.
+          </video>
 
-      <!-- ================= 1조: 루미아 (LUMIA) ================= -->
-      <div class="team-card">
-        <div class="card-hud-bar"></div>
-        
-        <!-- Banner with 1조1.png -->
-        <div class="banner-container" onclick="openPdf('1조.pdf', '1조 루미아(LUMIA) 에스테틱 포트폴리오')">
-          <span class="banner-tag">GROUP 01</span>
-          <span class="banner-click-prompt">
-            <i class="fa-regular fa-file-pdf"></i> VIEW PDF
-          </span>
-          
-          <img 
-            src="1조1.png" 
-            alt="1조 루미아 배너" 
-            class="banner-img" 
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-          >
-          <div class="fallback-banner">
-            <i class="fa-solid fa-dna"></i>
-            <p>1조1.png IMAGE LOAD</p>
+          <!-- Top Overlay Badges -->
+          <div class="absolute top-3 left-3 right-3 flex justify-between items-center pointer-events-none z-10">
+            <span class="bg-[#020e0b]/80 border border-brand-mint/40 text-brand-mint text-[11px] font-tech px-2.5 py-1 rounded-lg backdrop-blur-sm">
+              <i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse text-brand-mint"></i>TEAM 01
+            </span>
+            <span class="bg-[#020e0b]/80 border border-brand-borderLight text-brand-cyan text-[10px] font-tech px-2 py-0.5 rounded-md">
+              1조1.mp4
+            </span>
+          </div>
+
+          <!-- Video Playback Controls Bar -->
+          <div class="absolute bottom-2.5 right-3 flex items-center space-x-1.5 z-20">
+            <button onclick="toggleVideoPlayback('video-team1', this)" class="w-8 h-8 rounded-lg bg-black/60 hover:bg-brand-mint hover:text-black text-brand-textMain border border-brand-cardBorder flex items-center justify-center backdrop-blur-md transition" title="재생 / 일시정지">
+              <i class="fa-solid fa-play text-xs"></i>
+            </button>
+            <button onclick="toggleVideoMute('video-team1', this)" class="w-8 h-8 rounded-lg bg-black/60 hover:bg-brand-mint hover:text-black text-brand-textMain border border-brand-cardBorder flex items-center justify-center backdrop-blur-md transition" title="음소거 해제 / 설정">
+              <i class="fa-solid fa-volume-xmark text-xs"></i>
+            </button>
+          </div>
+
+          <!-- Fallback Alert if file is not found (managed automatically via JS) -->
+          <div id="fallback-team1" class="absolute inset-0 bg-[#031915] flex flex-col items-center justify-center p-4 text-center hidden">
+            <i class="fa-solid fa-video text-brand-mint text-2xl mb-2 opacity-60"></i>
+            <p class="text-xs text-brand-textMuted font-tech tracking-wide">1조1.mp4 로드 대기 중</p>
           </div>
         </div>
 
-        <div class="card-body">
-          <div class="team-header">
-            <div class="team-identity">
-              <span class="team-badge">UNIT 01 · DERMA REVITAL</span>
-              <span style="font-family:'Rajdhani'; font-size:12px; color:var(--neon-mint);">DOC: 1조.pdf</span>
+        <!-- Card Body -->
+        <div class="p-6 flex-grow flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline justify-between mb-2">
+              <h2 class="text-2xl font-serifTitle font-bold text-white tracking-wide">루미아</h2>
+              <span class="text-xs font-tech text-brand-mint tracking-wider">LUMIA CLINIC</span>
             </div>
-            <h2 class="team-name">루미아 (LUMIA)</h2>
-            <p class="team-desc">
-              광채 피부 장벽 강화 및 하이엔드 리바이탈라이징 솔루션
+            <p class="text-xs text-brand-cyan mb-4 font-tech tracking-wide uppercase">AI Adaptive Moisture & Barrier Care</p>
+            <p class="text-xs sm:text-sm text-brand-textMuted leading-relaxed mb-5">
+              인공지능 정밀 진단을 통해 피부 표피층의 유수분 불균형 패턴을 도출하고, 개인별 피부 상태에 맞춘 맞춤형 장벽 케어 솔루션을 제시합니다.
             </p>
-          </div>
 
-          <div class="spec-grid">
-            <div class="spec-item">
-              <span class="spec-label">Target Care</span>
-              <span class="spec-value">장벽 강화 · 광채 재생</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">Tech Core</span>
-              <span class="spec-value neon">AI 솔루션 & 리포트</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">Period</span>
-              <span class="spec-value">2026 Season</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">Verification</span>
-              <span class="spec-value">임상 데이터 입증</span>
+            <div class="space-y-2 mb-6">
+              <div class="flex items-center text-xs text-brand-textMain/90 bg-[#041c17] p-2.5 rounded-xl border border-brand-cardBorder/60">
+                <i class="fa-solid fa-wand-magic-sparkles text-brand-mint w-5"></i>
+                <span class="font-medium">핵심 과제:</span>
+                <span class="ml-1.5 text-brand-textMuted">AI 기반 유수분 진단 & 장벽 강화</span>
+              </div>
+              <div class="flex items-center text-xs text-brand-textMain/90 bg-[#041c17] p-2.5 rounded-xl border border-brand-cardBorder/60">
+                <i class="fa-solid fa-file-shield text-brand-cyan w-5"></i>
+                <span class="font-medium">연동 문서:</span>
+                <span class="ml-1.5 text-brand-mint font-tech">1조.pdf</span>
+              </div>
             </div>
           </div>
 
-          <div class="highlights-title">
-            <i class="fa-solid fa-atom"></i> Research Keynote
+          <!-- CTA Buttons -->
+          <div class="pt-2 flex items-center space-x-2">
+            <button onclick="openPdfModal('1조.pdf', '1조: 루미아 (LUMIA) 포트폴리오')" class="flex-1 py-3 px-4 rounded-xl bg-brand-borderLight/40 hover:bg-brand-mint hover:text-black border border-brand-mint/40 text-brand-textMain text-xs font-semibold tracking-wide transition flex items-center justify-center space-x-2 shadow-[0_0_12px_rgba(0,255,157,0.1)]">
+              <i class="fa-regular fa-eye"></i>
+              <span>포트폴리오 열람</span>
+            </button>
+            <a href="1조.pdf" target="_blank" class="p-3 rounded-xl bg-[#031d17] hover:border-brand-cyan border border-brand-cardBorder text-brand-cyan hover:text-white transition" title="새 탭에서 PDF 열기">
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
           </div>
-          <ul class="highlight-list">
-            <li>
-              <i class="fa-solid fa-check"></i>
-              <span><strong>초정밀 피부 분석:</strong> 유수분 지표 및 세포 활성도 진단</span>
-            </li>
-            <li>
-              <i class="fa-solid fa-check"></i>
-              <span><strong>복합 리커버리 매뉴얼:</strong> 테크니컬 클리닉 단계화 설계</span>
-            </li>
-            <li>
-              <i class="fa-solid fa-check"></i>
-              <span><strong>포뮬러 흡수 최적화:</strong> 고주파 및 앰플 침투 극대화</span>
-            </li>
-          </ul>
-
-          <div class="member-box">
-            <div class="member-title">Research Specialists</div>
-            <div class="member-chips">
-              <span class="member-chip">루미아 연구팀</span>
-              <span class="member-chip">테라피스트</span>
-              <span class="member-chip">데이터 분석가</span>
-            </div>
-          </div>
-
-          <a href="1조.pdf" target="_blank" class="pdf-action-btn" onclick="event.stopPropagation();">
-            <i class="fa-solid fa-file-pdf"></i>
-            <span>1조 포트폴리오 열람 (1조.pdf)</span>
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </a>
         </div>
-      </div>
+      </article>
 
-      <!-- ================= 2조: 광채주의보 ================= -->
-      <div class="team-card">
-        <div class="card-hud-bar"></div>
-        
-        <!-- Banner with 2조2.png -->
-        <div class="banner-container" onclick="openPdf('2조.pdf', '2조 광채주의보 피부미용 실무 역량 포트폴리오')">
-          <span class="banner-tag">GROUP 02</span>
-          <span class="banner-click-prompt">
-            <i class="fa-regular fa-file-pdf"></i> VIEW PDF
-          </span>
-          
-          <img 
-            src="2조2.png" 
-            alt="2조 광채주의보 배너" 
-            class="banner-img" 
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-          >
-          <div class="fallback-banner">
-            <i class="fa-solid fa-chart-line"></i>
-            <p>2조2.png IMAGE LOAD</p>
+      <!-- 2조 : 광채주의보 (GWANGCHAE) -->
+      <article class="glass-card rounded-3xl overflow-hidden flex flex-col group border border-brand-cardBorder">
+        <!-- Video Banner -->
+        <div class="video-container rounded-t-3xl border-b border-brand-cardBorder/70">
+          <video id="video-team2" loop muted playsinline preload="metadata" class="w-full h-full object-cover">
+            <source src="2조2.mp4" type="video/mp4">
+            브라우저가 HTML5 비디오를 지원하지 않습니다.
+          </video>
+
+          <div class="absolute top-3 left-3 right-3 flex justify-between items-center pointer-events-none z-10">
+            <span class="bg-[#020e0b]/80 border border-brand-mint/40 text-brand-mint text-[11px] font-tech px-2.5 py-1 rounded-lg backdrop-blur-sm">
+              <i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse text-brand-mint"></i>TEAM 02
+            </span>
+            <span class="bg-[#020e0b]/80 border border-brand-borderLight text-brand-cyan text-[10px] font-tech px-2 py-0.5 rounded-md">
+              2조2.mp4
+            </span>
+          </div>
+
+          <div class="absolute bottom-2.5 right-3 flex items-center space-x-1.5 z-20">
+            <button onclick="toggleVideoPlayback('video-team2', this)" class="w-8 h-8 rounded-lg bg-black/60 hover:bg-brand-mint hover:text-black text-brand-textMain border border-brand-cardBorder flex items-center justify-center backdrop-blur-md transition" title="재생 / 일시정지">
+              <i class="fa-solid fa-play text-xs"></i>
+            </button>
+            <button onclick="toggleVideoMute('video-team2', this)" class="w-8 h-8 rounded-lg bg-black/60 hover:bg-brand-mint hover:text-black text-brand-textMain border border-brand-cardBorder flex items-center justify-center backdrop-blur-md transition" title="음소거 해제 / 설정">
+              <i class="fa-solid fa-volume-xmark text-xs"></i>
+            </button>
+          </div>
+
+          <div id="fallback-team2" class="absolute inset-0 bg-[#031915] flex flex-col items-center justify-center p-4 text-center hidden">
+            <i class="fa-solid fa-video text-brand-mint text-2xl mb-2 opacity-60"></i>
+            <p class="text-xs text-brand-textMuted font-tech tracking-wide">2조2.mp4 로드 대기 중</p>
           </div>
         </div>
 
-        <div class="card-body">
-          <div class="team-header">
-            <div class="team-identity">
-              <span class="team-badge">UNIT 02 · CLINICAL DATA</span>
-              <span style="font-family:'Rajdhani'; font-size:12px; color:var(--neon-cyan);">DOC: 2조.pdf</span>
+        <!-- Card Body -->
+        <div class="p-6 flex-grow flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline justify-between mb-2">
+              <h2 class="text-2xl font-serifTitle font-bold text-white tracking-wide">광채주의보</h2>
+              <span class="text-xs font-tech text-brand-gold tracking-wider">CLINICAL DATA SYSTEM</span>
             </div>
-            <h2 class="team-name">광채주의보</h2>
-            <p class="team-desc">
-              시술 전후 객관적 데이터 기반 피부미용 실무 역량 증명
+            <p class="text-xs text-brand-cyan mb-4 font-tech tracking-wide uppercase">Evidence-Based Clinical Verification</p>
+            <p class="text-xs sm:text-sm text-brand-textMuted leading-relaxed mb-5">
+              측정 기기와 AI 분석을 결합하여 시술 전후 수분(+29%), 탄력(+12점) 개선 및 복부 고주파 관리(-3cm) 결과를 데이터로 명확히 검증합니다.
             </p>
-          </div>
 
-          <div class="spec-grid">
-            <div class="spec-item">
-              <span class="spec-label">Moisture Gain</span>
-              <span class="spec-value neon">+29% 수분도 향상</span>
+            <!-- Metrics Highlight Badges -->
+            <div class="grid grid-cols-3 gap-2 mb-4 text-center">
+              <div class="bg-[#041a15] p-2 rounded-xl border border-brand-cardBorder">
+                <span class="text-[10px] text-brand-textMuted block">수분 개선</span>
+                <span class="font-tech text-sm font-bold text-brand-mint">+29%</span>
+              </div>
+              <div class="bg-[#041a15] p-2 rounded-xl border border-brand-cardBorder">
+                <span class="text-[10px] text-brand-textMuted block">탄력 개선</span>
+                <span class="font-tech text-sm font-bold text-brand-cyan">+12점</span>
+              </div>
+              <div class="bg-[#041a15] p-2 rounded-xl border border-brand-cardBorder">
+                <span class="text-[10px] text-brand-textMuted block">복부 둘레</span>
+                <span class="font-tech text-sm font-bold text-brand-gold">-3cm</span>
+              </div>
             </div>
-            <div class="spec-item">
-              <span class="spec-label">Elasticity Score</span>
-              <span class="spec-value neon">+12점 탄력도 개선</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">Body Metric</span>
-              <span class="spec-value" style="color:var(--amber-gold);">-3cm 복부둘레 감소</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">Mission Date</span>
-              <span class="spec-value">2026. 08. 25</span>
-            </div>
-          </div>
 
-          <div class="highlights-title">
-            <i class="fa-solid fa-chart-pie"></i> Clinical Protocol
-          </div>
-          <ul class="highlight-list">
-            <li>
-              <i class="fa-solid fa-check"></i>
-              <span><strong>8단계 체계적 매뉴얼:</strong> 클렌징부터 고주파 기기 관리까지</span>
-            </li>
-            <li>
-              <i class="fa-solid fa-check"></i>
-              <span><strong>AI 정밀 측정 연동:</strong> 유수분 밸런스 및 확대경 모공 비교</span>
-            </li>
-            <li>
-              <i class="fa-solid fa-check"></i>
-              <span><strong>가시적 신체 변화:</strong> 총점 71점 ➔ 79점 객관적 상승 증명</span>
-            </li>
-          </ul>
-
-          <div class="member-box">
-            <div class="member-title">Research Specialists</div>
-            <div class="member-chips">
-              <span class="member-chip">신지영</span>
-              <span class="member-chip">송미링</span>
-              <span class="member-chip">임초은</span>
-              <span class="member-chip">장윤정</span>
+            <div class="text-[11px] text-brand-textMuted bg-[#041c17] p-2.5 rounded-xl border border-brand-cardBorder/60 mb-6">
+              <span class="text-brand-textMain font-medium">연구원:</span> 신지영 · 송미링 · 임초은 · 장윤정
             </div>
           </div>
 
-          <a href="2조.pdf" target="_blank" class="pdf-action-btn" onclick="event.stopPropagation();">
-            <i class="fa-solid fa-file-pdf"></i>
-            <span>2조 포트폴리오 열람 (2조.pdf)</span>
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </a>
+          <div class="pt-2 flex items-center space-x-2">
+            <button onclick="openPdfModal('2조.pdf', '2조: 광채주의보 포트폴리오')" class="flex-1 py-3 px-4 rounded-xl bg-brand-borderLight/40 hover:bg-brand-mint hover:text-black border border-brand-mint/40 text-brand-textMain text-xs font-semibold tracking-wide transition flex items-center justify-center space-x-2 shadow-[0_0_12px_rgba(0,255,157,0.1)]">
+              <i class="fa-regular fa-eye"></i>
+              <span>포트폴리오 열람</span>
+            </button>
+            <a href="2조.pdf" target="_blank" class="p-3 rounded-xl bg-[#031d17] hover:border-brand-cyan border border-brand-cardBorder text-brand-cyan hover:text-white transition" title="새 탭에서 PDF 열기">
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
+          </div>
         </div>
-      </div>
+      </article>
 
-      <!-- ================= 3조: 아프로디테 ================= -->
-      <div class="team-card">
-        <div class="card-hud-bar"></div>
-        
-        <!-- Banner with 3조3.png -->
-        <div class="banner-container" onclick="openPdf('3조.pdf', '3조 아프로디테 에스테틱 관리 포트폴리오')">
-          <span class="banner-tag">GROUP 03</span>
-          <span class="banner-click-prompt">
-            <i class="fa-regular fa-file-pdf"></i> VIEW PDF
-          </span>
-          
-          <img 
-            src="3조3.png" 
-            alt="3조 아프로디테 배너" 
-            class="banner-img" 
-            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
-          >
-          <div class="fallback-banner">
-            <i class="fa-solid fa-wand-magic-sparkles"></i>
-            <p>3조3.png IMAGE LOAD</p>
+      <!-- 3조 : 아프로디테 (APHRODITE) -->
+      <article class="glass-card rounded-3xl overflow-hidden flex flex-col group border border-brand-cardBorder">
+        <!-- Video Banner -->
+        <div class="video-container rounded-t-3xl border-b border-brand-cardBorder/70">
+          <video id="video-team3" loop muted playsinline preload="metadata" class="w-full h-full object-cover">
+            <source src="3조3.mp4" type="video/mp4">
+            브라우저가 HTML5 비디오를 지원하지 않습니다.
+          </video>
+
+          <div class="absolute top-3 left-3 right-3 flex justify-between items-center pointer-events-none z-10">
+            <span class="bg-[#020e0b]/80 border border-brand-mint/40 text-brand-mint text-[11px] font-tech px-2.5 py-1 rounded-lg backdrop-blur-sm">
+              <i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse text-brand-mint"></i>TEAM 03
+            </span>
+            <span class="bg-[#020e0b]/80 border border-brand-borderLight text-brand-cyan text-[10px] font-tech px-2 py-0.5 rounded-md">
+              3조3.mp4
+            </span>
+          </div>
+
+          <div class="absolute bottom-2.5 right-3 flex items-center space-x-1.5 z-20">
+            <button onclick="toggleVideoPlayback('video-team3', this)" class="w-8 h-8 rounded-lg bg-black/60 hover:bg-brand-mint hover:text-black text-brand-textMain border border-brand-cardBorder flex items-center justify-center backdrop-blur-md transition" title="재생 / 일시정지">
+              <i class="fa-solid fa-play text-xs"></i>
+            </button>
+            <button onclick="toggleVideoMute('video-team3', this)" class="w-8 h-8 rounded-lg bg-black/60 hover:bg-brand-mint hover:text-black text-brand-textMain border border-brand-cardBorder flex items-center justify-center backdrop-blur-md transition" title="음소거 해제 / 설정">
+              <i class="fa-solid fa-volume-xmark text-xs"></i>
+            </button>
+          </div>
+
+          <div id="fallback-team3" class="absolute inset-0 bg-[#031915] flex flex-col items-center justify-center p-4 text-center hidden">
+            <i class="fa-solid fa-video text-brand-mint text-2xl mb-2 opacity-60"></i>
+            <p class="text-xs text-brand-textMuted font-tech tracking-wide">3조3.mp4 로드 대기 중</p>
           </div>
         </div>
 
-        <div class="card-body">
-          <div class="team-header">
-            <div class="team-identity">
-              <span class="team-badge">UNIT 03 · AI DIAGNOSTIC APP</span>
-              <span style="font-family:'Rajdhani'; font-size:12px; color:var(--amber-gold);">DOC: 3조.pdf</span>
+        <!-- Card Body -->
+        <div class="p-6 flex-grow flex flex-col justify-between">
+          <div>
+            <div class="flex items-baseline justify-between mb-2">
+              <h2 class="text-2xl font-serifTitle font-bold text-white tracking-wide">아프로디테</h2>
+              <span class="text-xs font-tech text-brand-cyan tracking-wider">APHRODITE ESTHETIC</span>
             </div>
-            <h2 class="team-name">아프로디테</h2>
-            <p class="team-desc">
-              AI 피부진단 앱 연동부터 정밀 맞춤 홈케어 솔루션
+            <p class="text-xs text-brand-cyan mb-4 font-tech tracking-wide uppercase">10-Step Clinical Care System</p>
+            <p class="text-xs sm:text-sm text-brand-textMuted leading-relaxed mb-5">
+              피부분석부터 AI진단, 클렌징, 고주파, 메뉴얼테크닉, 초음파 및 모델링 마스크로 이어지는 하이엔드 10단계 에스테틱 프로토콜을 정립했습니다.
             </p>
-          </div>
 
-          <div class="spec-grid">
-            <div class="spec-item">
-              <span class="spec-label">AI Engine</span>
-              <span class="spec-value neon">Gemini AI 종합진단</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">Zone Matrix</span>
-              <span class="spec-value">4대 부위 (이마·볼·코·턱)</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">Process</span>
-              <span class="spec-value">10단계 풀사이클 케어</span>
-            </div>
-            <div class="spec-item">
-              <span class="spec-label">Clinical Form</span>
-              <span class="spec-value" style="color:var(--neon-cyan);">관리차트 & 리포트</span>
+            <div class="space-y-2 mb-6">
+              <div class="flex items-center text-xs text-brand-textMain/90 bg-[#041c17] p-2.5 rounded-xl border border-brand-cardBorder/60">
+                <i class="fa-solid fa-list-check text-brand-mint w-5"></i>
+                <span class="font-medium">프로그램:</span>
+                <span class="ml-1.5 text-brand-textMuted">10단계 풀코스 에스테틱 & 홈케어 처방</span>
+              </div>
+              <div class="text-[11px] text-brand-textMuted bg-[#041c17] p-2.5 rounded-xl border border-brand-cardBorder/60">
+                <span class="text-brand-textMain font-medium">연구원:</span> 황수빈 · 김은서 · 서정화 · 정예지 · 김다솜
+              </div>
             </div>
           </div>
 
-          <div class="highlights-title">
-            <i class="fa-solid fa-laptop-medical"></i> Clinical Tech & Care
+          <div class="pt-2 flex items-center space-x-2">
+            <button onclick="openPdfModal('3조.pdf', '3조: 아프로디테 에스테틱 포트폴리오')" class="flex-1 py-3 px-4 rounded-xl bg-brand-borderLight/40 hover:bg-brand-mint hover:text-black border border-brand-mint/40 text-brand-textMain text-xs font-semibold tracking-wide transition flex items-center justify-center space-x-2 shadow-[0_0_12px_rgba(0,255,157,0.1)]">
+              <i class="fa-regular fa-eye"></i>
+              <span>포트폴리오 열람</span>
+            </button>
+            <a href="3조.pdf" target="_blank" class="p-3 rounded-xl bg-[#031d17] hover:border-brand-cyan border border-brand-cardBorder text-brand-cyan hover:text-white transition" title="새 탭에서 PDF 열기">
+              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+            </a>
           </div>
-          <ul class="highlight-list">
-            <li>
-              <i class="fa-solid fa-check"></i>
-              <span><strong>관리자/고객용 AI 앱:</strong> 3각 밸런스 다이어그램 및 리포트</span>
-            </li>
-            <li>
-              <i class="fa-solid fa-check"></i>
-              <span><strong>부위별 집중 처방:</strong> 이마 수분 개선 및 피지선 분비 기능 촉진</span>
-            </li>
-            <li>
-              <i class="fa-solid fa-check"></i>
-              <span><strong>초음파·고주파·모델링:</strong> 전 부위 정상 밸런스 회복 달성</span>
-            </li>
-          </ul>
-
-          <div class="member-box">
-            <div class="member-title">Research Specialists</div>
-            <div class="member-chips">
-              <span class="member-chip">황수빈(조장)</span>
-              <span class="member-chip">김은서</span>
-              <span class="member-chip">서정화</span>
-              <span class="member-chip">정예지</span>
-              <span class="member-chip">김다솜</span>
-            </div>
-          </div>
-
-          <a href="3조.pdf" target="_blank" class="pdf-action-btn" onclick="event.stopPropagation();">
-            <i class="fa-solid fa-file-pdf"></i>
-            <span>3조 포트폴리오 열람 (3조.pdf)</span>
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-          </a>
         </div>
-      </div>
+      </article>
 
     </div>
 
-    <!-- Footer -->
-    <footer>
-      <p class="hud-footer">LUMINARAE AESTHETIC RESEARCH LAB · CLINICAL PORTFOLIO PRESENTATION</p>
-      <p>© 2026 LUMINARAE Medical Esthetics Group. All rights reserved. 본 포트폴리오는 연구 및 실무 역량 발표용입니다.</p>
-    </footer>
-
-  </div>
-
-  <div class="pdf-modal" id="pdfModal">
-    <div class="modal-content">
-      <div class="modal-header">
-        <div class="modal-title">
-          <i class="fa-solid fa-file-pdf" style="color: var(--neon-mint);"></i>
-          <span id="modalDocTitle">PORTFOLIO DOCUMENT</span>
+    <!-- Quick File Access Directory -->
+    <section class="mt-14 glass-card rounded-2xl p-6 border border-brand-cardBorder/80">
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div>
+          <h3 class="font-serifTitle text-lg font-bold text-white flex items-center">
+            <i class="fa-solid fa-folder-open text-brand-mint mr-2.5"></i>
+            로컬 미디어 및 문서 연동 현황
+          </h3>
+          <p class="text-xs text-brand-textMuted mt-1">
+            동일 폴더 내 비디오 파일 (<span class="text-brand-cyan">1조1.mp4, 2조2.mp4, 3조3.mp4</span>) 및 문서 (<span class="text-brand-mint">1조.pdf, 2조.pdf, 3조.pdf</span>)가 자동 연동됩니다.
+          </p>
         </div>
-        <div style="display: flex; gap: 10px;">
-          <a id="modalExternalLink" href="#" target="_blank" class="modal-close-btn" style="text-decoration: none;">
-            <i class="fa-solid fa-up-right-from-square"></i> 새 창에서 열기
+        <div class="flex flex-wrap gap-2">
+          <a href="1조.pdf" download class="text-xs px-3 py-2 rounded-lg bg-[#021813] hover:bg-brand-mint hover:text-black border border-brand-cardBorder transition font-tech">
+            1조.pdf 다운로드
           </a>
-          <button class="modal-close-btn" onclick="closePdf()">
-            <i class="fa-solid fa-xmark"></i> 닫기
+          <a href="2조.pdf" download class="text-xs px-3 py-2 rounded-lg bg-[#021813] hover:bg-brand-mint hover:text-black border border-brand-cardBorder transition font-tech">
+            2조.pdf 다운로드
+          </a>
+          <a href="3조.pdf" download class="text-xs px-3 py-2 rounded-lg bg-[#021813] hover:bg-brand-mint hover:text-black border border-brand-cardBorder transition font-tech">
+            3조.pdf 다운로드
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <div id="pdfModal" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-3 sm:p-6" role="dialog" aria-modal="true">
+    <div class="relative w-full max-w-5xl h-[88vh] bg-[#021310] border border-brand-mint/40 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.9)] flex flex-col">
+      <!-- Modal Header -->
+      <div class="h-16 px-6 border-b border-brand-cardBorder/80 bg-[#031d17] flex items-center justify-between">
+        <div class="flex items-center space-x-3">
+          <span class="w-3 h-3 rounded-full bg-brand-mint animate-pulse"></span>
+          <h4 id="modalTitle" class="text-sm sm:text-base font-serifTitle font-bold text-white tracking-wide">포트폴리오 문서 뷰어</h4>
+        </div>
+        <div class="flex items-center space-x-2">
+          <a id="modalExternalLink" href="#" target="_blank" class="px-3 py-1.5 rounded-lg bg-[#042820] hover:bg-brand-mint hover:text-black border border-brand-mint/30 text-xs font-tech text-brand-mint transition">
+            <i class="fa-solid fa-up-right-from-square mr-1"></i>새 창 열기
+          </a>
+          <button onclick="closePdfModal()" class="w-8 h-8 rounded-lg bg-[#042820] hover:bg-red-500/80 text-white flex items-center justify-center transition">
+            <i class="fa-solid fa-xmark text-sm"></i>
           </button>
         </div>
       </div>
-      <div class="modal-iframe-wrap">
-        <iframe id="pdfIframe" class="modal-iframe" src=""></iframe>
+
+      <!-- Modal Body (Iframe) -->
+      <div class="flex-grow w-full h-full relative bg-[#010907]">
+        <iframe id="pdfFrame" src="" class="w-full h-full border-none" title="PDF Presentation Viewer"></iframe>
+        
+        <!-- Iframe Loading / Fallback Notice -->
+        <div id="iframeNotice" class="absolute inset-0 pointer-events-none flex flex-col items-center justify-center text-center p-6 bg-[#02100d] z-0 opacity-0 transition duration-300">
+          <i class="fa-regular fa-file-pdf text-brand-mint text-4xl mb-3"></i>
+          <p class="text-sm font-medium text-brand-textMain">문서를 불러오는 중이거나 브라우저 보안에 의해 미리보기가 제한될 수 있습니다.</p>
+          <p class="text-xs text-brand-textMuted mt-1 mb-4">직접 열람 버튼을 눌러 브라우저 전체 화면 또는 PDF 전용 앱으로 확인하세요.</p>
+          <a id="modalDirectBtn" href="#" target="_blank" class="pointer-events-auto px-5 py-2.5 rounded-xl bg-brand-mint text-black font-semibold text-xs tracking-wider uppercase transition">
+            PDF 파일 직접 열기
+          </a>
+        </div>
       </div>
     </div>
   </div>
 
-  <script>
-    function openPdf(url, title) {
-      const modal = document.getElementById('pdfModal');
-      const iframe = document.getElementById('pdfIframe');
-      const titleElem = document.getElementById('modalDocTitle');
-      const externalLink = document.getElementById('modalExternalLink');
+  <footer class="border-t border-brand-cardBorder/60 bg-[#020a08] py-8 text-center text-xs text-brand-textMuted">
+    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <div class="font-serifTitle tracking-widest text-white">LUMINARAE CLINICAL ESTHETIC RESEARCH</div>
+      <div>1조 루미아 · 2조 광채주의보 · 3조 아프로디테 포트폴리오 쇼케이스</div>
+      <div class="font-tech text-brand-mint">© 2026 HIGH-END DERMATOLOGY ACADEMY</div>
+    </div>
+  </footer>
 
-      titleElem.textContent = title;
-      iframe.src = url;
-      externalLink.href = url;
-      modal.classList.add('active');
+  <script>
+    // 자동 재생 시도 (브라우저 정책상 muted 상태에서만 autoplay 지원)
+    window.addEventListener('DOMContentLoaded', () => {
+      ['video-team1', 'video-team2', 'video-team3'].forEach(id => {
+        const vid = document.getElementById(id);
+        if (vid) {
+          vid.muted = true;
+          vid.play().catch(err => {
+            // 자동 재생 제한 시 대체 UI 또는 수동 플레이 대기
+            console.log(`Video autoplay deferred for ${id}:`, err);
+          });
+
+          // 비디오 에러 핸들링 (영상 파일이 동일 디렉토리에 없을 경우 대체 화면 제공)
+          vid.addEventListener('error', () => {
+            const fallback = document.getElementById('fallback-' + id.replace('video-', ''));
+            if (fallback) fallback.classList.remove('hidden');
+          });
+        }
+      });
+    });
+
+    // 비디오 재생/일시정지 토글 함수
+    function toggleVideoPlayback(videoId, buttonEl) {
+      const vid = document.getElementById(videoId);
+      if (!vid) return;
+
+      const icon = buttonEl.querySelector('i');
+      if (vid.paused) {
+        vid.play();
+        if (icon) icon.className = 'fa-solid fa-pause text-xs';
+      } else {
+        vid.pause();
+        if (icon) icon.className = 'fa-solid fa-play text-xs';
+      }
+    }
+
+    // 비디오 음소거 토글 함수
+    function toggleVideoMute(videoId, buttonEl) {
+      const vid = document.getElementById(videoId);
+      if (!vid) return;
+
+      const icon = buttonEl.querySelector('i');
+      vid.muted = !vid.muted;
+      if (vid.muted) {
+        if (icon) icon.className = 'fa-solid fa-volume-xmark text-xs';
+      } else {
+        if (icon) icon.className = 'fa-solid fa-volume-high text-xs text-brand-mint';
+      }
+    }
+
+    // PDF 모달 제어 함수
+    function openPdfModal(pdfUrl, title) {
+      const modal = document.getElementById('pdfModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const pdfFrame = document.getElementById('pdfFrame');
+      const modalExternalLink = document.getElementById('modalExternalLink');
+      const modalDirectBtn = document.getElementById('modalDirectBtn');
+      const iframeNotice = document.getElementById('iframeNotice');
+
+      modalTitle.textContent = title;
+      pdfFrame.src = pdfUrl;
+      modalExternalLink.href = pdfUrl;
+      modalDirectBtn.href = pdfUrl;
+
+      // 브라우저에 따라 로컬 iframe PDF 렌더링 지연 시 안내창 노출 타이머
+      iframeNotice.classList.add('opacity-0');
+      setTimeout(() => {
+        iframeNotice.classList.remove('opacity-0');
+      }, 2500);
+
+      modal.classList.remove('hidden');
       document.body.style.overflow = 'hidden';
     }
 
-    function closePdf() {
+    function closePdfModal() {
       const modal = document.getElementById('pdfModal');
-      const iframe = document.getElementById('pdfIframe');
-      modal.classList.remove('active');
-      iframe.src = '';
-      document.body.style.overflow = 'auto';
+      const pdfFrame = document.getElementById('pdfFrame');
+      pdfFrame.src = '';
+      modal.classList.add('hidden');
+      document.body.style.overflow = '';
     }
 
-    document.getElementById('pdfModal').addEventListener('click', function(e) {
-      if (e.target === this) {
-        closePdf();
-      }
+    // ESC 키로 모달 닫기
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closePdfModal();
     });
 
-    document.addEventListener('keydown', function(e) {
-      if (e.key === 'Escape') {
-        closePdf();
-      }
+    // 배경 클릭 시 모달 닫기
+    document.getElementById('pdfModal').addEventListener('click', (e) => {
+      if (e.target.id === 'pdfModal') closePdfModal();
     });
+
+    function openAllPdfsInfo() {
+      openPdfModal('1조.pdf', 'LUMINARAE 전체 포트폴리오 아카이브 (1조/2조/3조)');
+    }
   </script>
 </body>
 </html>
