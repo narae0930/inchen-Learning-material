@@ -1,0 +1,1676 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMINARAE · Advanced Skin Research Portfolio Hub</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide & FontAwesome Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Cinzel, Rajdhani, Pretendard -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Rajdhani:wght@500;600;700&family=Pretendard:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg-main: #020c0a;
+            --bg-secondary: #031512;
+            --border-emerald: #0f483e;
+            --border-emerald-light: #1b685a;
+            --neon-mint: #00ff9d;
+            --neon-cyan: #2cf5e2;
+            --amber-gold: #e6b349;
+            --text-main: #e3f7f2;
+            --text-sub: #7fa39b;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            background-image: 
+                radial-gradient(circle at 50% 0%, rgba(15, 72, 62, 0.45) 0%, transparent 60%),
+                radial-gradient(circle at 10% 40%, rgba(0, 255, 157, 0.05) 0%, transparent 45%),
+                radial-gradient(circle at 90% 80%, rgba(44, 245, 226, 0.05) 0%, transparent 45%),
+                linear-gradient(180deg, #020c0a 0%, #031512 100%);
+            color: var(--text-main);
+            font-family: 'Pretendard', system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .font-rajdhani { font-family: 'Rajdhani', sans-serif; }
+
+        /* LUMINARAE 시그니처 글래스모피즘 카드 */
+        .luminarae-card {
+            background: linear-gradient(135deg, rgba(8, 45, 39, 0.85), rgba(3, 20, 17, 0.95));
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-emerald);
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.7), inset 0 0 20px rgba(0, 255, 157, 0.03);
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .luminarae-card:hover {
+            border-color: var(--neon-mint);
+            box-shadow: 0 0 25px rgba(0, 255, 157, 0.2), inset 0 0 15px rgba(44, 245, 226, 0.08);
+            transform: translateY(-4px);
+        }
+
+        /* 탭 액티브 스타일 */
+        .tab-btn-active {
+            background: #00ff9d !important;
+            color: #020c0a !important;
+            box-shadow: 0 0 18px rgba(0, 255, 157, 0.4) !important;
+        }
+
+        /* 커스텀 스크롤바 */
+        ::-webkit-scrollbar { width: 7px; height: 7px; }
+        ::-webkit-scrollbar-track { background: #020c0a; }
+        ::-webkit-scrollbar-thumb {
+            background: #0f483e;
+            border-radius: 9999px;
+            border: 1px solid #1b685a;
+        }
+        ::-webkit-scrollbar-thumb:hover { background: #00ff9d; }
+
+        .spinner {
+            border: 3px solid rgba(0, 255, 157, 0.15);
+            border-top: 3px solid var(--neon-mint);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            animation: spin 0.8s linear infinite;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <header class="border-b border-[#0f483e]/60 bg-[#020c0a]/90 backdrop-blur-md sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-12 flex items-center justify-between text-xs font-rajdhani">
+            <div class="flex items-center space-x-3 text-[#7fa39b]">
+                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full bg-[#00ff9d]/10 border border-[#00ff9d]/40 text-[#00ff9d] text-[11px] font-bold tracking-wider">
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#00ff9d] animate-ping mr-1.5"></span>
+                    SYSTEM ONLINE
+                </span>
+                <span class="hidden sm:inline tracking-wider">LAB ID: LMNR-2026-AI</span>
+                <span class="text-[#0f483e]">|</span>
+                <span class="hidden md:inline tracking-wide text-[#7fa39b]">DIRECT SANDBOX ENGINE: ACTIVE</span>
+            </div>
+            
+            <div class="flex items-center space-x-3">
+                <span class="text-[#7fa39b] font-medium hidden sm:inline">COHORTS: <strong class="text-[#e3f7f2]">1조 · 2조 · 3조</strong></span>
+                <a href="#live-desk-section" class="px-3 py-1.5 rounded-lg bg-[#082d27] border border-[#00ff9d]/50 text-[#00ff9d] hover:bg-[#00ff9d] hover:text-[#020c0a] tracking-wider uppercase font-bold text-[11px] flex items-center gap-1.5 transition">
+                    <i data-lucide="play" class="w-3.5 h-3.5 fill-current"></i>
+                    <span>실시간 샌드박스로 이동</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <section class="relative pt-12 pb-10 px-4 sm:px-6 lg:px-8 text-center overflow-hidden">
+        <div class="max-w-4xl mx-auto relative z-10">
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#082d27]/70 border border-[#1b685a] text-[#2cf5e2] text-xs font-rajdhani font-bold tracking-widest uppercase mb-4 shadow-sm">
+                <i data-lucide="dna" class="w-4 h-4 text-[#00ff9d]"></i>
+                Next-Gen Dermatology & Aesthetic Portfolio
+            </div>
+
+            <h1 class="font-cinzel text-4xl sm:text-5xl lg:text-6xl font-black tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-[#e3f7f2] via-[#2cf5e2] to-[#00ff9d] drop-shadow-[0_0_25px_rgba(0,255,157,0.35)]">
+                LUMINARAE
+            </h1>
+
+            <p class="font-rajdhani text-lg sm:text-xl font-semibold tracking-[0.25em] text-[#e6b349] uppercase mt-2">
+                CLINICAL SKIN INTELLIGENCE SUITE
+            </p>
+
+            <p class="mt-4 text-sm sm:text-base text-[#7fa39b] max-w-2xl mx-auto leading-relaxed">
+                아이들이 직접 기획하고 구현한 3개의 프리미엄 AI 피부 분석 시스템 포트폴리오입니다.<br class="hidden sm:inline">
+                <strong>원하는 배너를 클릭</strong>하면 하단 실시간 샌드박스에서 해당 팀의 원본 시스템이 즉시 실행됩니다.
+            </p>
+
+            <div class="mt-6 flex flex-wrap items-center justify-center gap-3 text-xs text-[#7fa39b]">
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#031512] border border-[#0f483e]">
+                    <span class="w-2 h-2 rounded-full bg-[#00ff9d]"></span> AI 측정 알고리즘
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#031512] border border-[#0f483e]">
+                    <span class="w-2 h-2 rounded-full bg-[#2cf5e2]"></span> 4·5대 부위 다이어그램
+                </span>
+                <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-[#031512] border border-[#e6b349]">
+                    <span class="w-2 h-2 rounded-full bg-[#e6b349]"></span> 메디컬 CRM & 리포트
+                </span>
+            </div>
+        </div>
+    </section>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16 flex-grow w-full">
+        
+        <div class="flex items-center justify-between mb-8 border-b border-[#0f483e] pb-4">
+            <div>
+                <span class="font-rajdhani text-xs font-bold text-[#00ff9d] tracking-widest uppercase">RESEARCH COHORTS</span>
+                <h2 class="font-cinzel text-xl sm:text-2xl font-bold text-[#e3f7f2]">세 가지 AI 피부 분석 프로젝트 배너</h2>
+            </div>
+            <span class="text-xs text-[#7fa39b] font-rajdhani font-semibold">배너 클릭 시 즉시 실행</span>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+            <!-- ================= BANNER 1: 1조 루미아 (LUMEA) ================= -->
+            <article class="luminarae-card rounded-3xl p-7 flex flex-col justify-between group cursor-pointer hover:border-[#00ff9d]" onclick="triggerProjectRun('lumea')">
+                <div>
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="px-3 py-1 rounded-full bg-[#00ff9d]/10 border border-[#00ff9d]/30 text-[#00ff9d] font-rajdhani text-xs font-bold tracking-wider">
+                            PROJECT 01 · 1조
+                        </span>
+                        <div class="w-10 h-10 rounded-2xl bg-[#0f483e]/50 border border-[#1b685a] flex items-center justify-center text-[#2cf5e2] group-hover:border-[#00ff9d] transition shadow-inner">
+                            <i data-lucide="sparkles" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h3 class="font-cinzel text-2xl font-bold text-[#e3f7f2] group-hover:text-[#00ff9d] transition">
+                            LUMEA
+                        </h3>
+                        <p class="font-rajdhani text-xs font-bold text-[#2cf5e2] tracking-wider uppercase mt-0.5">
+                            Aesthetic Skin Care & AI Prescription
+                        </p>
+                    </div>
+
+                    <p class="text-xs text-[#7fa39b] leading-relaxed mb-6">
+                        이마, 코, 양 볼, 턱 부위의 정밀 피부 상태를 레이더 다이어그램으로 시각화하고, 얼굴 7단계 및 바디관리, Before & After 분석, PDF 다운로드까지 지원하는 토탈 에스테틱 솔루션입니다.
+                    </p>
+
+                    <div class="space-y-2 mb-6 text-xs">
+                        <div class="flex items-center gap-2 p-2 rounded-xl bg-[#020c0a]/60 border border-[#0f483e]/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-[#00ff9d]"></i>
+                            <span class="text-[#e3f7f2]">얼굴 부위별 AI 밸런스 레이더 차트</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-2 rounded-xl bg-[#020c0a]/60 border border-[#0f483e]/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-[#2cf5e2]"></i>
+                            <span class="text-[#e3f7f2]">얼굴 7단계 & 바디관리 프로세스</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-2 rounded-xl bg-[#020c0a]/60 border border-[#0f483e]/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-[#e6b349]"></i>
+                            <span class="text-[#e3f7f2]">Before & After 측정 및 PDF 출력</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-[#0f483e]/80 space-y-2.5">
+                    <button onclick="event.stopPropagation(); triggerProjectRun('lumea')" class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#00ff9d] to-[#2cf5e2] text-[#020c0a] font-rajdhani font-bold text-sm tracking-wider hover:opacity-95 shadow-[0_0_20px_rgba(0,255,157,0.35)] flex items-center justify-center gap-2 transition transform active:scale-[0.98]">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        <span>1조 시스템 즉시 실행</span>
+                    </button>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="event.stopPropagation(); openModalViewer('lumea')" class="py-2.5 px-3 rounded-xl bg-[#031512] hover:bg-[#082d27] border border-[#1b685a] text-[#7fa39b] hover:text-[#e3f7f2] font-rajdhani text-xs font-semibold flex items-center justify-center gap-1.5 transition text-center">
+                            <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                            <span>풀스크린 뷰</span>
+                        </button>
+                        <button onclick="event.stopPropagation(); showProjectSpec('lumea')" class="py-2.5 px-3 rounded-xl bg-[#031512] hover:bg-[#082d27] border border-[#1b685a] text-[#7fa39b] hover:text-[#e3f7f2] font-rajdhani text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+                            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                            <span>기획 명세서</span>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ================= BANNER 2: 2조 광채주의보 (GWANGCHAE) ================= -->
+            <article class="luminarae-card rounded-3xl p-7 flex flex-col justify-between group border-[#1b685a] cursor-pointer hover:border-[#2cf5e2]" onclick="triggerProjectRun('gwangchae')">
+                <div>
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="px-3 py-1 rounded-full bg-[#2cf5e2]/10 border border-[#2cf5e2]/40 text-[#2cf5e2] font-rajdhani text-xs font-bold tracking-wider">
+                            PROJECT 02 · 2조
+                        </span>
+                        <div class="w-10 h-10 rounded-2xl bg-[#0f483e]/50 border border-[#1b685a] flex items-center justify-center text-[#00ff9d] group-hover:border-[#2cf5e2] transition shadow-inner">
+                            <i data-lucide="scan-face" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h3 class="font-cinzel text-2xl font-bold text-[#e3f7f2] group-hover:text-[#2cf5e2] transition">
+                            광채주의보
+                        </h3>
+                        <p class="font-rajdhani text-xs font-bold text-[#00ff9d] tracking-wider uppercase mt-0.5">
+                            GWANGCHAE AI Skin Analysis & CRM
+                        </p>
+                    </div>
+
+                    <p class="text-xs text-[#7fa39b] leading-relaxed mb-6">
+                        실시간 사진 스캔 및 4대 지표(수분, 탄력, 유분, 종합점수)를 정밀 측정하고, 수부지·건성·지성 자동 분류와 누적 고객 이력 시계열 그래프를 제공하는 클리닉 관리 시스템입니다.
+                    </p>
+
+                    <div class="space-y-2 mb-6 text-xs">
+                        <div class="flex items-center gap-2 p-2 rounded-xl bg-[#020c0a]/60 border border-[#0f483e]/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-[#2cf5e2]"></i>
+                            <span class="text-[#e3f7f2]">원형 게이지 스킨 헬스 스코어링</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-2 rounded-xl bg-[#020c0a]/60 border border-[#0f483e]/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-[#00ff9d]"></i>
+                            <span class="text-[#e3f7f2]">캔버스 픽셀 색조·조도 AI 분석</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-2 rounded-xl bg-[#020c0a]/60 border border-[#0f483e]/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-[#e6b349]"></i>
+                            <span class="text-[#e3f7f2]">다회차 누적 피부 변화 추적 그래프</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-[#0f483e]/80 space-y-2.5">
+                    <button onclick="event.stopPropagation(); triggerProjectRun('gwangchae')" class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#2cf5e2] to-[#00ff9d] text-[#020c0a] font-rajdhani font-bold text-sm tracking-wider hover:opacity-95 shadow-[0_0_20px_rgba(44,245,226,0.35)] flex items-center justify-center gap-2 transition transform active:scale-[0.98]">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        <span>2조 시스템 즉시 실행</span>
+                    </button>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="event.stopPropagation(); openModalViewer('gwangchae')" class="py-2.5 px-3 rounded-xl bg-[#031512] hover:bg-[#082d27] border border-[#1b685a] text-[#7fa39b] hover:text-[#e3f7f2] font-rajdhani text-xs font-semibold flex items-center justify-center gap-1.5 transition text-center">
+                            <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                            <span>풀스크린 뷰</span>
+                        </button>
+                        <button onclick="event.stopPropagation(); showProjectSpec('gwangchae')" class="py-2.5 px-3 rounded-xl bg-[#031512] hover:bg-[#082d27] border border-[#1b685a] text-[#7fa39b] hover:text-[#e3f7f2] font-rajdhani text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+                            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                            <span>기획 명세서</span>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+            <!-- ================= BANNER 3: 3조 아프로디테 (APHRODITE) ================= -->
+            <article class="luminarae-card rounded-3xl p-7 flex flex-col justify-between group border-[#1b685a] cursor-pointer hover:border-[#e6b349]" onclick="triggerProjectRun('aphrodite')">
+                <div>
+                    <div class="flex items-center justify-between mb-5">
+                        <span class="px-3 py-1 rounded-full bg-[#e6b349]/15 border border-[#e6b349]/40 text-[#e6b349] font-rajdhani text-xs font-bold tracking-wider">
+                            PROJECT 03 · 3조
+                        </span>
+                        <div class="w-10 h-10 rounded-2xl bg-[#0f483e]/50 border border-[#1b685a] flex items-center justify-center text-[#e6b349] group-hover:border-[#e6b349] transition shadow-inner">
+                            <i data-lucide="crown" class="w-5 h-5"></i>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <h3 class="font-cinzel text-2xl font-bold text-[#e3f7f2] group-hover:text-[#e6b349] transition">
+                            APHRODITE
+                        </h3>
+                        <p class="font-rajdhani text-xs font-bold text-[#e6b349] tracking-wider uppercase mt-0.5">
+                            Luxury Skin Clinical Triangle System
+                        </p>
+                    </div>
+
+                    <p class="text-xs text-[#7fa39b] leading-relaxed mb-6">
+                        수분 적정성, 탄력도, 유분 적정성을 3대 꼭지점으로 삼는 고유의 삼각형 다이어그램과 Gemini AI를 연동하여 VIP 맞춤 처방 및 프리미엄 서식 리포트를 생성하는 하이엔드 시스템입니다.
+                    </p>
+
+                    <div class="space-y-2 mb-6 text-xs">
+                        <div class="flex items-center gap-2 p-2 rounded-xl bg-[#020c0a]/60 border border-[#0f483e]/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-[#e6b349]"></i>
+                            <span class="text-[#e3f7f2]">특허형 삼각형 피부분석 다이어그램</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-2 rounded-xl bg-[#020c0a]/60 border border-[#0f483e]/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-[#00ff9d]"></i>
+                            <span class="text-[#e3f7f2]">4대 부위 초정밀 확대 사진 업로드</span>
+                        </div>
+                        <div class="flex items-center gap-2 p-2 rounded-xl bg-[#020c0a]/60 border border-[#0f483e]/70">
+                            <i data-lucide="check-circle-2" class="w-4 h-4 text-[#2cf5e2]"></i>
+                            <span class="text-[#e3f7f2]">Gemini AI 맞춤 홈케어·시그니처 코스</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 border-t border-[#0f483e]/80 space-y-2.5">
+                    <button onclick="event.stopPropagation(); triggerProjectRun('aphrodite')" class="w-full py-3 px-4 rounded-2xl bg-gradient-to-r from-[#e6b349] via-[#00ff9d] to-[#2cf5e2] text-[#020c0a] font-rajdhani font-bold text-sm tracking-wider hover:opacity-95 shadow-[0_0_20px_rgba(230,179,73,0.35)] flex items-center justify-center gap-2 transition transform active:scale-[0.98]">
+                        <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+                        <span>3조 시스템 즉시 실행</span>
+                    </button>
+                    <div class="grid grid-cols-2 gap-2">
+                        <button onclick="event.stopPropagation(); openModalViewer('aphrodite')" class="py-2.5 px-3 rounded-xl bg-[#031512] hover:bg-[#082d27] border border-[#1b685a] text-[#7fa39b] hover:text-[#e3f7f2] font-rajdhani text-xs font-semibold flex items-center justify-center gap-1.5 transition text-center">
+                            <i data-lucide="maximize-2" class="w-3.5 h-3.5"></i>
+                            <span>풀스크린 뷰</span>
+                        </button>
+                        <button onclick="event.stopPropagation(); showProjectSpec('aphrodite')" class="py-2.5 px-3 rounded-xl bg-[#031512] hover:bg-[#082d27] border border-[#1b685a] text-[#7fa39b] hover:text-[#e3f7f2] font-rajdhani text-xs font-semibold flex items-center justify-center gap-1.5 transition">
+                            <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
+                            <span>기획 명세서</span>
+                        </button>
+                    </div>
+                </div>
+            </article>
+
+        </div>
+
+        <!-- ================= LIVE INTERACTIVE SANDBOX DESK ================= -->
+        <section id="live-desk-section" class="mt-14 luminarae-card rounded-3xl p-6 sm:p-8 border-[#1b685a]">
+            <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 border-b border-[#0f483e] pb-5">
+                <div>
+                    <div class="flex items-center gap-2 text-[#00ff9d] text-xs font-rajdhani font-bold tracking-widest uppercase mb-1">
+                        <i data-lucide="activity" class="w-4 h-4"></i>
+                        LIVE INTERACTIVE SIMULATION DESK
+                    </div>
+                    <h3 class="font-cinzel text-xl sm:text-2xl font-bold text-[#e3f7f2] flex items-center gap-2">
+                        <span>실시간 통합 인터랙티브 샌드박스</span>
+                        <span id="currentDeskBadge" class="text-xs px-2.5 py-0.5 rounded-full bg-[#00ff9d]/20 text-[#00ff9d] font-rajdhani font-bold border border-[#00ff9d]/40">1조 LUMEA 구동 중</span>
+                    </h3>
+                    <p class="text-xs text-[#7fa39b] mt-1 max-w-2xl leading-relaxed">
+                        화면 이동 없이 원본 코드가 인라인 샌드박스 안에서 즉각 구동됩니다. 상단 배너를 누르거나 탭을 클릭해 바로 전환하세요.
+                    </p>
+                </div>
+
+                <div class="flex flex-wrap items-center gap-2 bg-[#020c0a] p-1.5 rounded-2xl border border-[#0f483e]">
+                    <button onclick="loadDeskProject('lumea')" id="desk-tab-lumea" class="px-4 py-2 rounded-xl text-xs font-rajdhani font-bold transition flex items-center gap-1.5 tab-btn-active">
+                        <span class="w-2 h-2 rounded-full bg-[#020c0a]"></span>
+                        <span>1조 LUMEA</span>
+                    </button>
+                    <button onclick="loadDeskProject('gwangchae')" id="desk-tab-gwangchae" class="px-4 py-2 rounded-xl text-xs font-rajdhani font-bold transition flex items-center gap-1.5 text-[#7fa39b] hover:text-[#e3f7f2]">
+                        <span class="w-2 h-2 rounded-full bg-[#2cf5e2]"></span>
+                        <span>2조 광채주의보</span>
+                    </button>
+                    <button onclick="loadDeskProject('aphrodite')" id="desk-tab-aphrodite" class="px-4 py-2 rounded-xl text-xs font-rajdhani font-bold transition flex items-center gap-1.5 text-[#7fa39b] hover:text-[#e3f7f2]">
+                        <span class="w-2 h-2 rounded-full bg-[#e6b349]"></span>
+                        <span>3조 아프로디테</span>
+                    </button>
+                    <button onclick="openModalViewer(currentActiveKey)" class="p-2 rounded-xl bg-[#082d27] border border-[#1b685a] text-[#00ff9d] hover:text-white transition" title="풀스크린 모달로 확대">
+                        <i data-lucide="maximize-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- iframe Container -->
+            <div class="mt-6 relative w-full h-[880px] rounded-2xl overflow-hidden border border-[#0f483e] bg-white shadow-2xl">
+                <iframe id="deskIframe" class="w-full h-full border-0 bg-white" title="LUMINARAE Interactive Preview Desk"></iframe>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Fullscreen Modal Viewer -->
+    <div id="liveViewerModal" class="fixed inset-0 z-50 bg-[#020c0a]/95 backdrop-blur-xl hidden flex flex-col">
+        <div class="h-14 border-b border-[#0f483e] bg-[#031512] px-4 sm:px-6 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <span class="w-3 h-3 rounded-full bg-[#00ff9d] animate-pulse"></span>
+                <span class="font-cinzel font-bold text-sm text-[#e3f7f2]">LUMINARAE FULLSCREEN VIEWER</span>
+                <span class="text-[#0f483e]">|</span>
+                <span id="modalViewerTitle" class="font-rajdhani font-bold text-xs text-[#2cf5e2] uppercase">1조 LUMEA</span>
+            </div>
+
+            <div class="hidden sm:flex items-center space-x-1.5 bg-[#020c0a] p-1 rounded-xl border border-[#0f483e]">
+                <button onclick="switchModalProject('lumea')" id="modal-tab-lumea" class="px-3 py-1 rounded-lg text-xs font-rajdhani font-bold bg-[#00ff9d] text-[#020c0a] shadow-sm transition">
+                    1조 LUMEA
+                </button>
+                <button onclick="switchModalProject('gwangchae')" id="modal-tab-gwangchae" class="px-3 py-1 rounded-lg text-xs font-rajdhani font-bold text-[#7fa39b] hover:text-[#e3f7f2] transition">
+                    2조 광채주의보
+                </button>
+                <button onclick="switchModalProject('aphrodite')" id="modal-tab-aphrodite" class="px-3 py-1 rounded-lg text-xs font-rajdhani font-bold text-[#7fa39b] hover:text-[#e3f7f2] transition">
+                    3조 아프로디테
+                </button>
+            </div>
+
+            <div class="flex items-center space-x-2">
+                <a id="modalDirectLink" href="루미아 (1조)_2.html" target="_blank" class="px-3 py-1.5 rounded-lg bg-[#0f483e] hover:bg-[#1b685a] text-[#00ff9d] text-xs font-bold transition flex items-center gap-1">
+                    <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+                    <span>원본 파일 새 탭 열기</span>
+                </a>
+                <button onclick="closeModalViewer()" class="p-2 rounded-lg bg-[#082d27] border border-[#1b685a] text-[#e3f7f2] hover:text-[#00ff9d] text-xs font-bold transition">
+                    <i data-lucide="x" class="w-4 h-4"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex-grow w-full relative bg-white">
+            <iframe id="modalIframe" class="w-full h-full border-0 bg-white" title="Project Fullscreen Sandbox View"></iframe>
+        </div>
+    </div>
+
+    <!-- Technical Specification Modal -->
+    <div id="specModal" class="fixed inset-0 z-50 bg-[#020c0a]/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="luminarae-card rounded-3xl max-w-2xl w-full p-6 sm:p-8 border-[#1b685a] shadow-2xl relative">
+            <button onclick="closeSpecModal()" class="absolute top-6 right-6 text-[#7fa39b] hover:text-[#e3f7f2]">
+                <i data-lucide="x" class="w-5 h-5"></i>
+            </button>
+
+            <div class="flex items-center gap-2 text-[#00ff9d] text-xs font-rajdhani font-bold tracking-widest uppercase mb-1">
+                <i data-lucide="clipboard-list" class="w-4 h-4"></i>
+                TECHNICAL SPECIFICATION
+            </div>
+            <h3 id="specTitle" class="font-cinzel text-2xl font-bold text-[#e3f7f2] mb-3">-</h3>
+            <p id="specDesc" class="text-xs text-[#7fa39b] leading-relaxed mb-6">-</p>
+
+            <div class="space-y-4 text-xs">
+                <div class="p-4 rounded-2xl bg-[#020c0a]/80 border border-[#0f483e]">
+                    <span class="text-[#00ff9d] font-bold block mb-1">■ 아키텍처 및 사용 기술</span>
+                    <p id="specTech" class="text-[#e3f7f2] leading-relaxed">-</p>
+                </div>
+                <div class="p-4 rounded-2xl bg-[#020c0a]/80 border border-[#0f483e]">
+                    <span class="text-[#2cf5e2] font-bold block mb-1">■ 핵심 차별화 기능</span>
+                    <p id="specFeatures" class="text-[#e3f7f2] leading-relaxed">-</p>
+                </div>
+            </div>
+
+            <div class="mt-6 flex justify-end">
+                <button onclick="closeSpecModal()" class="px-5 py-2.5 rounded-xl bg-[#082d27] border border-[#1b685a] text-[#e3f7f2] font-rajdhani font-bold text-xs hover:border-[#00ff9d] transition">
+                    닫기
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="border-t border-[#0f483e] bg-[#020c0a] py-8 text-center text-xs text-[#7fa39b]">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row justify-between items-center gap-4 font-rajdhani">
+            <div class="flex items-center space-x-2">
+                <span class="font-cinzel font-bold text-sm text-[#e3f7f2]">LUMINARAE</span>
+                <span>© 2026 AI Skin Research Laboratory. All rights reserved.</span>
+            </div>
+            <div class="flex items-center space-x-6 text-[#7fa39b]">
+                <span>COHORT PORTFOLIO SYSTEM</span>
+                <span class="text-[#00ff9d]">HIGH-END CLINICAL DESIGN</span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- [SOURCE 1: LUMEA (1조)] -->
+    <template id="tpl-lumea"><!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LUMEA - AI Skin Care & Analysis System</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,500;0,600;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        lumea: {
+                            bg: '#FAF8F5', card: '#FFFFFF', beige: '#F3EDE2', beigeDark: '#E4D8C8',
+                            gold: '#C5A073', leaf: '#506855', leafLight: '#8FA393', leafSoft: '#EBF0EC',
+                            text: '#2D3436', muted: '#718093'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Noto Sans KR"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #FAF8F5; color: #2D3436; font-family: 'Noto Sans KR', sans-serif;
+            background-image: radial-gradient(#8FA393 0.5px, transparent 0.5px), radial-gradient(#8FA393 0.5px, #FAF8F5 0.5px);
+            background-size: 20px 20px; background-position: 0 0, 10px 10px;
+        }
+        .serif-title { font-family: 'Playfair Display', serif; }
+        .lumea-card {
+            background: rgba(255, 255, 255, 0.95); backdrop-filter: blur(10px);
+            border: 1px solid rgba(228, 216, 200, 0.6); box-shadow: 0 10px 30px -5px rgba(80, 104, 85, 0.05);
+        }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #F3EDE2; }
+        ::-webkit-scrollbar-thumb { background: #8FA393; border-radius: 4px; }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white !important; }
+            .print-container { box-shadow: none !important; border: none !important; width: 100% !important; padding: 0 !important; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between">
+    <header class="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-lumea-beigeDark shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('customer-list')">
+                <div class="w-11 h-11 rounded-full bg-lumea-beige flex items-center justify-center border border-lumea-gold shadow-inner">
+                    <i class="fa-solid font-serif text-lumea-leaf text-xl">🌿</i>
+                </div>
+                <div>
+                    <h1 class="serif-title text-2xl font-bold tracking-wider text-lumea-leaf">LUMEA</h1>
+                    <p class="text-[10px] text-lumea-gold tracking-widest uppercase font-medium">Aesthetic Skin AI Clinic</p>
+                </div>
+            </div>
+
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 no-print">
+                <button onclick="switchTab('customer-list')" id="nav-customer-list" class="nav-btn px-4 py-2.5 rounded-full text-sm font-medium transition-all flex items-center space-x-2 bg-lumea-leaf text-white shadow-sm">
+                    <i class="fa-solid fa-users"></i><span>고객 차트 관리</span>
+                </button>
+                <button onclick="switchTab('skin-analysis')" id="nav-skin-analysis" class="nav-btn px-4 py-2.5 rounded-full text-sm font-medium text-lumea-muted hover:text-lumea-leaf hover:bg-lumea-beige transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-microscope"></i><span>피부 진단 & 측정</span>
+                </button>
+                <button onclick="switchTab('care-process')" id="nav-care-process" class="nav-btn px-4 py-2.5 rounded-full text-sm font-medium text-lumea-muted hover:text-lumea-leaf hover:bg-lumea-beige transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-spa"></i><span>관리과정</span>
+                </button>
+                <button onclick="switchTab('report-view')" id="nav-report-view" class="nav-btn px-4 py-2.5 rounded-full text-sm font-medium text-lumea-muted hover:text-lumea-leaf hover:bg-lumea-beige transition-all flex items-center space-x-2">
+                    <i class="fa-solid fa-file-invoice"></i><span>최종 리포트 (PDF)</span>
+                </button>
+                <button onclick="switchTab('ai-consult')" id="nav-ai-consult" class="nav-btn px-4 py-2.5 rounded-full text-sm font-medium text-lumea-muted hover:text-lumea-leaf hover:bg-lumea-beige transition-all flex items-center space-x-2 relative">
+                    <i class="fa-solid fa-robot text-lumea-gold"></i><span>AI 실시간 피부 상담</span>
+                </button>
+            </nav>
+
+            <div class="flex items-center space-x-3">
+                <div id="active-customer-badge" class="hidden md:flex items-center bg-lumea-leafSoft border border-lumea-leafLight text-lumea-leaf text-xs font-semibold px-3 py-1.5 rounded-full">
+                    <i class="fa-solid fa-user-check mr-1.5"></i>
+                    <span id="active-customer-name">선택된 고객 없음</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="md:hidden flex justify-around border-t border-lumea-beige bg-white py-2 text-xs no-print">
+            <button onclick="switchTab('customer-list')" class="flex flex-col items-center text-lumea-leaf"><i class="fa-solid fa-users text-lg"></i><span class="text-[10px] mt-1">고객차트</span></button>
+            <button onclick="switchTab('skin-analysis')" class="flex flex-col items-center text-lumea-muted"><i class="fa-solid fa-microscope text-lg"></i><span class="text-[10px] mt-1">피부진단</span></button>
+            <button onclick="switchTab('care-process')" class="flex flex-col items-center text-lumea-muted"><i class="fa-solid fa-spa text-lg"></i><span class="text-[10px] mt-1">관리과정</span></button>
+            <button onclick="switchTab('report-view')" class="flex flex-col items-center text-lumea-muted"><i class="fa-solid fa-file-lines text-lg"></i><span class="text-[10px] mt-1">최종리포트</span></button>
+            <button onclick="switchTab('ai-consult')" class="flex flex-col items-center text-lumea-muted"><i class="fa-solid fa-comments text-lg"></i><span class="text-[10px] mt-1">AI상담</span></button>
+        </div>
+    </header>
+
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
+        <!-- PAGE 1: CUSTOMER LIST -->
+        <section id="page-customer-list" class="space-y-6">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-lumea-beigeDark pb-4">
+                <div>
+                    <h2 class="text-2xl font-bold text-lumea-leaf flex items-center">
+                        <i class="fa-solid fa-clipboard-user mr-2 text-lumea-gold"></i> 고객 차트 및 정보 관리
+                    </h2>
+                    <p class="text-sm text-lumea-muted mt-1">방문 고객 정보를 등록하고 과거 피부 분석 이력을 확인하세요.</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
+                <div class="md:col-span-2 relative">
+                    <i class="fa-solid fa-magnifying-glass absolute left-4 top-3.5 text-lumea-muted"></i>
+                    <input type="text" id="customer-search-input" oninput="filterCustomers()" placeholder="고객 이름, 전화번호 검색..." class="w-full pl-11 pr-4 py-3 bg-white border border-lumea-beigeDark rounded-xl text-sm">
+                </div>
+                <div class="lumea-card p-3 rounded-xl flex items-center justify-between px-4">
+                    <div><p class="text-xs text-lumea-muted">총 관리 고객수</p><p id="stat-total-customers" class="text-xl font-bold text-lumea-leaf">2명</p></div>
+                    <div class="w-10 h-10 rounded-full bg-lumea-beige flex items-center justify-center text-lumea-leaf"><i class="fa-solid fa-user-group"></i></div>
+                </div>
+                <div class="lumea-card p-3 rounded-xl flex items-center justify-between px-4">
+                    <div><p class="text-xs text-lumea-muted">금일 피부 측정 진행</p><p id="stat-today-analyzed" class="text-xl font-bold text-lumea-gold">2건</p></div>
+                    <div class="w-10 h-10 rounded-full bg-lumea-leafSoft flex items-center justify-center text-lumea-leaf"><i class="fa-solid fa-chart-line"></i></div>
+                </div>
+            </div>
+
+            <div id="customer-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+        </section>
+
+        <!-- PAGE 2: SKIN ANALYSIS -->
+        <section id="page-skin-analysis" class="hidden space-y-6">
+            <div class="border-b border-lumea-beigeDark pb-4 flex flex-col md:flex-row justify-between items-start md:items-center gap-2">
+                <div>
+                    <h2 class="text-2xl font-bold text-lumea-leaf flex items-center">
+                        <i class="fa-solid fa-atom mr-2 text-lumea-gold"></i> AI 피부분석기 데이터 입력 & 부위별 측정
+                    </h2>
+                    <p class="text-sm text-lumea-muted mt-1">이마, 코, 볼, 턱 부위를 선택하고 수치를 조절하세요.</p>
+                </div>
+                <div id="analysis-customer-info" class="text-sm font-semibold text-lumea-leaf bg-lumea-beige px-4 py-2 rounded-lg border border-lumea-beigeDark">
+                    선택된 고객: <span id="current-analyzing-customer-name" class="text-lumea-gold font-bold">이지은 고객님</span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+                <div class="lg:col-span-12 space-y-6">
+                    <div class="lumea-card p-6 rounded-2xl">
+                        <div class="grid grid-cols-1 lg:grid-cols-[0.95fr_1.05fr] gap-6 items-stretch">
+                            <!-- Face SVG Character -->
+                            <div class="bg-lumea-bg rounded-2xl border border-lumea-beige p-5">
+                                <div class="mb-4">
+                                    <p class="text-sm font-bold text-lumea-leaf">얼굴 부위를 직접 선택하세요</p>
+                                    <p class="text-[10px] text-lumea-muted mt-1">이마 · 코 · 볼 · 턱을 클릭하면 해당 부위 수치가 변경됩니다.</p>
+                                </div>
+                                <div class="relative max-w-[340px] mx-auto select-none">
+                                    <svg viewBox="0 0 320 390" class="w-full h-auto">
+                                        <path d="M72 116 C77 35,242 26,252 118 C228 86,205 70,160 68 C115 68,89 87,72 116Z" fill="#506855" opacity="0.92"/>
+                                        <path d="M132 316 L132 362 Q160 380 188 362 L188 316Z" fill="#E8C7AE"/>
+                                        <path d="M82 118 Q91 69 160 65 Q229 69 238 118 L231 235 Q222 305 160 335 Q98 305 89 235Z" fill="#F2D6C2" stroke="#C5A073" stroke-width="3"/>
+                                        <ellipse cx="84" cy="200" rx="15" ry="28" fill="#F2D6C2" stroke="#C5A073" stroke-width="2"/>
+                                        <ellipse cx="236" cy="200" rx="15" ry="28" fill="#F2D6C2" stroke="#C5A073" stroke-width="2"/>
+                                        <path d="M109 159 Q130 148 146 159" fill="none" stroke="#66564B" stroke-width="4" stroke-linecap="round"/>
+                                        <path d="M174 159 Q192 148 211 159" fill="none" stroke="#66564B" stroke-width="4" stroke-linecap="round"/>
+                                        <path d="M160 183 Q150 221 160 233 Q168 237 176 231" fill="none" stroke="#B98E72" stroke-width="3" stroke-linecap="round"/>
+                                        <path d="M136 270 Q160 284 184 270" fill="none" stroke="#A66E69" stroke-width="3" stroke-linecap="round"/>
+                                        <ellipse id="detail-zone-forehead-shape" cx="160" cy="124" rx="59" ry="31" fill="#C5A073" opacity="0.28"/>
+                                        <ellipse id="detail-zone-nose-shape" cx="160" cy="217" rx="24" ry="41" fill="#8FA393" opacity="0.10"/>
+                                        <ellipse id="detail-zone-cheeks-shape-left" cx="116" cy="229" rx="35" ry="33" fill="#8FA393" opacity="0.10"/>
+                                        <ellipse id="detail-zone-cheeks-shape-right" cx="204" cy="229" rx="35" ry="33" fill="#8FA393" opacity="0.10"/>
+                                        <ellipse id="detail-zone-chin-shape" cx="160" cy="298" rx="45" ry="28" fill="#8FA393" opacity="0.10"/>
+                                    </svg>
+                                    <button type="button" onclick="selectDetailZone('forehead')" class="absolute left-1/2 -translate-x-1/2 top-[21%] min-w-[76px] h-11 rounded-full bg-white/95 border border-lumea-gold text-[11px] font-bold text-lumea-leaf">이마 <span id="detail-face-score-forehead">70</span></button>
+                                    <button type="button" onclick="selectDetailZone('nose')" class="absolute left-1/2 -translate-x-1/2 top-[49%] min-w-[64px] h-11 rounded-full bg-white/95 border border-lumea-beigeDark text-[11px] font-bold text-lumea-leaf">코 <span id="detail-face-score-nose">60</span></button>
+                                    <button type="button" onclick="selectDetailZone('cheeks')" class="absolute left-[12%] top-[54%] min-w-[68px] h-11 rounded-full bg-white/95 border border-lumea-beigeDark text-[11px] font-bold text-lumea-leaf">볼 <span id="detail-face-score-cheeks-left">78</span></button>
+                                    <button type="button" onclick="selectDetailZone('cheeks')" class="absolute right-[12%] top-[54%] min-w-[68px] h-11 rounded-full bg-white/95 border border-lumea-beigeDark text-[11px] font-bold text-lumea-leaf">볼 <span id="detail-face-score-cheeks-right">78</span></button>
+                                    <button type="button" onclick="selectDetailZone('chin')" class="absolute left-1/2 -translate-x-1/2 top-[72%] min-w-[72px] h-11 rounded-full bg-white/95 border border-lumea-beigeDark text-[11px] font-bold text-lumea-leaf">턱 <span id="detail-face-score-chin">68</span></button>
+                                </div>
+                                <div class="mt-4 text-center">
+                                    <span id="detail-selected-badge" class="inline-flex px-3 py-1.5 rounded-full bg-lumea-leaf text-white text-[10px] font-bold">이마 선택 중</span>
+                                </div>
+                            </div>
+
+                            <!-- Detail Sliders -->
+                            <div class="bg-white rounded-2xl border border-lumea-beige p-5">
+                                <h4 id="detail-zone-title" class="text-xl font-bold text-lumea-leaf border-b pb-3 mb-4">이마</h4>
+                                <div class="space-y-4">
+                                    <div>
+                                        <div class="flex justify-between text-xs font-bold mb-1"><span>수분</span><span id="lbl-moist">68%</span></div>
+                                        <input type="range" id="detail-moisture-range" min="0" max="100" value="68" oninput="setDetailMetric('moisture',this.value)" class="w-full accent-lumea-leaf">
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-xs font-bold mb-1"><span>탄력</span><span id="lbl-elast">72%</span></div>
+                                        <input type="range" id="detail-elasticity-range" min="0" max="100" value="72" oninput="setDetailMetric('elasticity',this.value)" class="w-full accent-lumea-leaf">
+                                    </div>
+                                    <div>
+                                        <div class="flex justify-between text-xs font-bold mb-1"><span>유분</span><span id="lbl-oil">70%</span></div>
+                                        <input type="range" id="detail-oil-range" min="0" max="100" value="70" oninput="setDetailMetric('oil',this.value)" class="w-full accent-lumea-leaf">
+                                    </div>
+                                </div>
+                                <div class="mt-6 p-4 rounded-xl bg-lumea-leafSoft border border-lumea-leafLight text-xs">
+                                    <b>부위 상태 요약:</b> <span id="detail-zone-summary">적정 유수분 상태</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Radar Canvas -->
+                        <div class="mt-6 bg-lumea-bg rounded-2xl border border-lumea-beige p-5">
+                            <h4 class="text-sm font-bold text-lumea-leaf mb-3">최종 피부 상태 레이더 그래프</h4>
+                            <div class="relative w-full max-w-[500px] h-[300px] mx-auto">
+                                <canvas id="zoneRadarChart"></canvas>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 flex gap-3">
+                            <button onclick="generateAIRecommendation()" class="flex-1 bg-lumea-gold text-white font-medium py-3 rounded-xl text-xs">관리 프로그램 & 홈케어 생성</button>
+                            <button onclick="saveAnalysisToCustomer()" class="bg-lumea-leaf text-white font-medium px-6 py-3 rounded-xl text-xs">분석 저장</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 3: CARE PROCESS -->
+        <section id="page-care-process" class="hidden space-y-6">
+            <div class="border-b border-lumea-beigeDark pb-4 flex justify-between items-center">
+                <div><h2 class="text-2xl font-bold text-lumea-leaf"><i class="fa-solid fa-spa mr-2 text-lumea-gold"></i>관리과정 (얼굴 7단계 + 바디관리)</h2></div>
+                <div class="text-xs bg-lumea-beige px-3 py-1.5 rounded-lg border border-lumea-beigeDark">고객: <b id="care-process-customer-name">이지은</b></div>
+            </div>
+            <div class="lumea-card p-6 rounded-2xl">
+                <div id="care-process-program" class="space-y-3 text-xs"></div>
+            </div>
+        </section>
+
+        <!-- PAGE 4: REPORT VIEW -->
+        <section id="page-report-view" class="hidden space-y-6">
+            <div class="flex justify-between items-center border-b border-lumea-beigeDark pb-4 no-print">
+                <h2 class="text-2xl font-bold text-lumea-leaf">최종 피부 · 바디 관리 리포트</h2>
+                <button onclick="window.print()" class="bg-lumea-leaf text-white px-5 py-2.5 rounded-xl text-xs font-bold">인쇄하기</button>
+            </div>
+            <div id="pdf-report-content" class="lumea-card p-8 rounded-3xl max-w-4xl mx-auto border-2 border-lumea-beige bg-white">
+                <div class="flex justify-between items-start border-b-2 border-lumea-gold pb-4 mb-6">
+                    <div><h1 class="serif-title text-3xl font-extrabold text-lumea-leaf">LUMEA</h1><p class="text-xs text-lumea-gold">Aesthetic AI Clinical Report</p></div>
+                    <div class="text-right text-xs text-lumea-muted"><p id="report-date"></p><p id="report-id"></p></div>
+                </div>
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-lumea-bg p-4 rounded-xl text-xs mb-6">
+                    <div><span>고객명: </span><b id="report-cust-name">-</b></div>
+                    <div><span>연령: </span><span id="report-cust-age">-</span></div>
+                    <div><span>피부타입: </span><span id="report-cust-type">-</span></div>
+                    <div><span>주요고민: </span><span id="report-cust-concern" class="text-amber-700">-</span></div>
+                </div>
+                <div class="p-4 bg-lumea-leafSoft rounded-xl border border-lumea-leafLight text-xs leading-relaxed">
+                    <b>전문 에스테티션 종합 소견:</b><br>
+                    T존과 U존의 유수분 불균형이 감지되며, 1~7단계 얼굴 진정 프로그램과 맞춤형 바디 데콜테 순환 케어를 권장합니다.
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 5: AI CONSULT -->
+        <section id="page-ai-consult" class="hidden space-y-6">
+            <div class="border-b border-lumea-beigeDark pb-4">
+                <h2 class="text-2xl font-bold text-lumea-leaf">LUMEA AI 실시간 피부 상담실</h2>
+            </div>
+            <div class="lumea-card p-6 rounded-2xl h-[500px] flex flex-col justify-between">
+                <div id="chat-messages" class="flex-1 overflow-y-auto space-y-3 p-2 text-xs">
+                    <div class="bg-lumea-leafSoft p-3 rounded-xl max-w-[80%] text-slate-800">
+                        안녕하세요! LUMEA 뷰티 AI 카운셀러입니다. 화장품 추천이나 홈케어 루틴을 질문해 주세요.
+                    </div>
+                </div>
+                <div class="flex gap-2 pt-3 border-t">
+                    <input type="text" id="chat-input" placeholder="질문을 입력하세요..." class="flex-1 p-2 border rounded-xl text-xs" onkeydown="if(event.key==='Enter') sendChatMessage()">
+                    <button onclick="sendChatMessage()" class="bg-lumea-leaf text-white px-4 py-2 rounded-xl text-xs font-bold">전송</button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let customers = [
+            {
+                id: 'c1', name: '이지은', phone: '010-3829-1920', age: '30대 여성', type: '복합성 (수부지)', concern: '이마/코 모공, 볼 수분부족',
+                analysis: { moisture: 42, elasticity: 68, oil: 65, score: 74, zones: { forehead: 68, nose: 58, cheeks: 75, chin: 64 }, date: '2026-08-28' }
+            },
+            {
+                id: 'c2', name: '박서준', phone: '010-9912-4021', age: '20대 남성', type: '지성 피부', concern: '턱 주변 트러블, 과유분',
+                analysis: { moisture: 35, elasticity: 75, oil: 82, score: 65, zones: { forehead: 60, nose: 50, cheeks: 70, chin: 52 }, date: '2026-09-01' }
+            }
+        ];
+        let activeCustomerId = 'c1';
+        let radarChartInstance = null;
+        let selectedDetailZone = 'forehead';
+        let zoneDetailData = {
+            forehead: { moisture: 68, elasticity: 72, oil: 70 },
+            nose:     { moisture: 55, elasticity: 66, oil: 78 },
+            cheeks:   { moisture: 72, elasticity: 76, oil: 48 },
+            chin:     { moisture: 62, elasticity: 67, oil: 58 }
+        };
+
+        window.onload = function() {
+            renderCustomerGrid();
+            initRadarChart();
+            selectCustomer(activeCustomerId);
+        };
+
+        function switchTab(tabId) {
+            ['customer-list','skin-analysis','care-process','report-view','ai-consult'].forEach(p => {
+                const el = document.getElementById('page-' + p);
+                if(el) el.classList.add('hidden');
+                const btn = document.getElementById('nav-' + p);
+                if(btn) { btn.classList.remove('bg-lumea-leaf','text-white','shadow-sm'); btn.classList.add('text-lumea-muted'); }
+            });
+            const activePage = document.getElementById('page-' + tabId);
+            if(activePage) activePage.classList.remove('hidden');
+            const active = document.getElementById('nav-' + tabId);
+            if(active) { active.classList.add('bg-lumea-leaf','text-white','shadow-sm'); active.classList.remove('text-lumea-muted'); }
+            if(tabId === 'report-view') updateReportView();
+            if(tabId === 'care-process') loadCareProcess();
+        }
+
+        function selectCustomer(id) {
+            activeCustomerId = id;
+            const cust = customers.find(c => c.id === id);
+            if(cust) {
+                document.getElementById('active-customer-name').innerText = `${cust.name} (${cust.age})`;
+                document.getElementById('current-analyzing-customer-name').innerText = `${cust.name} 고객님`;
+                renderCustomerGrid();
+            }
+        }
+
+        function renderCustomerGrid() {
+            const grid = document.getElementById('customer-grid');
+            if(!grid) return;
+            grid.innerHTML = customers.map(c => `
+                <div class="lumea-card p-5 rounded-2xl border-2 ${c.id === activeCustomerId ? 'border-lumea-gold bg-lumea-leafSoft/40' : 'border-lumea-beige'}" onclick="selectCustomer('${c.id}')">
+                    <div class="flex justify-between items-start mb-2"><h3 class="font-bold text-lumea-leaf">${c.name}</h3><span class="text-xs text-lumea-muted">${c.phone}</span></div>
+                    <p class="text-xs text-lumea-gold font-semibold">${c.type} · ${c.concern}</p>
+                    <div class="mt-4 flex gap-2"><button onclick="switchTab('skin-analysis')" class="flex-1 bg-lumea-leaf text-white py-1.5 rounded-lg text-xs">피부분석</button><button onclick="switchTab('report-view')" class="bg-lumea-beige text-lumea-leaf px-3 py-1.5 rounded-lg text-xs">리포트</button></div>
+                </div>
+            `).join('');
+            const tot = document.getElementById('stat-total-customers');
+            if(tot) tot.innerText = customers.length + '명';
+            const today = document.getElementById('stat-today-analyzed');
+            if(today) today.innerText = customers.length + '건';
+        }
+
+        function selectDetailZone(zone) {
+            selectedDetailZone = zone;
+            const labels = { forehead: '이마', nose: '코', cheeks: '볼', chin: '턱' };
+            document.getElementById('detail-zone-title').textContent = labels[zone];
+            document.getElementById('detail-selected-badge').textContent = `${labels[zone]} 선택 중`;
+            const d = zoneDetailData[zone];
+            document.getElementById('detail-moisture-range').value = d.moisture;
+            document.getElementById('detail-elasticity-range').value = d.elasticity;
+            document.getElementById('detail-oil-range').value = d.oil;
+            document.getElementById('lbl-moist').textContent = d.moisture + '%';
+            document.getElementById('lbl-elast').textContent = d.elasticity + '%';
+            document.getElementById('lbl-oil').textContent = d.oil + '%';
+        }
+
+        function setDetailMetric(metric, val) {
+            zoneDetailData[selectedDetailZone][metric] = Number(val);
+            if(metric === 'moisture') document.getElementById('lbl-moist').textContent = val + '%';
+            if(metric === 'elasticity') document.getElementById('lbl-elast').textContent = val + '%';
+            if(metric === 'oil') document.getElementById('lbl-oil').textContent = val + '%';
+            updateZoneRadar();
+        }
+
+        function initRadarChart() {
+            const chartEl = document.getElementById('zoneRadarChart');
+            if(!chartEl) return;
+            const ctx = chartEl.getContext('2d');
+            radarChartInstance = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['이마', '코', '양 볼', '턱'],
+                    datasets: [
+                        { label: '수분', data: [68, 55, 72, 62], borderColor: '#506855', backgroundColor: 'rgba(80,104,85,0.1)' },
+                        { label: '탄력', data: [72, 66, 76, 67], borderColor: '#C5A073', backgroundColor: 'rgba(197,160,115,0.1)' },
+                        { label: '유분', data: [70, 78, 48, 58], borderColor: '#77786F', backgroundColor: 'rgba(119,120,111,0.1)' }
+                    ]
+                },
+                options: { responsive: true, maintainAspectRatio: false, scales: { r: { min: 0, max: 100 } } }
+            });
+        }
+
+        function updateZoneRadar() {
+            if(!radarChartInstance) return;
+            const z = ['forehead','nose','cheeks','chin'];
+            radarChartInstance.data.datasets[0].data = z.map(k => zoneDetailData[k].moisture);
+            radarChartInstance.data.datasets[1].data = z.map(k => zoneDetailData[k].elasticity);
+            radarChartInstance.data.datasets[2].data = z.map(k => zoneDetailData[k].oil);
+            radarChartInstance.update();
+        }
+
+        function generateAIRecommendation() { switchTab('care-process'); }
+        function saveAnalysisToCustomer() { switchTab('report-view'); }
+
+        function loadCareProcess() {
+            const cust = customers.find(c => c.id === activeCustomerId);
+            if(!cust) return;
+            const nameEl = document.getElementById('care-process-customer-name');
+            if(nameEl) nameEl.innerText = cust.name;
+            const prog = document.getElementById('care-process-program');
+            if(prog) {
+                prog.innerHTML = `
+                    <div class="p-3 bg-lumea-bg border rounded-xl"><b>1. 클렌징:</b> 약산성 클렌저로 표면 피지 정리</div>
+                    <div class="p-3 bg-lumea-bg border rounded-xl"><b>2. 딥클렌징:</b> T존 각질 효소 분해</div>
+                    <div class="p-3 bg-lumea-bg border rounded-xl"><b>3. 기기관리:</b> 초음파 수분 앰플 침투</div>
+                    <div class="p-3 bg-lumea-bg border rounded-xl"><b>4. 매뉴얼테크닉:</b> 데콜테 림프 순환 마사지</div>
+                    <div class="p-3 bg-lumea-bg border rounded-xl"><b>5. 크림팩:</b> 세라마이드 진정 보습팩</div>
+                    <div class="p-3 bg-lumea-bg border rounded-xl"><b>6. 마스크:</b> 쿨링 모델링 마스크</div>
+                    <div class="p-3 bg-lumea-bg border rounded-xl"><b>7. 림프 & 바디:</b> 어깨·승모근 스트레칭 관리</div>
+                `;
+            }
+        }
+
+        function updateReportView() {
+            const cust = customers.find(c => c.id === activeCustomerId);
+            if(!cust) return;
+            document.getElementById('report-cust-name').innerText = cust.name;
+            document.getElementById('report-cust-age').innerText = cust.age;
+            document.getElementById('report-cust-type').innerText = cust.type;
+            document.getElementById('report-cust-concern').innerText = cust.concern;
+            document.getElementById('report-date').innerText = '발급일: 2026.09.27';
+            document.getElementById('report-id').innerText = 'ID: LM-2026-' + cust.id;
+        }
+
+        function sendChatMessage() {
+            const val = document.getElementById('chat-input').value;
+            if(!val) return;
+            const chat = document.getElementById('chat-messages');
+            chat.innerHTML += `<div class="text-right text-xs"><span class="bg-lumea-leaf text-white p-2.5 rounded-xl inline-block">${val}</span></div>`;
+            document.getElementById('chat-input').value = '';
+            setTimeout(() => {
+                chat.innerHTML += `<div class="bg-lumea-leafSoft p-3 rounded-xl max-w-[80%] text-slate-800 text-xs">고객님의 피부 수분 및 유분 데이터를 분석한 결과, 히알루론산 세럼과 진정 젤 크림 사용을 추천합니다.</div>`;
+                chat.scrollTop = chat.scrollHeight;
+            }, 400);
+        }
+    </script>
+</body>
+</html></template>
+
+    <!-- [SOURCE 2: 광채주의보 (2조)] -->
+    <template id="tpl-gwangchae"><!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>광채주의보 AI 피부 분석</title>
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
+
+:root{
+  --bg:#211a20;
+  --card:#30252d;
+  --card-2:#261f26;
+  --line:#57434f;
+  --text:#f3eef1;
+  --muted:#b8adb5;
+  --pink:#d77a9d;
+  --pink-soft:#4b303c;
+  --panel:#3a4655;
+}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{
+  margin:0;background:linear-gradient(180deg,#241c23 0%,#1e181e 100%);
+  color:var(--text);font-family:'Pretendard',system-ui,sans-serif;
+  min-height:100vh;-webkit-font-smoothing:antialiased;
+}
+.app-shell{width:100%;max-width:620px;margin:0 auto;padding:24px 28px 52px}
+.app-brand{padding:6px 4px 18px}
+.app-brand .eyebrow{color:var(--pink);font-size:12px;font-weight:800;letter-spacing:.14em}
+.app-brand h1{margin:5px 0 0;font-size:24px;letter-spacing:-.04em}
+
+.section-card{
+  background:rgba(48,37,45,.96);border:1px solid var(--line);
+  border-radius:34px;padding:30px;margin:0 0 24px;
+  box-shadow:0 10px 28px rgba(0,0,0,.13);
+}
+.section-head{display:flex;align-items:center;gap:18px;margin-bottom:30px}
+.icon-box{
+  width:68px;height:68px;border-radius:22px;background:#412d39;
+  display:grid;place-items:center;color:var(--pink);flex:0 0 auto;
+}
+.icon-box svg{width:30px;height:30px}
+.section-copy{min-width:0}
+.title-row{display:flex;align-items:baseline;gap:10px}
+.step{color:#c87a99;font-size:16px;font-weight:800;letter-spacing:.14em}
+.section-title{margin:0;font-size:26px;line-height:1.1;letter-spacing:-.05em;font-weight:800}
+.section-sub{margin:8px 0 0;color:var(--muted);font-size:15px}
+
+.field{margin-top:22px}
+.field label{display:block;color:#c6bbc2;font-size:15px;font-weight:800;margin-bottom:12px}
+.field-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+input,textarea,select{
+  width:100%;border:1px solid #5b4652;background:#251e25;color:var(--text);
+  border-radius:22px;padding:18px 22px;font:inherit;outline:none;
+  transition:.2s;border-color:#5b4652;
+}
+input{height:80px;font-size:19px}
+textarea{min-height:134px;resize:vertical;line-height:1.6}
+input:focus,textarea:focus,select:focus{border-color:var(--pink);box-shadow:0 0 0 3px rgba(215,122,157,.09)}
+input::placeholder,textarea::placeholder{color:#aaa0a7}
+input[type="date"]{color:#bdb2ba}
+
+.concern-select{display:none}
+.concern-pills{
+  display:flex;gap:12px;overflow-x:auto;padding:2px 0 6px;
+  scrollbar-width:none;margin-right:-10px
+}
+.concern-pills::-webkit-scrollbar{display:none}
+.concern-pill{
+  flex:0 0 auto;border:1px solid #51404b;background:#251e25;color:#c9bec5;
+  border-radius:999px;padding:16px 20px;font-size:15px;font-weight:700;
+  cursor:pointer;white-space:nowrap
+}
+.concern-pill.active{border-color:var(--pink);background:rgba(215,122,157,.14);color:#e6a0b9;box-shadow:inset 0 0 0 1px rgba(215,122,157,.12)}
+
+.drop-zone{
+  min-height:260px;border:2px dashed #5a4652;border-radius:30px;
+  background:#241d24;position:relative;display:grid;place-items:center;
+  overflow:hidden;transition:.2s
+}
+.drop-zone.drop-active{border-color:var(--pink)!important;background:#2d2028!important}
+#photoInput{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer;z-index:5;padding:0}
+#uploadPrompt{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px}
+#uploadPrompt .upload-icon{
+  width:90px;height:90px;border-radius:28px;background:#363042;
+  display:grid;place-items:center;color:var(--pink);margin-bottom:10px
+}
+#uploadPrompt svg{width:38px;height:38px}
+.upload-main{font-size:21px;font-weight:800}
+.upload-sub{font-size:15px;color:var(--muted)}
+.hidden{display:none!important}
+#previewContainer{width:100%;height:100%;min-height:240px;padding:12px;display:grid;place-items:center}
+#photoPreview{max-width:100%;max-height:320px;border-radius:22px;object-fit:contain}
+#clearPhoto{position:absolute;right:16px;top:16px;border:0;border-radius:50%;width:36px;height:36px;background:#57303d;color:white;z-index:8;display:grid;place-items:center}
+#photoResult{margin-top:14px;border:1px solid #5c3d4b;background:#392632;color:#f0d9e3;padding:16px;border-radius:18px;font-size:14px}
+#scanBtn,.primary-btn{
+  width:100%;border:0;border-radius:22px;padding:19px 20px;margin-top:16px;
+  background:linear-gradient(135deg,#c56f91,#df87aa);color:white;font:inherit;font-weight:800;
+  font-size:17px;box-shadow:0 8px 22px rgba(199,99,141,.18);cursor:pointer
+}
+#scanBtn{background:#412d39;color:#e7a2bb;box-shadow:none}
+
+.measure-card{padding-bottom:26px}
+.measure-head-right{margin-left:auto}
+#resetBtn{background:none;border:0;color:#c4a8b5;font:inherit;font-size:14px;cursor:pointer}
+#scoreGrid{display:grid;grid-template-columns:1fr;gap:16px}
+.score-item{
+  background:var(--panel);border:1px solid #4f5b6a;border-radius:28px;padding:20px 22px;
+}
+.score-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.score-name{font-size:18px;font-weight:800}
+.score-badge{font-size:32px;font-weight:800;color:#ef9fbb}
+.score-row{display:grid;grid-template-columns:1fr 70px;gap:14px;align-items:center}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;height:10px;border-radius:99px;padding:0;
+  background:linear-gradient(90deg,#d47a9d 0%,#d47a9d 50%,#5d6977 50%,#5d6977 100%);
+  border:0
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:28px;height:28px;border-radius:50%;
+  background:#f4eef1;border:3px solid #d47a9d;box-shadow:0 2px 8px rgba(0,0,0,.35)
+}
+input[type=range]::-moz-range-thumb{width:25px;height:25px;border-radius:50%;background:#f4eef1;border:3px solid #d47a9d}
+.score-num{height:54px!important;padding:8px!important;border-radius:16px!important;text-align:center;font-weight:800;font-size:18px!important;background:#2d3640!important}
+
+#resultSection{margin-top:24px}
+.result-card{background:rgba(48,37,45,.96);border:1px solid var(--line);border-radius:34px;padding:28px;margin-bottom:20px}
+.result-hero{display:flex;gap:20px;align-items:center;padding-bottom:22px;border-bottom:1px solid #513f49}
+.gauge-wrap{width:108px;height:108px;position:relative;flex:0 0 auto}
+.gauge-wrap svg{width:100%;height:100%;transform:rotate(-90deg)}
+.gauge-center{position:absolute;inset:0;display:grid;place-items:center;text-align:center}
+.gauge-center b{font-size:31px}
+.gauge-center span{font-size:9px;color:var(--muted)}
+#reportDate{color:#dc8baa;font-size:12px;font-weight:800}
+#reportTitle{font-size:21px;margin:7px 0 5px}
+#skinType{color:#e6a1bb;font-weight:800;margin:0 0 5px}
+#skinReason{color:var(--muted);font-size:13px;margin:0}
+.result-actions{display:flex;gap:10px;margin-top:18px}
+.result-actions button{flex:1;border:1px solid #5b4652;background:#3c2b35;color:#f5edf1;border-radius:16px;padding:13px;font-weight:800;cursor:pointer}
+#metrics{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:18px}
+.metric-card{background:#272028;border:1px solid #4c3e47;border-radius:18px;padding:15px;text-align:center}
+.metric-card div{font-size:12px;color:var(--muted)}
+.metric-card b{font-size:18px}
+.detail-box{margin-top:16px;padding:17px;border-radius:20px;background:#272028;border:1px solid #4c3e47;color:#d7ccd2;font-size:14px;line-height:1.7}
+.result-grid{display:grid;grid-template-columns:1fr;gap:20px}
+.result-grid .result-card h3{font-size:18px;margin-top:0}
+#recs .rec-card,#routine>div{background:#272028!important;border:1px solid #4c3e47;border-radius:18px!important;padding:16px!important;color:#ddd4d9}
+#recs span{background:#b96789!important;border-radius:99px!important}
+#recs p,#routine li{color:#aaa0a7!important}
+.chart{height:190px;border-left:1px solid #594650;border-bottom:1px solid #594650;background:repeating-linear-gradient(to bottom,transparent 0,transparent 36px,rgba(255,255,255,.06) 37px)}
+#historyCards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+#historyCards>div,#historyList>div,#customers>div{background:#272028!important;border:1px solid #4c3e47!important;color:#ddd4d9;border-radius:18px!important}
+#customers button{background:#4a2f3b!important;color:#efb1c7!important;border-radius:12px!important;cursor:pointer}
+#search{height:54px;border-radius:16px;font-size:14px}
+
+@media (min-width:700px){
+  .app-shell{padding-top:36px}
+  .section-card{padding:34px}
+  #scoreGrid{grid-template-columns:1fr 1fr}
+  .result-grid{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+<main class="app-shell">
+  <div class="app-brand no-print">
+    <div class="eyebrow">GWANGCHAE AI SKIN SYSTEM</div>
+    <h1>광채주의보 AI 피부 분석</h1>
+  </div>
+
+  <section class="section-card no-print">
+    <div class="section-head">
+      <div class="icon-box"><i data-lucide="user-round"></i></div>
+      <div class="section-copy">
+        <div class="title-row"><span class="step">01</span><h2 class="section-title">고객 기본 정보</h2></div>
+        <p class="section-sub">측정 기록을 위한 기본 정보</p>
+      </div>
+    </div>
+
+    <div class="field-grid">
+      <div class="field">
+        <label>고객 성함</label>
+        <input id="customerName" value="이지원" placeholder="이름 입력">
+      </div>
+      <div class="field">
+        <label>나이</label>
+        <input id="customerAge" type="number" min="1" max="120" value="28" placeholder="나이">
+      </div>
+    </div>
+
+    <div class="field">
+      <label>주요 피부 고민</label>
+      <div class="concern-pills" id="concernPills">
+        <button class="concern-pill active" data-value="없음" type="button">없음</button>
+        <button class="concern-pill" data-value="건조함" type="button">건조함</button>
+        <button class="concern-pill" data-value="유분·번들거림" type="button">유분·번들거림</button>
+        <button class="concern-pill" data-value="탄력·주름" type="button">탄력·주름</button>
+        <button class="concern-pill" data-value="민감·붉음" type="button">민감·붉음</button>
+      </div>
+      <select id="concern" class="concern-select">
+        <option>없음</option><option>건조함</option><option>유분·번들거림</option>
+        <option>탄력·주름</option><option>민감·붉음</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label>상담 메모</label>
+      <textarea id="memo" placeholder="피부 상태, 제품 반응, 생활 습관 등을 기록하세요">T존 피지 분비 다소 높음, 환절기 속당김 케어 필요</textarea>
+    </div>
+  </section>
+
+  <section class="section-card measure-card no-print">
+    <div class="section-head">
+      <div class="icon-box"><i data-lucide="chart-no-axes-combined"></i></div>
+      <div class="section-copy">
+        <div class="title-row"><span class="step">02</span><h2 class="section-title">피부 정밀 측정</h2></div>
+        <p class="section-sub">막대 위를 누르거나 수치를 조절하세요</p>
+      </div>
+      <button id="resetBtn" class="measure-head-right" type="button">초기화</button>
+    </div>
+    <div id="scoreGrid"></div>
+    <button id="analyzeBtn" class="primary-btn" type="button">AI 종합 피부 분석 실행하기</button>
+  </section>
+
+  <section id="resultSection" class="hidden">
+    <div class="result-card">
+      <div class="result-hero">
+        <div class="gauge-wrap">
+          <svg viewBox="0 0 36 36">
+            <path stroke="#5a4a53" stroke-width="3.5" fill="none" d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831a15.9155 15.9155 0 0 1 0-31.831"/>
+            <path id="gaugePath" stroke="#d77a9d" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-dasharray="0,100" d="M18 2.0845a15.9155 15.9155 0 0 1 0 31.831a15.9155 15.9155 0 0 1 0-31.831"/>
+          </svg>
+          <div class="gauge-center"><div><b id="scoreDisplay">0</b><br><span>SKIN HEALTH</span></div></div>
+        </div>
+        <div>
+          <div id="reportDate"></div><h2 id="reportTitle"></h2>
+          <p id="skinType"></p><p id="skinReason"></p>
+        </div>
+      </div>
+      <div class="result-actions no-print">
+        <button id="saveBtn" type="button">결과 저장</button>
+        <button type="button" onclick="window.print()">리포트 출력</button>
+      </div>
+      <div id="metrics"></div>
+      <div class="detail-box"><b>✨ AI 상세 분석 의견</b><p id="detail"></p></div>
+    </div>
+
+    <div class="result-grid">
+      <div class="result-card"><h3>우선순위 클리닉 케어</h3><div id="recs" class="space-y-3"></div></div>
+      <div class="result-card"><h3>맞춤 홈케어 Routine</h3><div id="routine"></div></div>
+    </div>
+  </section>
+</main>
+
+<script>
+const $ = id => document.getElementById(id);
+
+const scoreInfo = [
+  ['moisture','💧 수분','blue', 48],
+  ['elasticity','✨ 탄력','amber', 72],
+  ['oil','🫧 유분','teal', 65],
+  ['total','🏆 종합 점수','indigo', 68]
+];
+
+$('scoreGrid').innerHTML = scoreInfo.map(x => `
+<div class="score-item">
+  <div class="score-top">
+    <span class="score-name">${x[1]}</span>
+    <span id="${x[0]}Badge" class="score-badge">${x[3]} 점</span>
+  </div>
+  <div class="score-row">
+    <input type="range" id="${x[0]}" min="0" max="100" value="${x[3]}" class="w-full">
+    <input type="number" id="${x[0]}Num" min="0" max="100" value="${x[3]}" class="score-num">
+  </div>
+</div>
+`).join('');
+
+scoreInfo.forEach(x => {
+  let id = x[0];
+  $(id).oninput = () => sync(id);
+  $(id + 'Num').oninput = () => syncNum(id);
+});
+
+function sync(id){
+  $(id + 'Num').value = $(id).value;
+  $(id + 'Badge').textContent = $(id).value + ' 점';
+}
+
+function syncNum(id){
+  let value = Math.max(0, Math.min(100, Number($(id + 'Num').value) || 0));
+  $(id).value = value;
+  $(id + 'Num').value = value;
+  $(id + 'Badge').textContent = value + ' 점';
+}
+
+$('resetBtn').onclick = () => {
+  scoreInfo.forEach(x => {
+    $(x[0]).value = 50;
+    sync(x[0]);
+  });
+};
+
+function detectSkinType(moisture, elasticity, oil, total, concern){
+  if(moisture < 45 && oil >= 60){
+    return ['수분부족지성 (수부지)', '속수분은 부족하지만 표면 유분이 높은 패턴입니다.'];
+  }
+  if(moisture < 45 && oil < 45){
+    return ['건성 (Dry Skin)', '유수분이 모두 부족한 패턴입니다.'];
+  }
+  if(moisture >= 55 && oil >= 70){
+    return ['지성 (Oily Skin)', '유분 수치가 높은 편입니다.'];
+  }
+  return ['복합성 밸런스', '유수분 수치가 균형적이나 부위별 차이가 있을 수 있습니다.'];
+}
+
+$('analyzeBtn').onclick = () => {
+  const name = $('customerName').value.trim() || '고객';
+  const age = Number($('customerAge').value) || 28;
+  const moisture = Number($('moisture').value);
+  const elasticity = Number($('elasticity').value);
+  const oil = Number($('oil').value);
+  const total = Number($('total').value);
+  const concern = $('concern').value;
+  const [skinType,reason] = detectSkinType(moisture, elasticity, oil, total, concern);
+  const now = new Date();
+
+  $('resultSection').classList.remove('hidden');
+  $('reportDate').textContent = now.toLocaleString('ko-KR');
+  $('reportTitle').textContent = `${name} 님 (${age}세) 리포트`;
+  $('skinType').textContent = skinType;
+  $('skinReason').textContent = reason;
+  $('scoreDisplay').textContent = total;
+  $('gaugePath').style.strokeDasharray = `${total},100`;
+
+  $('metrics').innerHTML = [
+    ['💧 수분',moisture], ['✨ 탄력',elasticity], ['🫧 유분',oil], ['🏆 총점',total]
+  ].map(item => `
+    <div class="metric-card">
+      <div class="text-xs">${item[0]}</div>
+      <b>${item[1]}점</b>
+    </div>
+  `).join('');
+
+  $('detail').textContent = `현재 피부는 ${skinType} 패턴입니다. 수분 보충과 유수분 밸런싱 케어를 병행하는 것을 권장합니다.`;
+
+  $('recs').innerHTML = `
+    <div class="rec-card">
+      <span class="text-[10px] bg-indigo-600 text-white px-2 py-1 rounded">1순위</span>
+      <b class="block mt-2 text-sm">수분·장벽 집중 관리</b>
+      <p class="text-xs text-slate-400">저자극 수분 공급과 보습막 강화 케어</p>
+    </div>
+    <div class="rec-card">
+      <span class="text-[10px] bg-indigo-600 text-white px-2 py-1 rounded">2순위</span>
+      <b class="block mt-2 text-sm">피지 밸런싱 모공 케어</b>
+      <p class="text-xs text-slate-400">과도한 유분 분비 조절 및 모공 정돈</p>
+    </div>
+  `;
+
+  $('routine').innerHTML = `
+    <div class="p-3 rounded-xl bg-[#272028]">
+      <b class="text-xs text-amber-300">☀️ 아침</b>
+      <ul class="text-[11px] list-disc pl-4 mt-2 text-slate-300">
+        <li>순한 약산성 세안</li><li>수분 진정 토너</li><li>가벼운 보습 로션</li><li>자외선 차단제</li>
+      </ul>
+    </div>
+    <div class="p-3 rounded-xl bg-[#272028] mt-2">
+      <b class="text-xs text-indigo-300">🌙 저녁</b>
+      <ul class="text-[11px] list-disc pl-4 mt-2 text-slate-300">
+        <li>딥클렌징 오일</li><li>수분 앰플 레이어링</li><li>장벽 세라마이드 크림</li>
+      </ul>
+    </div>
+  `;
+
+  $('resultSection').scrollIntoView({ behavior:'smooth' });
+};
+
+lucide.createIcons();
+
+document.querySelectorAll('.concern-pill').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.concern-pill').forEach(x => x.classList.remove('active'));
+    btn.classList.add('active');
+    $('concern').value = btn.dataset.value;
+  });
+});
+</script>
+</body>
+</html></template>
+
+    <!-- [SOURCE 3: 아프로디테 (3조)] -->
+    <template id="tpl-aphrodite"><!DOCTYPE html>
+<html lang="ko" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>아프로디테 에스테틱 (Aphrodite Aesthetic)</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            background: linear-gradient(145deg, #f7f3ec 0%, #faf8f5 50%, #f0e6dc 100%);
+            color: #4a4036; font-family: system-ui, -apple-system, sans-serif; min-height: 100vh;
+        }
+        .card-luxury {
+            background: rgba(255, 255, 255, 0.94); backdrop-filter: blur(16px);
+            border: 1px solid rgba(192, 171, 142, 0.35); box-shadow: 0 15px 35px -10px rgba(126, 109, 92, 0.09);
+        }
+        .zone-btn.active {
+            background-color: #7e6d5c; color: #ffffff; border-color: #7e6d5c; box-shadow: 0 4px 12px rgba(126, 109, 92, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="bg-[#7e6d5c] text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="w-12 h-12 rounded-full border-2 border-[#c0ab8e] flex items-center justify-center bg-[#f4ebcd] text-[#7e6d5c] text-xl font-serif font-bold shadow-inner">A</div>
+                <div>
+                    <h1 class="font-serif text-xl sm:text-2xl tracking-wide font-semibold text-[#f4ebcd]">아프로디테 에스테틱</h1>
+                    <p class="text-[10px] text-[#d4d3ca] tracking-widest uppercase">Aphrodite Aesthetic · Luxury Skin Clinical System</p>
+                </div>
+            </div>
+            <div class="flex items-center space-x-2 bg-white/10 px-3 py-1.5 rounded-full border border-[#c0ab8e]/40 text-xs">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                <span>Gemini AI 연동 완료</span>
+            </div>
+        </div>
+    </header>
+
+    <nav class="bg-[#f0e6dc]/80 border-b border-[#c0ab8e]/30 shadow-sm sticky top-20 z-40 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 flex space-x-2 py-2.5 text-xs sm:text-sm font-bold">
+            <button onclick="switchTab('client-tab')" id="nav-client-tab" class="px-4 py-2 rounded-xl bg-white shadow-sm border border-[#c0ab8e]/40 text-[#7e6d5c]">1. 고객 관리 (CRM)</button>
+            <button onclick="switchTab('scan-tab')" id="nav-scan-tab" class="px-4 py-2 rounded-xl text-[#7e6d5c]/70 hover:text-[#7e6d5c] transition">2. 4대 부위 측정 (Scan)</button>
+            <button onclick="switchTab('ai-tab')" id="nav-ai-tab" class="px-4 py-2 rounded-xl text-[#7e6d5c]/70 hover:text-[#7e6d5c] transition">3. AI 삼각형 다이어그램</button>
+            <button onclick="switchTab('print-tab')" id="nav-print-tab" class="px-4 py-2 rounded-xl text-[#7e6d5c]/70 hover:text-[#7e6d5c] transition">4. VIP 리포트 & PDF</button>
+        </div>
+    </nav>
+
+    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6">
+        <!-- TAB 1: CRM -->
+        <section id="client-tab" class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="card-luxury rounded-2xl p-6">
+                <h2 class="font-serif text-base font-bold text-[#7e6d5c] mb-4">VIP 고객 명단</h2>
+                <div class="p-4 rounded-xl bg-[#7e6d5c] text-white shadow">
+                    <b>한소희 (BLACK VIP)</b><p class="text-xs text-[#d4d3ca] mt-1">010-4491-0021 · 30세</p>
+                </div>
+            </div>
+            <div class="lg:col-span-2 card-luxury rounded-2xl p-6">
+                <div class="flex justify-between items-center pb-4 border-b border-[#c0ab8e]/30">
+                    <div><h2 class="font-serif text-2xl font-bold text-[#7e6d5c]">한소희 님</h2><p class="text-xs text-stone-500 mt-1">BLACK VIP 회원 · 담당: 이윤서 원장</p></div>
+                    <button onclick="switchTab('scan-tab')" class="bg-[#7e6d5c] text-white px-5 py-2 rounded-xl text-xs font-bold shadow">측정 시작</button>
+                </div>
+                <div class="p-4 bg-[#f0e6dc]/60 rounded-xl border border-[#c0ab8e]/30 mt-4 text-xs">
+                    <b>특이사항:</b> 레티놀 계열 제품 민감, 유수분 밸런스 위주 관리 선호
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: 4-ZONE SCAN -->
+        <section id="scan-tab" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-5 card-luxury rounded-2xl p-6">
+                <h2 class="font-serif text-base font-bold text-[#7e6d5c] mb-4">측정 대상 부위 선택</h2>
+                <div class="grid grid-cols-4 gap-2 mb-6">
+                    <button onclick="selectZone('forehead')" id="zone-btn-forehead" class="zone-btn active py-3 rounded-xl text-xs font-bold text-center border border-[#c0ab8e]/40">이마</button>
+                    <button onclick="selectZone('cheek')" id="zone-btn-cheek" class="zone-btn py-3 rounded-xl text-xs font-bold text-center border border-[#c0ab8e]/40 bg-white">볼</button>
+                    <button onclick="selectZone('nose')" id="zone-btn-nose" class="zone-btn py-3 rounded-xl text-xs font-bold text-center border border-[#c0ab8e]/40 bg-white">코</button>
+                    <button onclick="selectZone('chin')" id="zone-btn-chin" class="zone-btn py-3 rounded-xl text-xs font-bold text-center border border-[#c0ab8e]/40 bg-white">턱</button>
+                </div>
+                <div class="p-4 bg-[#f0e6dc]/80 rounded-xl border border-[#c0ab8e]/30 text-center">
+                    <h3 id="zone-title" class="font-bold text-sm text-[#7e6d5c] mb-1">이마 (Forehead) 측정</h3>
+                    <p class="text-xs text-stone-500">표정 주름, 피지 분비 및 수분도 측정</p>
+                </div>
+            </div>
+
+            <div class="lg:col-span-7 card-luxury rounded-2xl p-6">
+                <h2 class="font-serif text-base font-bold text-[#7e6d5c] mb-4 pb-2 border-b border-[#c0ab8e]/30">아프로디테 3대 주 지표 파라미터 조절</h2>
+                <div class="space-y-4 text-xs">
+                    <div class="bg-white p-4 rounded-xl border border-[#c0ab8e]/30">
+                        <div class="flex justify-between font-bold mb-1"><span>💧 수분기 (Moisture)</span><span id="lbl-m">42%</span></div>
+                        <input type="range" id="rng-m" min="0" max="100" value="42" class="w-full" oninput="updateM('moisture', this.value)">
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-[#c0ab8e]/30">
+                        <div class="flex justify-between font-bold mb-1"><span>✨ 탄력도 (Elasticity)</span><span id="lbl-e">65%</span></div>
+                        <input type="range" id="rng-e" min="0" max="100" value="65" class="w-full" oninput="updateM('elasticity', this.value)">
+                    </div>
+                    <div class="bg-white p-4 rounded-xl border border-[#c0ab8e]/30">
+                        <div class="flex justify-between font-bold mb-1"><span>🫧 유분기 (Oiliness)</span><span id="lbl-o">26%</span></div>
+                        <input type="range" id="rng-o" min="0" max="100" value="26" class="w-full" oninput="updateM('oiliness', this.value)">
+                    </div>
+                </div>
+                <div class="mt-6 flex justify-end">
+                    <button onclick="switchTab('ai-tab')" class="bg-[#7e6d5c] text-white px-6 py-2.5 rounded-xl font-bold text-xs shadow">AI 삼각형 다이어그램 진단</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: TRIANGLE CHART -->
+        <section id="ai-tab" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-6">
+            <div class="lg:col-span-5 card-luxury rounded-2xl p-6 flex flex-col items-center">
+                <h2 class="font-serif text-sm font-bold text-[#7e6d5c] mb-2">특허형 삼각형 피부분석 다이어그램</h2>
+                <div class="w-full max-w-[320px] h-[300px]"><canvas id="triangleChart"></canvas></div>
+            </div>
+            <div class="lg:col-span-7 card-luxury rounded-2xl p-6">
+                <h2 class="font-serif text-base font-bold text-[#7e6d5c] mb-4 pb-2 border-b border-[#c0ab8e]/30">Gemini AI 종합 진단 소견</h2>
+                <div class="p-4 bg-[#f0e6dc]/80 rounded-xl border border-[#c0ab8e]/40 text-xs leading-relaxed space-y-2">
+                    <p><b>종합 평가:</b> T존의 유분 밸런스는 우수하나, U존(볼/턱)의 수분 보유력이 다소 부족하여 속당김이 발생할 수 있는 상태입니다.</p>
+                    <p><b>추천 처방:</b> 하이드라 밸런싱 세럼 & 세라마이드 장벽 강화 에스테틱 프로그램</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: PRINT -->
+        <section id="print-tab" class="hidden">
+            <div class="card-luxury p-8 rounded-2xl max-w-3xl mx-auto bg-white border border-[#c0ab8e]/40 text-xs">
+                <div class="flex justify-between items-end border-b-2 border-[#7e6d5c] pb-4 mb-6">
+                    <div><h1 class="font-serif text-2xl font-bold text-[#7e6d5c]">아프로디테 에스테틱</h1><p class="text-stone-500 uppercase">VIP Clinical Prescription</p></div>
+                    <button onclick="window.print()" class="bg-[#7e6d5c] text-white px-4 py-2 rounded-xl font-bold">인쇄 / PDF</button>
+                </div>
+                <p class="leading-relaxed">고객 성명: <b>한소희 님</b> | 발행일: 2026.09.27 | 담당: 이윤서 원장</p>
+                <div class="mt-4 p-4 bg-[#f0e6dc]/50 rounded-xl">본 진단서는 3대 꼭지점 삼각형 다이어그램을 바탕으로 발행된 VIP 맞춤형 에스테틱 처방전입니다.</div>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        let currentZ = 'forehead';
+        let scanD = {
+            forehead: { moisture: 42, elasticity: 65, oiliness: 26 },
+            cheek: { moisture: 48, elasticity: 68, oiliness: 24 },
+            nose: { moisture: 40, elasticity: 62, oiliness: 85 },
+            chin: { moisture: 44, elasticity: 60, oiliness: 25 }
+        };
+        let tChart = null;
+
+        function switchTab(id) {
+            ['client-tab','scan-tab','ai-tab','print-tab'].forEach(t => {
+                const el = document.getElementById(t);
+                if(el) el.classList.add('hidden');
+            });
+            const target = document.getElementById(id);
+            if(target) target.classList.remove('hidden');
+            if(id === 'ai-tab') { if(!tChart) initTChart(); else updateTChart(); }
+        }
+
+        function selectZone(z) {
+            currentZ = z;
+            ['forehead','cheek','nose','chin'].forEach(k => {
+                const el = document.getElementById('zone-btn-' + k);
+                if(el) { el.classList.remove('active'); el.classList.add('bg-white'); }
+            });
+            const active = document.getElementById('zone-btn-' + z);
+            if(active) { active.classList.add('active'); active.classList.remove('bg-white'); }
+
+            const labels = { forehead: '이마', cheek: '볼', nose: '코', chin: '턱' };
+            const titleEl = document.getElementById('zone-title');
+            if(titleEl) titleEl.textContent = `${labels[z]} (${z}) 측정`;
+            const d = scanD[z];
+            document.getElementById('rng-m').value = d.moisture; document.getElementById('lbl-m').textContent = d.moisture + '%';
+            document.getElementById('rng-e').value = d.elasticity; document.getElementById('lbl-e').textContent = d.elasticity + '%';
+            document.getElementById('rng-o').value = d.oiliness; document.getElementById('lbl-o').textContent = d.oiliness + '%';
+            updateTChart();
+        }
+
+        function updateM(metric, val) {
+            scanD[currentZ][metric] = Number(val);
+            if(metric === 'moisture') document.getElementById('lbl-m').textContent = val + '%';
+            if(metric === 'elasticity') document.getElementById('lbl-e').textContent = val + '%';
+            if(metric === 'oiliness') document.getElementById('lbl-o').textContent = val + '%';
+            updateTChart();
+        }
+
+        function initTChart() {
+            const chartCanvas = document.getElementById('triangleChart');
+            if(!chartCanvas) return;
+            const ctx = chartCanvas.getContext('2d');
+            tChart = new Chart(ctx, {
+                type: 'radar',
+                data: {
+                    labels: ['수분 적정성', '탄력도', '유분 적정성'],
+                    datasets: [
+                        { label: '측정 밸런스 점수', data: [80, 85, 95], borderColor: '#7e6d5c', backgroundColor: 'rgba(126,109,92,0.28)', borderWidth: 2.5, pointBackgroundColor: '#7e6d5c' },
+                        { label: '이상적 기준 (100점)', data: [100, 100, 100], borderColor: '#c0ab8e', borderDash: [4, 4], pointRadius: 0 }
+                    ]
+                },
+                options: { scales: { r: { min: 0, max: 100, ticks: { display: false } } }, plugins: { legend: { position: 'bottom' } } }
+            });
+            updateTChart();
+        }
+
+        function updateTChart() {
+            if(!tChart) return;
+            const d = scanD[currentZ];
+            const mScore = Math.max(20, Math.min(100, 100 - Math.abs(d.moisture - 55) * 1.8));
+            const eScore = Math.max(20, Math.min(100, d.elasticity >= 70 ? 100 : 100 - (70 - d.elasticity) * 1.5));
+            const oScore = Math.max(20, Math.min(100, 100 - Math.abs(d.oiliness - 24) * 1.6));
+            tChart.data.datasets[0].data = [Math.round(mScore), Math.round(eScore), Math.round(oScore)];
+            tChart.update();
+        }
+
+        window.onload = function() { initTChart(); };
+    </script>
+</body>
+</html></template>
+
+    <script>
+        lucide.createIcons();
+
+        const projectData = {
+            lumea: {
+                title: "1조 · LUMEA (루미아) AI Skin Care System",
+                badge: "1조 LUMEA 구동 중",
+                desc: "보태니컬 감성과 럭셔리 에스테틱 클리닉을 융합한 시스템으로, 4대 측정 수치를 바탕으로 얼굴 부위별 세부 균형을 도출합니다.",
+                tech: "Tailwind CSS, Chart.js (레이더 다이어그램), html2pdf.js (PDF 리포트 생성), Gemini AI 실시간 피부 상담실",
+                features: "얼굴 캐릭터 인터랙티브 부위 클릭 선택기, 얼굴 관리 1~7단계 및 바디관리 프로세스 자동 추천, Before & After 비교 측정 엔진",
+                file: "루미아 (1조)_2.html"
+            },
+            gwangchae: {
+                title: "2조 · 광채주의보 (GWANGCHAE) AI 피부 분석",
+                badge: "2조 광채주의보 구동 중",
+                desc: "다크 테마 기반의 모바일 퍼스트 AI 피부 분석 시스템으로, 브라우저 캔버스를 이용한 사진 조도·색조 스캐닝과 4대 지표(수분, 탄력, 유분, 총점) 측정 및 CRM 누적 차트를 제공합니다.",
+                tech: "Pure Vanilla HTML5/CSS3/JS, Lucide Icons, Canvas 2D Pixel Luminance/Redness Extraction, Local CRM System",
+                features: "SVG 원형 게이지 차트, 피부타입 자동 감지 알고리즘 (수부지, 건성, 지성, 민감성), 모바일 퍼스트 반응형 레이아웃",
+                file: "광채주의보 (2조)_2.html"
+            },
+            aphrodite: {
+                title: "3조 · 아프로디테 (APHRODITE) Aesthetic",
+                badge: "3조 아프로디테 구동 중",
+                desc: "최고급 샴페인 골드 테마의 VIP 클리니컬 시스템으로, 독창적인 3대 꼭지점(수분 적정성, 탄력도, 유분 적정성) 삼각형 다이어그램과 Gemini AI 진단 소견을 지원합니다.",
+                tech: "Tailwind CSS, Chart.js (커스텀 Triangle Radar), FontAwesome, Gemini AI 진단 소견 엔진",
+                features: "특허형 3축 삼각형 다이어그램, 4대 부위(이마, 볼, 코, 턱) 고해상도 확대 사진 업로드 및 3대 파라미터 매트릭스, VIP 맞춤형 서식 인쇄 리포트",
+                file: "아프로디테 (3조)_2.HTML"
+            }
+        };
+
+        let currentActiveKey = 'lumea';
+
+        // 템플릿에서 HTML 원본 문자열 가져오기
+        function getTemplateHtml(key) {
+            const tpl = document.getElementById('tpl-' + key);
+            return tpl ? tpl.innerHTML : '';
+        }
+
+        // iframe에 백지 없이 100% 안전하게 주입하는 함수
+        function renderIframe(iframeEl, key) {
+            if (!iframeEl) return;
+            const html = getTemplateHtml(key);
+            // srcdoc은 크롬 file:// 및 웹 환경 모두에서 크로스 오리진 제약 없이 독립 샌드박스로 100% 즉시 렌더링됨
+            iframeEl.srcdoc = html;
+        }
+
+        // 실시간 데스크 프로젝트 로드
+        function loadDeskProject(key) {
+            currentActiveKey = key;
+            const data = projectData[key];
+            const deskIframe = document.getElementById('deskIframe');
+            const badge = document.getElementById('currentDeskBadge');
+
+            badge.textContent = data.badge;
+
+            // 탭 스타일 갱신
+            ['lumea', 'gwangchae', 'aphrodite'].forEach(k => {
+                const tab = document.getElementById('desk-tab-' + k);
+                if (k === key) {
+                    tab.className = "px-4 py-2 rounded-xl text-xs font-rajdhani font-bold transition flex items-center gap-1.5 tab-btn-active";
+                } else {
+                    tab.className = "px-4 py-2 rounded-xl text-xs font-rajdhani font-bold transition flex items-center gap-1.5 text-[#7fa39b] hover:text-[#e3f7f2]";
+                }
+            });
+
+            // 즉각 렌더링
+            renderIframe(deskIframe, key);
+        }
+
+        // 배너 클릭 시: 실시간 데스크로 이동하고 해당 프로젝트 즉시 실행
+        function triggerProjectRun(key) {
+            loadDeskProject(key);
+            const deskSection = document.getElementById('live-desk-section');
+            if (deskSection) {
+                deskSection.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        // 풀스크린 모달 뷰어 열기
+        function openModalViewer(key) {
+            const modal = document.getElementById('liveViewerModal');
+            modal.classList.remove('hidden');
+            switchModalProject(key);
+        }
+
+        // 풀스크린 모달 내부 프로젝트 전환
+        function switchModalProject(key) {
+            currentActiveKey = key;
+            const data = projectData[key];
+            const titleEl = document.getElementById('modalViewerTitle');
+            const iframe = document.getElementById('modalIframe');
+            const directLink = document.getElementById('modalDirectLink');
+
+            titleEl.textContent = data.title;
+            if (directLink) {
+                directLink.href = data.file;
+            }
+
+            ['lumea', 'gwangchae', 'aphrodite'].forEach(k => {
+                const tab = document.getElementById('modal-tab-' + k);
+                if (k === key) {
+                    tab.className = "px-3 py-1 rounded-lg text-xs font-rajdhani font-bold bg-[#00ff9d] text-[#020c0a] shadow-sm";
+                } else {
+                    tab.className = "px-3 py-1 rounded-lg text-xs font-rajdhani font-bold text-[#7fa39b] hover:text-[#e3f7f2] transition";
+                }
+            });
+
+            renderIframe(iframe, key);
+        }
+
+        // 풀스크린 모달 닫기
+        function closeModalViewer() {
+            const modal = document.getElementById('liveViewerModal');
+            const iframe = document.getElementById('modalIframe');
+            iframe.srcdoc = "";
+            modal.classList.add('hidden');
+        }
+
+        // 기술 명세서 모달
+        function showProjectSpec(key) {
+            const data = projectData[key];
+            document.getElementById('specTitle').textContent = data.title;
+            document.getElementById('specDesc').textContent = data.desc;
+            document.getElementById('specTech').textContent = data.tech;
+            document.getElementById('specFeatures').textContent = data.features;
+            document.getElementById('specModal').classList.remove('hidden');
+        }
+
+        function closeSpecModal() {
+            document.getElementById('specModal').classList.add('hidden');
+        }
+
+        // 페이지가 열리자마자 1조 LUMEA가 즉시 세팅되도록 호출
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDeskProject('lumea');
+        });
+
+        // 윈도우 로드 시에도 확실히 한 번 더 세팅 (지연 로딩 대응)
+        window.addEventListener('load', () => {
+            const deskIframe = document.getElementById('deskIframe');
+            if (!deskIframe.srcdoc || deskIframe.srcdoc === '') {
+                loadDeskProject('lumea');
+            }
+        });
+    </script>
+</body>
+</html>
