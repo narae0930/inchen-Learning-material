@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LUMINARAE // 기능경기대회 공식 상영관</title>
+  <title>LUMINARAE // 피부 미용 동아리 공식 상영관</title>
   
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -76,32 +76,11 @@
       box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 255, 157, 0.04);
     }
 
-    /* Subtle header edge light: keep motion away from text. */
+    /* HUD Scanner horizontal beam (No vertical floating) */
     .hud-scanner-line {
       position: relative;
       overflow: hidden;
     }
-    .hud-scanner-line::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      width: 24%;
-      height: 2px;
-      pointer-events: none;
-      background: linear-gradient(90deg, transparent, rgba(44, 245, 226, 0.22), rgba(0, 255, 157, 0.28), transparent);
-      animation: scanBeam 14s linear infinite;
-    }
-    @keyframes scanBeam {
-      0% { transform: translateX(-110%); opacity: 0; }
-      8% { opacity: 1; }
-      60% { opacity: 1; }
-      70%, 100% { transform: translateX(430%); opacity: 0; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      .hud-scanner-line::after { animation: none; opacity: 0; }
-    }
-
     /* Cinema Projection Ambient Glow */
     .theater-glow {
       box-shadow: 
@@ -166,12 +145,12 @@
         <!-- Middle Breadcrumb & Medical Lab Meta -->
         <div class="hidden md:flex items-center gap-3 font-rajdhani text-xs tracking-wider text-brand-textMute">
           <span class="px-2.5 py-1 rounded-md bg-[#020c0a]/80 border border-brand-borderDark text-brand-cyan">
-            SPECIMEN : SKILLS-2026
+            CLUB ARCHIVE : ESTHETICS-2026
           </span>
           <span class="text-brand-borderBright">/</span>
-          <span class="text-brand-textMain">RECORDING ARCHIVE</span>
+          <span class="text-brand-textMain">29TH GENERATION</span>
           <span class="text-brand-borderBright">/</span>
-          <span class="text-brand-gold font-bold">SESSION ID: 04.MP4</span>
+          <span class="text-brand-gold font-bold">SESSION ID: 03.MP4</span>
         </div>
 
         <!-- Theater & Lab Status Indicators -->
@@ -204,10 +183,10 @@
           <div class="h-6 w-1 bg-gradient-to-b from-brand-mint to-brand-cyan rounded-full"></div>
           <div>
             <h1 class="font-cinzel text-xl sm:text-2xl lg:text-3xl font-bold tracking-wide text-brand-textMain flex items-center gap-2">
-              LUMINARAE <span class="font-pretendard text-base sm:text-lg text-brand-mint font-medium font-sans">기능경기대회 공식 상영관</span>
+              LUMINARAE <span class="font-pretendard text-base sm:text-lg text-brand-mint font-medium font-sans">피부 미용 동아리 공식 상영관</span>
             </h1>
             <p class="text-xs sm:text-sm text-brand-textMute font-normal mt-0.5">
-              생명과학 & 뷰티 메디컬 융합 기능경기 공식 시연 기록물 [04.mp4]
+              2026년 29기 피부 미용 동아리 실무 테크닉 &amp; 에스테틱 연구 활동 기록물 [03.mp4]
             </p>
           </div>
         </div>
@@ -233,7 +212,7 @@
               <span class="inline-block w-2 h-2 rounded-full bg-brand-cyan"></span>
               <span>CINEMA SCREEN 01</span>
               <span class="text-brand-borderBright">|</span>
-              <span class="text-brand-textMain">SOURCE : 04.mp4</span>
+              <span class="text-brand-textMain">SOURCE : 03.mp4</span>
             </div>
             <div class="flex items-center gap-4">
               <span id="videoStatusBadge" class="text-brand-gold font-semibold uppercase">STANDBY (PAUSED)</span>
@@ -251,11 +230,11 @@
               playsinline
               controls
               preload="metadata"
-              poster="https://placehold.co/1920x1080/031512/00ff9d?text=LUMINARAE+CINEMA+STAGE+-+04.MP4"
+              poster="https://placehold.co/1920x1080/031512/00ff9d?text=LUMINARAE+29TH+ESTHETICS+CLUB+-+03.MP4"
             >
               <!-- Primary Target Video Source -->
-              <source src="04.mp4" type="video/mp4">
-              <source src="04.mp" type="video/mp4">
+              <source src="03.mp4" type="video/mp4">
+              <source src="03.mp" type="video/mp4">
               이 브라우저는 HTML5 비디오 재생을 지원하지 않습니다.
             </video>
 
@@ -284,7 +263,7 @@
                   CLICK TO INITIATE PLAYBACK
                 </span>
                 <span class="text-xs sm:text-sm text-brand-mint font-medium tracking-wide mt-1 block">
-                  화면 또는 재생 버튼을 누르면 기능경기대회 영상이 시작됩니다
+                  화면 또는 재생 버튼을 누르면 29기 동아리 활동 영상이 시작됩니다
                 </span>
                 <span class="mt-2 inline-block px-3 py-1 rounded-full bg-[#020c0a]/70 border border-brand-borderDark text-[11px] font-rajdhani text-brand-textMute">
                   NO AUTOPLAY // USER CONFIRMATION REQUIRED
@@ -296,7 +275,7 @@
             <div id="videoNotice" class="absolute bottom-4 left-4 right-4 sm:left-6 sm:right-auto z-20 pointer-events-none opacity-0 transition-opacity duration-500">
               <div class="glass-card px-3.5 py-2 rounded-xl border border-brand-borderBright text-xs text-brand-textMain flex items-center gap-2">
                 <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
-                <span>'04.mp4' 파일이 프로젝트 동일 경로에 위치해야 정상 로드됩니다.</span>
+                <span>'03.mp4' 파일이 프로젝트 동일 경로에 위치해야 정상 로드됩니다.</span>
               </div>
             </div>
           </div>
@@ -324,19 +303,19 @@
     <footer class="w-full space-y-4">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         
-        <!-- Panel 1: Competition Dossier -->
+        <!-- Panel 1: Competition & Club Dossier -->
         <div class="glass-card rounded-2xl p-5 border border-brand-borderDark relative overflow-hidden">
           <div class="flex items-center justify-between mb-2">
             <span class="font-rajdhani text-xs font-bold text-brand-cyan uppercase tracking-widest">DOSSIER // 01</span>
-            <span class="text-[10px] font-rajdhani px-2 py-0.5 rounded bg-brand-borderDark text-brand-mint">VERIFIED</span>
+            <span class="text-[10px] font-rajdhani px-2 py-0.5 rounded bg-brand-borderDark text-brand-mint">2026 ARCHIVE</span>
           </div>
-          <h3 class="font-cinzel text-base font-bold text-brand-textMain mb-1">대회 개요 및 세부 정보</h3>
+          <h3 class="font-cinzel text-base font-bold text-brand-textMain mb-1">2026년 29기 동아리 활동 개요</h3>
           <p class="text-xs text-brand-textMute leading-relaxed">
-            전국/지방 기능경기대회 공식 참가작 및 시연 과정의 고화질 아카이빙 비디오입니다. 정밀 테크놀로지와 표준 매뉴얼 준수 항목을 상영합니다.
+            피부 미용 동아리 2026년 29기 활동 기록 아카이빙 비디오입니다. 메디컬 에스테틱 기초 실습, 기능성 피부 케어 기기 운용, 프로페셔널 피부 관리 프로토콜 실연 과정이 수록되어 있습니다.
           </p>
           <div class="mt-3 pt-3 border-t border-brand-borderDark/60 flex items-center justify-between text-xs font-rajdhani text-brand-textMute">
-            <span>MEDIA ID: 04.mp4</span>
-            <span class="text-brand-gold">RATING: OFFICIAL</span>
+            <span>MEDIA ID: 03.mp4</span>
+            <span class="text-brand-gold">COHORT: 29TH CLASS</span>
           </div>
         </div>
 
@@ -344,20 +323,20 @@
         <div class="glass-card rounded-2xl p-5 border border-brand-borderDark relative overflow-hidden">
           <div class="flex items-center justify-between mb-2">
             <span class="font-rajdhani text-xs font-bold text-brand-mint uppercase tracking-widest">METRICS // 02</span>
-            <span class="text-[10px] font-rajdhani px-2 py-0.5 rounded bg-[#041d18] border border-brand-mint text-brand-mint">ACTIVE SPEC</span>
+            <span class="text-[10px] font-rajdhani px-2 py-0.5 rounded bg-[#041d18] border border-brand-mint text-brand-mint">29TH ACTIVE</span>
           </div>
-          <h3 class="font-cinzel text-base font-bold text-brand-textMain mb-1">정밀 연구소 분석 프로토콜</h3>
+          <h3 class="font-cinzel text-base font-bold text-brand-textMain mb-1">피부 케어 테크닉 이수 지표</h3>
           <div class="space-y-1.5 mt-2 text-xs">
             <div class="flex justify-between text-brand-textMute">
-              <span>스펙트럼 분석</span>
-              <span class="text-brand-textMain font-rajdhani font-semibold">99.8% PRECISION</span>
+              <span>동아리 커리큘럼 이수율</span>
+              <span class="text-brand-textMain font-rajdhani font-semibold">100% COMPLETE</span>
             </div>
             <div class="w-full h-1 bg-[#020c0a] rounded-full overflow-hidden">
-              <div class="h-full bg-gradient-to-r from-brand-mint to-brand-cyan w-[99.8%]"></div>
+              <div class="h-full bg-gradient-to-r from-brand-mint to-brand-cyan w-[100%]"></div>
             </div>
             <div class="flex justify-between text-brand-textMute pt-1">
-              <span>메디컬 스킨/바이오 적합도</span>
-              <span class="text-brand-gold font-rajdhani font-semibold">GRADE AAA+</span>
+              <span>메디컬 스킨 테라피 적합도</span>
+              <span class="text-brand-gold font-rajdhani font-semibold">LEVEL: ADVANCED</span>
             </div>
           </div>
         </div>
@@ -371,7 +350,7 @@
             </div>
             <h3 class="font-cinzel text-base font-bold text-brand-textMain mb-1">상영관 제어 및 복귀</h3>
             <p class="text-xs text-brand-textMute leading-relaxed">
-              영상이 끝났거나 이전 메인 화면으로 복귀하려면 상단 또는 아래 버튼을 클릭하십시오.
+              29기 동아리 활동 영상 시청 후 이전 메인 화면으로 돌아가려면 상단 배너 또는 아래 버튼을 클릭하십시오.
             </p>
           </div>
           <div class="mt-4 pt-3 border-t border-brand-borderDark/60 flex items-center gap-2">
@@ -388,7 +367,7 @@
 
       <!-- Copyright & System Watermark -->
       <div class="text-center py-2 text-xs font-rajdhani text-brand-textMute tracking-wider">
-        <span>LUMINARAE BIO-LABORATORY ARCHIVES &copy; 2026. ALL COMPETITION ASSETS RESERVED.</span>
+        <span>LUMINARAE ESTHETICS CLUB ARCHIVES &copy; 2026. 29TH GENERATION ACTIVITIES RESERVED.</span>
       </div>
     </footer>
 
