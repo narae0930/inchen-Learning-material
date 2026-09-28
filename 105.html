@@ -1,0 +1,698 @@
+<!DOCTYPE html>
+<html lang="ko" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMINARAE | 에스테틱 & 피부과 클리닉 스펙 부스팅 아카이브</title>
+  
+  <!-- Google Fonts: Cinzel, Rajdhani, Pretendard -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            mainBg1: '#020c0a',
+            mainBg2: '#031512',
+            emeraldBorder: '#0f483e',
+            emeraldBorderLight: '#1b685a',
+            neonMint: '#00ff9d',
+            neonCyan: '#2cf5e2',
+            amberGold: '#e6b349',
+            textWhiteMint: '#e3f7f2',
+            textMuteGreen: '#7fa39b',
+          },
+          fontFamily: {
+            serifTitle: ['Cinzel', 'serif'],
+            techCode: ['Rajdhani', 'sans-serif'],
+            sans: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+          },
+          boxShadow: {
+            'glow-mint': '0 0 25px -4px rgba(0, 255, 157, 0.28)',
+            'glow-cyan': '0 0 25px -4px rgba(44, 245, 226, 0.28)',
+            'glow-gold': '0 0 25px -4px rgba(230, 179, 73, 0.28)',
+            'card-glass': '0 10px 35px 0 rgba(0, 0, 0, 0.55)',
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Global Base */
+    body {
+      background-color: #020c0a;
+      background-image: 
+        radial-gradient(circle at 10% 15%, rgba(15, 72, 62, 0.3) 0%, transparent 45%),
+        radial-gradient(circle at 90% 70%, rgba(44, 245, 226, 0.08) 0%, transparent 50%),
+        linear-gradient(180deg, #020c0a 0%, #031512 100%);
+      color: #e3f7f2;
+      font-family: 'Pretendard', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Medical Laboratory Micro Grid */
+    .lab-grid {
+      background-size: 36px 36px;
+      background-image: 
+        linear-gradient(to right, rgba(15, 72, 62, 0.18) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(15, 72, 62, 0.18) 1px, transparent 1px);
+    }
+
+    /* High-End Glassmorphism Card (Without any bobbing/floating jump) */
+    .glass-card {
+      background: linear-gradient(135deg, rgba(8, 45, 39, 0.85), rgba(3, 20, 17, 0.95));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid #0f483e;
+      transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+    }
+    
+    .glass-card:hover {
+      border-color: #1b685a;
+      box-shadow: 0 12px 30px -10px rgba(0, 255, 157, 0.2);
+    }
+
+    /* Subtle Horizontal Scanner Sweep across Header Only */
+    .hud-scanner-line {
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #00ff9d, #2cf5e2, transparent);
+      animation: scanBeam 4.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+
+    @keyframes scanBeam {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #020c0a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #0f483e;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00ff9d;
+    }
+  </style>
+</head>
+<body class="relative min-h-screen lab-grid selection:bg-neonMint selection:text-black">
+
+  <header class="sticky top-0 z-50 backdrop-blur-xl bg-[#020c0a]/92 border-b border-emeraldBorder">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Brand Logo -->
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#082d27] to-[#0f483e] border border-neonMint/40 flex items-center justify-center shadow-glow-mint">
+          <i class="fa-solid fa-spa text-neonMint text-lg"></i>
+        </div>
+        <div>
+          <span class="font-serifTitle text-xl sm:text-2xl tracking-widest font-bold text-white block leading-none">
+            LUMINARAE
+          </span>
+          <span class="font-techCode text-[10px] tracking-[0.22em] text-neonCyan uppercase font-semibold">
+            Medical Aesthetic Spec Protocol
+          </span>
+        </div>
+      </div>
+
+      <!-- Telemetry Tags -->
+      <div class="hidden lg:flex items-center gap-4 text-xs font-techCode">
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-emeraldBorder bg-[#082d27]/40">
+          <span class="w-2 h-2 rounded-full bg-neonMint"></span>
+          <span class="text-textMuteGreen">CURRICULUM:</span>
+          <span class="text-textWhiteMint font-semibold">SKIN CARE & CLINIC ALLIANCE</span>
+        </div>
+        <div class="flex items-center gap-2 px-3 py-1.5 rounded-lg border border-emeraldBorder bg-[#082d27]/40">
+          <i class="fa-solid fa-award text-amberGold"></i>
+          <span class="text-textMuteGreen">AUTHORITY:</span>
+          <span class="text-amberGold font-semibold">식품의약품안전처 / 한국직능원 등록</span>
+        </div>
+      </div>
+
+      <!-- Header Action -->
+      <div class="flex items-center gap-3">
+        <a href="#certificate-viewer" class="px-4 py-2 rounded-xl border border-neonMint/60 bg-neonMint/10 hover:bg-neonMint/20 text-neonMint font-techCode text-xs tracking-wider font-bold transition-all shadow-glow-mint flex items-center gap-2">
+          <i class="fa-solid fa-file-shield"></i>
+          <span>자격증 05.png 뷰어</span>
+        </a>
+      </div>
+    </div>
+    
+    <!-- Top HUD Scanner Beam -->
+    <div class="relative w-full h-[1px] bg-emeraldBorder overflow-hidden">
+      <div class="hud-scanner-line"></div>
+    </div>
+  </header>
+
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 lg:py-16 space-y-20">
+
+    <section class="relative">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neonMint/40 bg-neonMint/5 mb-5 text-xs tracking-wider text-neonMint font-techCode uppercase font-bold">
+        <i class="fa-solid fa-notes-medical"></i>
+        <span>SKIN THERAPIST & CLINIC COORDINATOR SPEC EMPOWERMENT</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+        <div class="lg:col-span-7 space-y-6">
+          <h1 class="font-serifTitle text-3xl sm:text-4xl lg:text-5xl font-extrabold text-white leading-tight">
+            초보 피부미용인의 빈 이력서,<br/>
+            <span class="text-transparent bg-clip-text bg-gradient-to-r from-neonMint via-neonCyan to-amberGold">
+              검증된 4대 핵심 자격증
+            </span>으로 채우다.
+          </h1>
+
+          <p class="text-textMuteGreen text-base sm:text-lg leading-relaxed font-normal">
+            이제 막 취업 시장에 뛰어든 신입 피부미용사, 에스테티션, 피부과·성형외과 코디네이터 지망생의 가장 큰 고민은 바로 
+            <strong class="text-textWhiteMint font-semibold">"자격증 란에 국가기술자격 단 1줄만 있거나 공란인 이력서"</strong>입니다.
+            경력이 부족한 초보일수록 <span class="text-neonMint font-medium">아로마 테라피, 전문 피부/병원 코디네이션 자격</span>으로 실무 준비도와 전문성을 증명해야 서류 합격률이 극대화됩니다.
+          </p>
+
+          <!-- Core Stat Indicators -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-2">
+            <div class="glass-card p-4 rounded-2xl border border-emeraldBorder">
+              <span class="text-xs font-techCode text-amberGold tracking-wider block">KEY DEFICIT</span>
+              <p class="text-lg font-bold text-textWhiteMint mt-1 font-serifTitle">이력서 공란 극복</p>
+              <p class="text-xs text-textMuteGreen mt-0.5">서류 검토 시 첫인상 탈락 방지</p>
+            </div>
+
+            <div class="glass-card p-4 rounded-2xl border border-emeraldBorder">
+              <span class="text-xs font-techCode text-neonMint tracking-wider block">CLINICAL FIT</span>
+              <p class="text-lg font-bold text-textWhiteMint mt-1 font-serifTitle">식약처 인가 아로마</p>
+              <p class="text-xs text-textMuteGreen mt-0.5">호텔스파·메디컬스파 우대 스펙</p>
+            </div>
+
+            <div class="glass-card p-4 rounded-2xl border border-emeraldBorder">
+              <span class="text-xs font-techCode text-neonCyan tracking-wider block">HOSPITAL DESK</span>
+              <p class="text-lg font-bold text-textWhiteMint mt-1 font-serifTitle">피부·병원 코디</p>
+              <p class="text-xs text-textMuteGreen mt-0.5">상담 실장 및 케어 차트 마스터</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Resume Compare Simulator -->
+        <div class="lg:col-span-5">
+          <div class="glass-card p-6 sm:p-7 rounded-3xl border border-emeraldBorderLight shadow-2xl relative">
+            <div class="flex items-center justify-between border-b border-emeraldBorder/80 pb-4 mb-4">
+              <div class="flex items-center gap-2">
+                <i class="fa-solid fa-id-card-clip text-neonMint"></i>
+                <span class="font-serifTitle text-sm font-bold tracking-wider text-white">RESUME IMPACT SIMULATOR</span>
+              </div>
+              <span class="text-[11px] font-techCode px-2.5 py-1 rounded bg-[#082d27] border border-neonMint/40 text-neonMint">
+                SKIN CLINIC TARGET
+              </span>
+            </div>
+
+            <div class="space-y-4 text-xs">
+              <!-- Before state -->
+              <div class="p-4 rounded-2xl bg-black/40 border border-red-500/30">
+                <div class="flex items-center justify-between text-red-400 font-bold mb-2">
+                  <span><i class="fa-regular fa-circle-xmark mr-1.5"></i>보강 전 (초보 신입 지원자)</span>
+                  <span class="font-techCode text-[11px] text-red-400">PASS RATE: 22%</span>
+                </div>
+                <div class="space-y-1.5 text-textMuteGreen text-[11px]">
+                  <div class="p-2 rounded bg-white/5 line-through">· 자격증: 미용사(피부) 1개 외 공란</div>
+                  <div class="p-2 rounded bg-white/5 opacity-70">· 병원 차트 상담 및 아로마 맞춤 처방 경험 증빙 불가</div>
+                </div>
+              </div>
+
+              <!-- After state -->
+              <div class="p-4 rounded-2xl bg-[#082d27]/70 border border-neonMint/50 shadow-glow-mint">
+                <div class="flex items-center justify-between text-neonMint font-bold mb-2">
+                  <span><i class="fa-solid fa-circle-check mr-1.5"></i>보강 후 (LUMINARAE 아카이브 완성)</span>
+                  <span class="font-techCode text-[11px] text-neonMint">PASS RATE: 94%</span>
+                </div>
+                <div class="space-y-1.5 text-[11px] text-textWhiteMint">
+                  <div class="p-1.5 px-2.5 rounded bg-[#020c0a]/80 border border-emeraldBorder flex items-center justify-between">
+                    <span>1. 미용사(피부) <span class="text-textMuteGreen text-[10px]">[국가기술자격]</span></span>
+                    <span class="font-techCode text-neonMint">기본면허</span>
+                  </div>
+                  <div class="p-1.5 px-2.5 rounded bg-[#020c0a]/80 border border-emeraldBorder flex items-center justify-between">
+                    <span>2. 아로마전문가 1급 <span class="text-textMuteGreen text-[10px]">[식약처 2022-005227]</span></span>
+                    <span class="font-techCode text-amberGold">처방특화</span>
+                  </div>
+                  <div class="p-1.5 px-2.5 rounded bg-[#020c0a]/80 border border-emeraldBorder flex items-center justify-between">
+                    <span>3. 피부코디네이터 1급 <span class="text-textMuteGreen text-[10px]">[한자평]</span></span>
+                    <span class="font-techCode text-neonCyan">상담전문</span>
+                  </div>
+                  <div class="p-1.5 px-2.5 rounded bg-[#020c0a]/80 border border-emeraldBorder flex items-center justify-between">
+                    <span>4. 병원코디네이터 1급 <span class="text-textMuteGreen text-[10px]">[한자평]</span></span>
+                    <span class="font-techCode text-neonCyan">클리닉운영</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <p class="mt-4 pt-3 border-t border-emeraldBorder/70 text-[11px] text-textMuteGreen flex items-center justify-between">
+              <span>* 채용 시 '즉시 상담 및 시술 보조 가능한 신입'으로 평가</span>
+              <i class="fa-solid fa-circle-nodes text-neonMint"></i>
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="certificate-viewer" class="scroll-mt-24 space-y-6">
+      
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b border-emeraldBorder/80 pb-5">
+        <div>
+          <div class="inline-flex items-center gap-2 text-xs font-techCode text-amberGold tracking-widest uppercase mb-1">
+            <i class="fa-solid fa-microscope text-neonMint"></i>
+            <span>AUTHENTIC ARCHIVE DISPLAY // SECTION 05</span>
+          </div>
+          <h2 class="font-serifTitle text-2xl sm:text-3xl font-bold text-white">
+            피부미용 마스터 자격 인증 : <span class="text-neonMint font-sans">자격증 05.png</span>
+          </h2>
+          <p class="text-textMuteGreen text-sm mt-1">
+            이력서에 탑재되는 정식 등록 민간자격증 및 국가자격 통합 와이드 증명 규격입니다.
+          </p>
+        </div>
+
+        <div class="flex items-center gap-3">
+          <div class="px-3.5 py-1.5 rounded-xl bg-emeraldBorder/40 border border-emeraldBorder text-xs font-techCode text-neonMint flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-neonMint"></span>
+            FILE: 자격증 05.png
+          </div>
+          <button onclick="toggleWideView()" class="px-3.5 py-1.5 rounded-xl bg-neonCyan/10 hover:bg-neonCyan/20 border border-neonCyan/40 text-neonCyan text-xs font-techCode font-semibold transition-all flex items-center gap-1.5">
+            <i class="fa-solid fa-arrows-left-right"></i>
+            <span id="zoomBtnText">와이드 확장</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Wide Certificate Viewport Card -->
+      <div class="glass-card rounded-3xl p-4 sm:p-7 border border-emeraldBorderLight shadow-2xl relative overflow-hidden">
+        
+        <!-- Tech HUD Accents -->
+        <div class="flex items-center justify-between text-[11px] font-techCode text-textMuteGreen/80 mb-3 px-1">
+          <span class="flex items-center gap-1.5">
+            <i class="fa-solid fa-lock text-neonMint"></i>
+            REGISTRATION ARCHIVE: 식약처 등록 제 2022-005227호 외
+          </span>
+          <span class="text-neonCyan">VIEWPORT: HORIZONTAL HIGH-RES WIDE</span>
+        </div>
+
+        <!-- Wide Certificate Canvas Wrapper -->
+        <div id="certContainer" class="relative w-full rounded-2xl overflow-hidden border border-emeraldBorder bg-[#020c0a] flex items-center justify-center min-h-[320px] sm:min-h-[460px] p-2 transition-all duration-300">
+          
+          <!-- Image Element seamlessly pointing to '자격증 05.png' with detailed placeholder fallback -->
+          <img 
+            id="certificateImage"
+            src="자격증 05.png" 
+            alt="자격증 05.png 피부미용 자격증 원본" 
+            class="w-full h-auto object-contain max-h-[560px] rounded-xl shadow-2xl transition-all duration-300"
+            onerror="this.onerror=null; this.src='https://placehold.co/1300x520/031512/00ff9d?text=%EC%9E%90%EA%B2%A9%EC%A6%9D+05.png+%ED%94%BC%EB%B6%80%EB%AF%B8%EC%9 contemporary+%EC%99%80%EC%9D%B4%EB%93%9C+%EC%97%B0%EB%8F%99+%EC%98%81%EC%97%AD+(Aroma+%26+Clinic+Coordinators)';"
+          />
+
+          <!-- Live Watermark Tag -->
+          <div class="absolute bottom-5 right-5 pointer-events-none flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#020c0a]/85 backdrop-blur-md border border-emeraldBorder text-xs font-techCode text-neonMint">
+            <i class="fa-solid fa-shield-halved text-amberGold"></i>
+            <span>VERIFIED BY KOREA LICENSE APPROVAL INSTITUTE</span>
+          </div>
+        </div>
+
+        <!-- Certificate Official Reference Data Strip -->
+        <div class="mt-6 pt-5 border-t border-emeraldBorder/70 grid grid-cols-2 lg:grid-cols-4 gap-4 text-xs">
+          <div class="p-3 rounded-xl bg-[#020c0a]/60 border border-emeraldBorder">
+            <span class="text-textMuteGreen font-techCode block text-[10px] uppercase">REPRESENTATIVE CERT</span>
+            <span class="text-textWhiteMint font-bold text-sm block mt-0.5">아로마전문가 1급</span>
+            <span class="text-amberGold text-[11px]">주무부처: 식품의약품안전처</span>
+          </div>
+          <div class="p-3 rounded-xl bg-[#020c0a]/60 border border-emeraldBorder">
+            <span class="text-textMuteGreen font-techCode block text-[10px] uppercase">LEGAL FOUNDATION</span>
+            <span class="text-neonMint font-bold text-sm block mt-0.5">자격기본법 시행령 제17조</span>
+            <span class="text-textMuteGreen text-[11px]">한국자격검정평가진흥원</span>
+          </div>
+          <div class="p-3 rounded-xl bg-[#020c0a]/60 border border-emeraldBorder">
+            <span class="text-textMuteGreen font-techCode block text-[10px] uppercase">COORDINATOR LINE</span>
+            <span class="text-neonCyan font-bold text-sm block mt-0.5">피부 & 병원코디네이터 1급</span>
+            <span class="text-textMuteGreen text-[11px]">피부과·성형외과 환자 차트 관리</span>
+          </div>
+          <div class="p-3 rounded-xl bg-[#020c0a]/60 border border-emeraldBorder">
+            <span class="text-textMuteGreen font-techCode block text-[10px] uppercase">BASIC LICENSE</span>
+            <span class="text-textWhiteMint font-bold text-sm block mt-0.5">미용사 (피부)</span>
+            <span class="text-amberGold text-[11px]">한국산업인력공단 시행</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="space-y-8">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-emeraldBorder/80 pb-4">
+        <div>
+          <span class="font-techCode text-xs tracking-widest text-neonMint uppercase font-bold">PORTFOLIO BREAKDOWN</span>
+          <h2 class="font-serifTitle text-2xl sm:text-3xl font-bold text-white mt-1">
+            제공 자격증 분석 및 이력서 기재 핵심 규격
+          </h2>
+        </div>
+        <p class="text-xs text-textMuteGreen font-techCode">
+          OFFICIAL REGISTERED MINISTRIES: MFDS & HRD KOREA
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+
+        <!-- Card 1: 미용사 (피부) -->
+        <div class="glass-card rounded-3xl p-5 border border-emeraldBorder flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-techCode text-amberGold px-2.5 py-0.5 rounded bg-amberGold/10 border border-amberGold/30">NATIONAL TECH</span>
+              <i class="fa-solid fa-stamp text-amberGold"></i>
+            </div>
+            <h3 class="text-lg font-bold text-textWhiteMint">미용사 (피부)</h3>
+            <div class="text-xs space-y-1 text-textMuteGreen">
+              <p><strong class="text-textWhiteMint">시행처:</strong> 한국산업인력공단</p>
+              <p><strong class="text-textWhiteMint">주무부처:</strong> 보건복지부</p>
+              <p class="text-[11px] text-textMuteGreen/90 mt-2 leading-relaxed">
+                피부관리실 창업 및 피부과 취업 시 피부관리 업무를 합법적으로 수행할 수 있는 필수 국가기술자격입니다.
+              </p>
+            </div>
+          </div>
+          <button onclick="copyToClipboard('미용사(피부) | 시행처: 한국산업인력공단 | 구분: 국가기술자격')" class="mt-5 w-full py-2 rounded-xl bg-[#082d27] border border-emeraldBorderLight hover:border-amberGold text-xs font-techCode font-bold text-textWhiteMint hover:text-amberGold transition-all flex items-center justify-center gap-1.5">
+            <i class="fa-regular fa-copy"></i>
+            <span>이력서 한 줄 복사</span>
+          </button>
+        </div>
+
+        <!-- Card 2: 아로마전문가 1급 -->
+        <div class="glass-card rounded-3xl p-5 border border-emeraldBorder flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-techCode text-neonMint px-2.5 py-0.5 rounded bg-neonMint/10 border border-neonMint/30">REGISTERED CERT</span>
+              <i class="fa-solid fa-droplet text-neonMint"></i>
+            </div>
+            <h3 class="text-lg font-bold text-textWhiteMint">아로마전문가 1급</h3>
+            <div class="text-xs space-y-1 text-textMuteGreen">
+              <p><strong class="text-textWhiteMint">등록번호:</strong> 2022-005227</p>
+              <p><strong class="text-textWhiteMint">주무부처:</strong> 식품의약품안전처</p>
+              <p class="text-[11px] text-textMuteGreen/90 mt-2 leading-relaxed">
+                천연 에센셜 오일의 피부 기전 이해와 맞춤형 블렌딩 테라피로 프리미엄 에스테틱 및 스파에서 선호하는 고급 스펙입니다.
+              </p>
+            </div>
+          </div>
+          <button onclick="copyToClipboard('아로마전문가 1급 | 주무부처: 식품의약품안전처 | 등록번호: 2022-005227 | 발급처: 한국자격검정평가진흥원')" class="mt-5 w-full py-2 rounded-xl bg-[#082d27] border border-emeraldBorderLight hover:border-neonMint text-xs font-techCode font-bold text-textWhiteMint hover:text-neonMint transition-all flex items-center justify-center gap-1.5">
+            <i class="fa-regular fa-copy"></i>
+            <span>이력서 한 줄 복사</span>
+          </button>
+        </div>
+
+        <!-- Card 3: 피부코디네이터 1급 -->
+        <div class="glass-card rounded-3xl p-5 border border-emeraldBorder flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-techCode text-neonCyan px-2.5 py-0.5 rounded bg-neonCyan/10 border border-neonCyan/30">REGISTERED CERT</span>
+              <i class="fa-solid fa-clipboard-user text-neonCyan"></i>
+            </div>
+            <h3 class="text-lg font-bold text-textWhiteMint">피부코디네이터 1급</h3>
+            <div class="text-xs space-y-1 text-textMuteGreen">
+              <p><strong class="text-textWhiteMint">발급기관:</strong> 한국자격검정평가진흥원</p>
+              <p><strong class="text-textWhiteMint">핵심역량:</strong> 피부진단 & 상담관리</p>
+              <p class="text-[11px] text-textMuteGreen/90 mt-2 leading-relaxed">
+                고객 내원 시 피부 상태 정밀 상담, 관리 플랜 수립 및 사후 진정 케어 가이드를 주도하는 에스테틱 전문 상담 자격입니다.
+              </p>
+            </div>
+          </div>
+          <button onclick="copyToClipboard('피부코디네이터 1급 | 발급처: 한국자격검정평가진흥원 | 직무: 피부 상담 및 프로그램 매니지먼트')" class="mt-5 w-full py-2 rounded-xl bg-[#082d27] border border-emeraldBorderLight hover:border-neonCyan text-xs font-techCode font-bold text-textWhiteMint hover:text-neonCyan transition-all flex items-center justify-center gap-1.5">
+            <i class="fa-regular fa-copy"></i>
+            <span>이력서 한 줄 복사</span>
+          </button>
+        </div>
+
+        <!-- Card 4: 병원코디네이터 1급 -->
+        <div class="glass-card rounded-3xl p-5 border border-emeraldBorder flex flex-col justify-between">
+          <div class="space-y-3">
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-techCode text-neonMint px-2.5 py-0.5 rounded bg-neonMint/10 border border-neonMint/30">CLINICAL DESK</span>
+              <i class="fa-solid fa-hospital-user text-neonMint"></i>
+            </div>
+            <h3 class="text-lg font-bold text-textWhiteMint">병원코디네이터 1급</h3>
+            <div class="text-xs space-y-1 text-textMuteGreen">
+              <p><strong class="text-textWhiteMint">발급기관:</strong> 한국자격검정평가진흥원</p>
+              <p><strong class="text-textWhiteMint">적용분야:</strong> 피부과 / 성형외과 클리닉</p>
+              <p class="text-[11px] text-textMuteGreen/90 mt-2 leading-relaxed">
+                의료 서비스 매너, 병의원 원무 차트, 환자 리텐션 관리 및 시술 전후 의료 커뮤니케이션을 총괄하는 핵심 자격입니다.
+              </p>
+            </div>
+          </div>
+          <button onclick="copyToClipboard('병원코디네이터 1급 | 발급처: 한국자격검정평가진흥원 | 직무: 의료서비스 상담 및 원무 고객관리')" class="mt-5 w-full py-2 rounded-xl bg-[#082d27] border border-emeraldBorderLight hover:border-neonMint text-xs font-techCode font-bold text-textWhiteMint hover:text-neonMint transition-all flex items-center justify-center gap-1.5">
+            <i class="fa-regular fa-copy"></i>
+            <span>이력서 한 줄 복사</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="glass-card rounded-3xl p-6 sm:p-10 border border-emeraldBorderLight relative overflow-hidden">
+      <div class="max-w-4xl space-y-6">
+        
+        <div class="flex items-center justify-between">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-neonMint/40 bg-neonMint/5 text-neonMint font-techCode text-xs font-bold">
+            <i class="fa-solid fa-terminal"></i>
+            <span>ONE-CLICK RESUME BATCH EXPORT</span>
+          </div>
+          <span class="text-xs font-techCode text-amberGold">JOBKOREA & SARAMIN READY</span>
+        </div>
+
+        <div>
+          <h2 class="font-serifTitle text-2xl sm:text-3xl font-bold text-white">
+            이력서 '자격사항/어학' 입력란 원클릭 완성 서식
+          </h2>
+          <p class="text-textMuteGreen text-sm mt-1">
+            사람인, 잡코리아, 병원 채용 서식에 그대로 붙여넣을 수 있도록 공식 규격으로 포맷팅된 데이터입니다.
+          </p>
+        </div>
+
+        <!-- Formatted Resume Table -->
+        <div class="overflow-x-auto rounded-2xl border border-emeraldBorder bg-[#020c0a]/90">
+          <table class="w-full text-left text-xs">
+            <thead class="bg-[#082d27] text-textWhiteMint font-techCode uppercase border-b border-emeraldBorder">
+              <tr>
+                <th class="p-3.5">자격/면허명</th>
+                <th class="p-3.5">발행처/기관</th>
+                <th class="p-3.5">등록/관리번호</th>
+                <th class="p-3.5">주무부처</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-emeraldBorder/60 text-textMuteGreen">
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-3.5 font-semibold text-textWhiteMint">미용사(피부)</td>
+                <td class="p-3.5">한국산업인력공단</td>
+                <td class="p-3.5 font-mono text-neonCyan">국가기술자격</td>
+                <td class="p-3.5 text-amberGold">보건복지부</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-3.5 font-semibold text-textWhiteMint">아로마전문가 1급</td>
+                <td class="p-3.5">한국자격검정평가진흥원</td>
+                <td class="p-3.5 font-mono text-neonCyan">2022-005227</td>
+                <td class="p-3.5 text-amberGold">식품의약품안전처</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-3.5 font-semibold text-textWhiteMint">피부코디네이터 1급</td>
+                <td class="p-3.5">한국자격검정평가진흥원</td>
+                <td class="p-3.5 font-mono text-neonCyan">등록민간자격</td>
+                <td class="p-3.5 text-amberGold">보건의료/뷰티</td>
+              </tr>
+              <tr class="hover:bg-white/5 transition-colors">
+                <td class="p-3.5 font-semibold text-textWhiteMint">병원코디네이터 1급</td>
+                <td class="p-3.5">한국자격검정평가진흥원</td>
+                <td class="p-3.5 font-mono text-neonCyan">등록민간자격</td>
+                <td class="p-3.5 text-amberGold">보건복지 계열</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="flex flex-col sm:flex-row items-center gap-4 pt-2">
+          <button onclick="copyFullResume()" class="w-full sm:w-auto px-6 py-3 rounded-xl bg-gradient-to-r from-neonMint to-neonCyan text-black font-techCode text-sm font-bold tracking-wider hover:opacity-95 transition-all flex items-center justify-center gap-2 shadow-glow-mint">
+            <i class="fa-solid fa-copy"></i>
+            <span>4대 자격증 전체 양식 한 번에 복사하기</span>
+          </button>
+          <span class="text-xs text-textMuteGreen">
+            클립보드에 정돈된 텍스트 형태로 복사되어 바로 붙여넣을 수 있습니다.
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <section class="space-y-6">
+      <div class="text-center max-w-2xl mx-auto space-y-2">
+        <span class="font-techCode text-xs tracking-widest text-neonCyan uppercase font-bold px-3 py-1 rounded-full border border-neonCyan/30 bg-neonCyan/5">
+          FAST-TRACK ROADMAP
+        </span>
+        <h2 class="font-serifTitle text-2xl sm:text-3xl font-bold text-white">
+          초보자를 위한 3주 완성 자격증 취득 플랜
+        </h2>
+        <p class="text-textMuteGreen text-xs sm:text-sm">
+          비전공자나 이력서 공백기가 고민인 취업준비생을 위한 고밀도 자격 취득 순서도
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 pt-4">
+        
+        <div class="glass-card p-6 rounded-3xl border border-emeraldBorder">
+          <div class="font-techCode text-neonMint font-bold text-sm mb-1">PHASE 01 // 1주차</div>
+          <h3 class="text-base font-bold text-textWhiteMint mb-2">아로마 테라피 원리 & 성분학</h3>
+          <p class="text-xs text-textMuteGreen leading-relaxed">
+            식약처 등록 아로마전문가 1급 온라인 검정 이수. 천연 에센셜 오일의 기전 및 메디컬 스파의 맞춤형 블렌딩 처방 기초를 마스터합니다.
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-3xl border border-emeraldBorder">
+          <div class="font-techCode text-neonCyan font-bold text-sm mb-1">PHASE 02 // 2주차</div>
+          <h3 class="text-base font-bold text-textWhiteMint mb-2">피부 상담 & 진단 코디네이션</h3>
+          <p class="text-xs text-textMuteGreen leading-relaxed">
+            피부코디네이터 1급 과정 완성. 피부 타입별 시술 전후 상담 기법, 홈케어 처방 티칭, 고객 응대 시뮬레이션을 정립합니다.
+          </p>
+        </div>
+
+        <div class="glass-card p-6 rounded-3xl border border-emeraldBorder">
+          <div class="font-techCode text-amberGold font-bold text-sm mb-1">PHASE 03 // 3주차</div>
+          <h3 class="text-base font-bold text-textWhiteMint mb-2">피부과/클리닉 원무 및 실장 실무</h3>
+          <p class="text-xs text-textMuteGreen leading-relaxed">
+            병원코디네이터 1급 취득. 전자 차트 관리, 예약 컴플레인 조율, 원내 마케팅 프로세스를 습득하여 병원급 취업 서류를 완성합니다.
+          </p>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="mt-20 border-t border-emeraldBorder/80 bg-[#020c0a] py-10 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-textMuteGreen">
+      <div class="flex items-center gap-3">
+        <span class="font-serifTitle font-bold text-lg text-white tracking-widest">LUMINARAE</span>
+        <span class="text-emeraldBorderLight">|</span>
+        <span>AESTHETIC CLINICAL SPEC ARCHIVE LAB</span>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-6 font-techCode">
+        <span class="flex items-center gap-1.5 text-neonMint">
+          <span class="w-2 h-2 rounded-full bg-neonMint"></span>
+          SECURE ENCRYPTION
+        </span>
+        <span>ATTACHMENT: 자격증 05.png</span>
+        <span class="text-textWhiteMint">© 2026 LUMINARAE PROTOCOL. ALL RIGHTS RESERVED.</span>
+      </div>
+    </div>
+  </footer>
+
+  <div id="toastMessage" class="fixed bottom-8 right-8 z-50 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none">
+    <div class="glass-card px-5 py-3.5 rounded-2xl border border-neonMint shadow-glow-mint flex items-center gap-3 bg-[#031512]/95 text-textWhiteMint text-xs sm:text-sm font-medium">
+      <i class="fa-solid fa-circle-check text-neonMint text-lg"></i>
+      <span id="toastText">이력서 기재 양식이 클립보드에 복사되었습니다.</span>
+    </div>
+  </div>
+
+  <script>
+    // Copy single string to clipboard
+    function copyToClipboard(text) {
+      executeCopy(text, '선택한 자격증 기재 문구가 복사되었습니다.');
+    }
+
+    // Copy full structured resume string
+    function copyFullResume() {
+      const fullText = 
+`[이력서 자격/면허사항]
+1. 미용사(피부) | 시행처: 한국산업인력공단 | 구분: 국가기술자격
+2. 아로마전문가 1급 | 주무부처: 식품의약품안전처 | 등록번호: 2022-005227 | 발급기관: 한국자격검정평가진흥원
+3. 피부코디네이터 1급 | 발급기관: 한국자격검정평가진흥원 | 등록민간자격
+4. 병원코디네이터 1급 | 발급기관: 한국자격검정평가진흥원 | 등록민간자격`;
+      
+      executeCopy(fullText, '4대 피부미용 자격증 전체 양식이 클립보드에 복사되었습니다.');
+    }
+
+    function executeCopy(text, successMsg) {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(text).then(() => {
+          showToast(successMsg);
+        }).catch(() => {
+          fallbackCopyText(text, successMsg);
+        });
+      } else {
+        fallbackCopyText(text, successMsg);
+      }
+    }
+
+    function fallbackCopyText(text, successMsg) {
+      const textArea = document.createElement("textarea");
+      textArea.value = text;
+      textArea.style.position = "fixed";
+      textArea.style.left = "-999999px";
+      textArea.style.top = "-999999px";
+      document.body.appendChild(textArea);
+      textArea.focus();
+      textArea.select();
+      try {
+        document.execCommand('copy');
+        showToast(successMsg);
+      } catch (err) {
+        console.error('Fallback copy failed', err);
+      }
+      document.body.removeChild(textArea);
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toastMessage');
+      const textElem = document.getElementById('toastText');
+      if (!toast) return;
+
+      if (message && textElem) {
+        textElem.textContent = message;
+      }
+
+      toast.classList.remove('translate-y-24', 'opacity-0');
+      toast.classList.add('translate-y-0', 'opacity-100');
+
+      setTimeout(() => {
+        toast.classList.remove('translate-y-0', 'opacity-100');
+        toast.classList.add('translate-y-24', 'opacity-0');
+      }, 2600);
+    }
+
+    // Toggle wide view mode for the center certificate
+    let isWide = false;
+    function toggleWideView() {
+      const cert = document.getElementById('certificateImage');
+      const container = document.getElementById('certContainer');
+      const btnText = document.getElementById('zoomBtnText');
+      if (!cert || !container) return;
+
+      isWide = !isWide;
+      if (isWide) {
+        cert.classList.remove('max-h-[560px]');
+        cert.classList.add('max-h-none', 'w-full');
+        container.classList.add('border-neonMint', 'shadow-glow-mint');
+        if (btnText) btnText.textContent = '기본 비율로 복원';
+      } else {
+        cert.classList.add('max-h-[560px]');
+        cert.classList.remove('max-h-none');
+        container.classList.remove('border-neonMint', 'shadow-glow-mint');
+        if (btnText) btnText.textContent = '와이드 확장';
+      }
+    }
+  </script>
+</body>
+</html>
