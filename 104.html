@@ -3,632 +3,527 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LUMINARAE | Clinical Dermatology Portfolio Showcase</title>
-
+  <title>LUMINARAE // 기능경기대회 공식 상영관</title>
+  
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Google Fonts & Font Awesome Icons -->
+  
+  <!-- Fonts: Pretendard, Cinzel, Rajdhani -->
+  <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 
   <script>
-    if (window.tailwind) tailwind.config = {
+    tailwind.config = {
       theme: {
         extend: {
           colors: {
             brand: {
-              darkest: '#020c0a',
-              dark: '#031512',
-              cardBorder: '#0f483e',
-              borderLight: '#1b685a',
+              bgDark: '#020c0a',
+              bgDeep: '#031512',
+              borderDark: '#0f483e',
+              borderBright: '#1b685a',
               mint: '#00ff9d',
               cyan: '#2cf5e2',
               gold: '#e6b349',
               textMain: '#e3f7f2',
-              textMuted: '#7fa39b'
+              textMute: '#7fa39b'
             }
           },
           fontFamily: {
-            serifTitle: ['Cinzel', 'serif'],
-            tech: ['Rajdhani', 'sans-serif'],
-            body: ['Pretendard', '-apple-system', 'BlinkMacSystemFont', 'sans-serif']
+            pretendard: ['Pretendard', 'sans-serif'],
+            cinzel: ['Cinzel', 'serif'],
+            rajdhani: ['Rajdhani', 'sans-serif']
           }
         }
       }
-    };
+    }
   </script>
 
   <style>
+    * {
+      box-sizing: border-box;
+      -webkit-font-smoothing: antialiased;
+    }
+    
     body {
       background-color: #020c0a;
+      background-image: 
+        radial-gradient(ellipse 80% 50% at 50% -20%, rgba(0, 255, 157, 0.08), transparent 70%),
+        radial-gradient(circle at 85% 30%, rgba(44, 245, 226, 0.04), transparent 50%),
+        radial-gradient(circle at 15% 70%, rgba(15, 72, 62, 0.18), transparent 60%);
       color: #e3f7f2;
       font-family: 'Pretendard', sans-serif;
       overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    /* Subtle HUD grid backdrop */
+    .lab-grid-overlay {
+      background-size: 40px 40px;
       background-image: 
-        radial-gradient(circle at 15% 10%, rgba(0, 255, 157, 0.04) 0%, transparent 40%),
-        radial-gradient(circle at 85% 60%, rgba(44, 245, 226, 0.04) 0%, transparent 45%),
-        linear-gradient(rgba(15, 72, 62, 0.08) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(15, 72, 62, 0.08) 1px, transparent 1px);
-      background-size: 100% 100%, 100% 100%, 48px 48px, 48px 48px;
+        linear-gradient(to right, rgba(27, 104, 90, 0.07) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(27, 104, 90, 0.07) 1px, transparent 1px);
     }
 
+    /* Glass card styling */
     .glass-card {
-      background: linear-gradient(135deg, rgba(8, 45, 39, 0.88), rgba(3, 20, 17, 0.96));
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border: 1px solid #0f483e;
-      box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.8), 0 0 18px rgba(0, 255, 157, 0.06);
-      transition: all 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+      background: linear-gradient(135deg, rgba(8, 45, 39, 0.82), rgba(3, 20, 17, 0.95));
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid #1b685a;
+      box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.7), 0 0 20px rgba(0, 255, 157, 0.04);
     }
 
-    .glass-card:hover {
-      border-color: #2cf5e2;
-      box-shadow: 0 24px 48px -8px rgba(0, 0, 0, 0.9), 0 0 26px rgba(44, 245, 226, 0.16);
-      transform: translateY(-4px);
-    }
-
-    .video-container {
+    /* HUD Scanner horizontal beam (No vertical floating) */
+    .hud-scanner-line {
       position: relative;
       overflow: hidden;
-      background: #020907;
-      aspect-ratio: 16 / 9;
     }
-
-    .video-container video {
-      width: 100%;
+    .hud-scanner-line::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 40%;
       height: 100%;
-      object-fit: cover;
-      display: block;
+      background: linear-gradient(90deg, transparent, rgba(44, 245, 226, 0.8), rgba(0, 255, 157, 0.9), transparent);
+      animation: scanBeam 4s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+    }
+    @keyframes scanBeam {
+      0% { left: -40%; }
+      60%, 100% { left: 140%; }
     }
 
-    /* Modal Backdrop */
-    .modal-backdrop {
-      background-color: rgba(1, 10, 8, 0.92);
-      backdrop-filter: blur(14px);
+    /* Cinema Projection Ambient Glow */
+    .theater-glow {
+      box-shadow: 
+        0 0 60px -10px rgba(0, 255, 157, 0.25),
+        0 20px 80px rgba(2, 12, 10, 0.95),
+        inset 0 0 0 1px rgba(44, 245, 226, 0.3);
     }
 
-    /* Custom subtle scrollbar */
+    /* Cinema curved ambient floor reflection */
+    .cinema-reflection {
+      background: linear-gradient(180deg, rgba(44, 245, 226, 0.12) 0%, rgba(2, 12, 10, 0.0) 70%);
+      transform: perspective(600px) rotateX(60deg);
+      transform-origin: top center;
+    }
+
+    /* Custom video controls aesthetics */
+    video::-webkit-media-controls-panel {
+      background-image: linear-gradient(to top, rgba(3, 20, 17, 0.95), transparent);
+    }
+
+    /* Scrollbar */
     ::-webkit-scrollbar {
-      width: 8px;
+      width: 6px;
     }
     ::-webkit-scrollbar-track {
       background: #020c0a;
     }
     ::-webkit-scrollbar-thumb {
-      background: #0f483e;
+      background: #1b685a;
       border-radius: 9999px;
     }
     ::-webkit-scrollbar-thumb:hover {
       background: #00ff9d;
     }
-    [hidden] { display: none !important; }
-    #pdfModal.hidden { display: none !important; }
-    #pdfModal { position:fixed; inset:0; z-index:100; align-items:center; justify-content:center; }
-    #pdfModal > div { display:flex; flex-direction:column; width: min(1100px,96vw); height:88vh; background:#021310; }
-    #pdfModal > div > div:first-child { flex-shrink:0; }
-    .pdf-toolbar { display:flex; flex-wrap:wrap; align-items:center; gap:10px; padding:10px 16px; border-bottom:1px solid #0f483e; font-size:12px; }
-    .pdf-toolbar button,.pdf-toolbar a { background:#0f483e; color:#e3f7f2; padding:8px 12px; border-radius:8px; cursor:pointer; }
-    #pdfStatus { flex:1; min-width:180px; color:#b4d9ce; }
-    #pdfBody { flex:1; min-height:0; position:relative; }
-    #pdfFrame { width:100%; height:100%; border:0; background:white; }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between selection:bg-brand-mint selection:text-black">
+<body class="selection:bg-brand-mint selection:text-black">
 
-  <header class="sticky top-0 z-40 border-b border-brand-cardBorder/60 bg-[#020c0a]/90 backdrop-blur-md">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-      <div class="flex items-center space-x-3">
-        <div class="w-10 h-10 rounded-xl border border-brand-mint/40 bg-brand-dark flex items-center justify-center shadow-[0_0_12px_rgba(0,255,157,0.25)]">
-          <i class="fa-solid fa-dna text-brand-mint text-lg"></i>
-        </div>
-        <div>
-          <span class="font-serifTitle text-xl tracking-[0.25em] text-white font-bold block leading-none">LUMINARAE</span>
-          <span class="font-tech text-xs tracking-widest text-brand-mint uppercase">Aesthetic Clinical Symposium</span>
-        </div>
-      </div>
+  <div class="fixed inset-0 pointer-events-none lab-grid-overlay z-0"></div>
 
-      <div class="flex items-center space-x-4">
-        <div class="hidden sm:flex items-center space-x-2 text-xs font-tech text-brand-textMuted bg-[#031c17] px-3.5 py-1.5 rounded-full border border-brand-cardBorder">
-          <span class="inline-block w-2 h-2 rounded-full bg-brand-mint animate-pulse"></span>
-          <span>RESEARCH ARCHIVE ONLINE</span>
-        </div>
-        <button onclick="openAllPdfsInfo()" class="text-xs font-medium px-4 py-2 rounded-xl bg-brand-borderLight/30 hover:bg-brand-mint hover:text-black border border-brand-mint/30 transition duration-200">
-          <i class="fa-regular fa-file-pdf mr-1.5"></i>전체 발표 자료
-        </button>
-      </div>
-    </div>
-  </header>
+  <!-- Theater Dimming Backdrop (Triggerable) -->
+  <div id="theaterCurtain" class="fixed inset-0 bg-black/85 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-700 z-30"></div>
 
-  <main class="flex-grow max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 w-full">
-    <!-- Intro Banner -->
-    <section class="text-center max-w-3xl mx-auto mb-14">
-      <div class="inline-flex items-center space-x-2 px-3 py-1 rounded-full border border-brand-mint/30 bg-[#06241f] text-brand-mint text-xs font-tech tracking-wider mb-4">
-        <i class="fa-solid fa-microscope text-brand-cyan"></i>
-        <span>CLINICAL COMPETENCY PRESENTATION</span>
-      </div>
-      <h1 class="font-serifTitle text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-white mb-4">
-        피부미용 실무 역량 <br class="hidden sm:inline" />포트폴리오 제작발표회
-      </h1>
-      <p class="text-brand-textMuted text-sm sm:text-base leading-relaxed">
-        AI 스마트 진단과 체계적 임상 테크닉을 결합한 3개 연구팀의 포트폴리오 쇼케이스입니다. <br class="hidden md:inline" />
-        배너 영상을 재생하거나 카드를 클릭하여 팀별 상세 <span class="text-brand-mint font-semibold">PDF 포트폴리오</span>를 열람하세요.
-      </p>
-    </section>
+  <div class="relative z-10 min-h-screen flex flex-col justify-between p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-      <!-- 1조 : 루미아 (LUMIA) -->
-      <article class="glass-card rounded-3xl overflow-hidden flex flex-col group border border-brand-cardBorder">
-        <!-- Video Banner -->
-        <div class="video-container rounded-t-3xl border-b border-brand-cardBorder/70">
-          <video id="video-team1" loop muted playsinline preload="metadata" class="w-full h-full object-cover">
-            <source src="1조1.mp4" type="video/mp4">
-            브라우저가 HTML5 비디오를 지원하지 않습니다.
-          </video>
-
-          <!-- Top Overlay Badges -->
-          <div class="absolute top-3 left-3 right-3 flex justify-between items-center pointer-events-none z-10">
-            <span class="bg-[#020e0b]/80 border border-brand-mint/40 text-brand-mint text-[11px] font-tech px-2.5 py-1 rounded-lg backdrop-blur-sm">
-              <i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse text-brand-mint"></i>TEAM 01
-            </span>
-            <span class="bg-[#020e0b]/80 border border-brand-borderLight text-brand-cyan text-[10px] font-tech px-2 py-0.5 rounded-md">
-              1조1.mp4
-            </span>
+    <header class="w-full mb-6 lg:mb-8">
+      <!-- Return Banner Bar -->
+      <div class="glass-card rounded-2xl p-3 sm:p-4 border border-brand-borderDark flex flex-wrap items-center justify-between gap-4 hud-scanner-line">
+        
+        <!-- Back Button -->
+        <a href="javascript:void(0);" onclick="handleGoBack()" id="backButton"
+           class="group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-xl bg-[#041a16] border border-brand-borderBright/70 hover:border-brand-mint hover:bg-[#072a24] text-brand-textMain transition-all duration-300 shadow-sm active:scale-95">
+          <svg class="w-5 h-5 text-brand-cyan group-hover:-translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          <div class="flex flex-col text-left">
+            <span class="font-rajdhani text-xs font-semibold text-brand-mint uppercase tracking-widest leading-none">RETURN NAVIGATION</span>
+            <span class="text-sm font-semibold text-brand-textMain leading-snug">이전 목록으로 돌아가기</span>
           </div>
+        </a>
 
-          <!-- Video Playback Controls Bar -->
-          <div class="absolute bottom-2.5 right-3 flex items-center space-x-1.5 z-20">
-            <button onclick="toggleVideoPlayback('video-team1', this)" class="w-8 h-8 rounded-lg bg-black/60 hover:bg-brand-mint hover:text-black text-brand-textMain border border-brand-cardBorder flex items-center justify-center backdrop-blur-md transition" title="재생 / 일시정지">
-              <i class="fa-solid fa-play text-xs"></i>
-            </button>
-            <button onclick="toggleVideoMute('video-team1', this)" class="w-8 h-8 rounded-lg bg-black/60 hover:bg-brand-mint hover:text-black text-brand-textMain border border-brand-cardBorder flex items-center justify-center backdrop-blur-md transition" title="음소거 해제 / 설정">
-              <i class="fa-solid fa-volume-xmark text-xs"></i>
-            </button>
-          </div>
-
-          <!-- Fallback Alert if file is not found (managed automatically via JS) -->
-          <div id="fallback-team1" class="absolute inset-0 bg-[#031915] flex flex-col items-center justify-center p-4 text-center hidden">
-            <i class="fa-solid fa-video text-brand-mint text-2xl mb-2 opacity-60"></i>
-            <p class="text-xs text-brand-textMuted font-tech tracking-wide">1조1.mp4 로드 대기 중</p>
-          </div>
+        <!-- Middle Breadcrumb & Medical Lab Meta -->
+        <div class="hidden md:flex items-center gap-3 font-rajdhani text-xs tracking-wider text-brand-textMute">
+          <span class="px-2.5 py-1 rounded-md bg-[#020c0a]/80 border border-brand-borderDark text-brand-cyan">
+            SPECIMEN : SKILLS-2026
+          </span>
+          <span class="text-brand-borderBright">/</span>
+          <span class="text-brand-textMain">RECORDING ARCHIVE</span>
+          <span class="text-brand-borderBright">/</span>
+          <span class="text-brand-gold font-bold">SESSION ID: 04.MP4</span>
         </div>
 
-        <!-- Card Body -->
-        <div class="p-6 flex-grow flex flex-col justify-between">
-          <div>
-            <div class="flex items-baseline justify-between mb-2">
-              <h2 class="text-2xl font-serifTitle font-bold text-white tracking-wide">루미아</h2>
-              <span class="text-xs font-tech text-brand-mint tracking-wider">LUMIA CLINIC</span>
-            </div>
-            <p class="text-xs text-brand-cyan mb-4 font-tech tracking-wide uppercase">AI Adaptive Moisture & Barrier Care</p>
-            <p class="text-xs sm:text-sm text-brand-textMuted leading-relaxed mb-5">
-              인공지능 정밀 진단을 통해 피부 표피층의 유수분 불균형 패턴을 도출하고, 개인별 피부 상태에 맞춘 맞춤형 장벽 케어 솔루션을 제시합니다.
-            </p>
-
-            <div class="space-y-2 mb-6">
-              <div class="flex items-center text-xs text-brand-textMain/90 bg-[#041c17] p-2.5 rounded-xl border border-brand-cardBorder/60">
-                <i class="fa-solid fa-wand-magic-sparkles text-brand-mint w-5"></i>
-                <span class="font-medium">핵심 과제:</span>
-                <span class="ml-1.5 text-brand-textMuted">AI 기반 유수분 진단 & 장벽 강화</span>
-              </div>
-              <div class="flex items-center text-xs text-brand-textMain/90 bg-[#041c17] p-2.5 rounded-xl border border-brand-cardBorder/60">
-                <i class="fa-solid fa-file-shield text-brand-cyan w-5"></i>
-                <span class="font-medium">연동 문서:</span>
-                <span class="ml-1.5 text-brand-mint font-tech">1조.pdf</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- CTA Buttons -->
-          <div class="pt-2 flex items-center space-x-2">
-            <button onclick="openPdfModal('1조.pdf', '1조: 루미아 (LUMIA) 포트폴리오')" class="flex-1 py-3 px-4 rounded-xl bg-brand-borderLight/40 hover:bg-brand-mint hover:text-black border border-brand-mint/40 text-brand-textMain text-xs font-semibold tracking-wide transition flex items-center justify-center space-x-2 shadow-[0_0_12px_rgba(0,255,157,0.1)]">
-              <i class="fa-regular fa-eye"></i>
-              <span>포트폴리오 열람</span>
-            </button>
-            <a href="1조.pdf" target="_blank" class="p-3 rounded-xl bg-[#031d17] hover:border-brand-cyan border border-brand-cardBorder text-brand-cyan hover:text-white transition" title="새 탭에서 PDF 열기">
-              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 2조 : 광채주의보 (GWANGCHAE) -->
-      <article class="glass-card rounded-3xl overflow-hidden flex flex-col group border border-brand-cardBorder">
-        <!-- Video Banner -->
-        <div class="video-container rounded-t-3xl border-b border-brand-cardBorder/70">
-          <video id="video-team2" loop muted playsinline preload="metadata" class="w-full h-full object-cover">
-            <source src="2조2.mp4" type="video/mp4">
-            브라우저가 HTML5 비디오를 지원하지 않습니다.
-          </video>
-
-          <div class="absolute top-3 left-3 right-3 flex justify-between items-center pointer-events-none z-10">
-            <span class="bg-[#020e0b]/80 border border-brand-mint/40 text-brand-mint text-[11px] font-tech px-2.5 py-1 rounded-lg backdrop-blur-sm">
-              <i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse text-brand-mint"></i>TEAM 02
-            </span>
-            <span class="bg-[#020e0b]/80 border border-brand-borderLight text-brand-cyan text-[10px] font-tech px-2 py-0.5 rounded-md">
-              2조2.mp4
-            </span>
-          </div>
-
-          <div class="absolute bottom-2.5 right-3 flex items-center space-x-1.5 z-20">
-            <button onclick="toggleVideoPlayback('video-team2', this)" class="w-8 h-8 rounded-lg bg-black/60 hover:bg-brand-mint hover:text-black text-brand-textMain border border-brand-cardBorder flex items-center justify-center backdrop-blur-md transition" title="재생 / 일시정지">
-              <i class="fa-solid fa-play text-xs"></i>
-            </button>
-            <button onclick="toggleVideoMute('video-team2', this)" class="w-8 h-8 rounded-lg bg-black/60 hover:bg-brand-mint hover:text-black text-brand-textMain border border-brand-cardBorder flex items-center justify-center backdrop-blur-md transition" title="음소거 해제 / 설정">
-              <i class="fa-solid fa-volume-xmark text-xs"></i>
-            </button>
-          </div>
-
-          <div id="fallback-team2" class="absolute inset-0 bg-[#031915] flex flex-col items-center justify-center p-4 text-center hidden">
-            <i class="fa-solid fa-video text-brand-mint text-2xl mb-2 opacity-60"></i>
-            <p class="text-xs text-brand-textMuted font-tech tracking-wide">2조2.mp4 로드 대기 중</p>
-          </div>
-        </div>
-
-        <!-- Card Body -->
-        <div class="p-6 flex-grow flex flex-col justify-between">
-          <div>
-            <div class="flex items-baseline justify-between mb-2">
-              <h2 class="text-2xl font-serifTitle font-bold text-white tracking-wide">광채주의보</h2>
-              <span class="text-xs font-tech text-brand-gold tracking-wider">CLINICAL DATA SYSTEM</span>
-            </div>
-            <p class="text-xs text-brand-cyan mb-4 font-tech tracking-wide uppercase">Evidence-Based Clinical Verification</p>
-            <p class="text-xs sm:text-sm text-brand-textMuted leading-relaxed mb-5">
-              측정 기기와 AI 분석을 결합하여 시술 전후 수분(+29%), 탄력(+12점) 개선 및 복부 고주파 관리(-3cm) 결과를 데이터로 명확히 검증합니다.
-            </p>
-
-            <!-- Metrics Highlight Badges -->
-            <div class="grid grid-cols-3 gap-2 mb-4 text-center">
-              <div class="bg-[#041a15] p-2 rounded-xl border border-brand-cardBorder">
-                <span class="text-[10px] text-brand-textMuted block">수분 개선</span>
-                <span class="font-tech text-sm font-bold text-brand-mint">+29%</span>
-              </div>
-              <div class="bg-[#041a15] p-2 rounded-xl border border-brand-cardBorder">
-                <span class="text-[10px] text-brand-textMuted block">탄력 개선</span>
-                <span class="font-tech text-sm font-bold text-brand-cyan">+12점</span>
-              </div>
-              <div class="bg-[#041a15] p-2 rounded-xl border border-brand-cardBorder">
-                <span class="text-[10px] text-brand-textMuted block">복부 둘레</span>
-                <span class="font-tech text-sm font-bold text-brand-gold">-3cm</span>
-              </div>
-            </div>
-
-            <div class="text-[11px] text-brand-textMuted bg-[#041c17] p-2.5 rounded-xl border border-brand-cardBorder/60 mb-6">
-              <span class="text-brand-textMain font-medium">연구원:</span> 신지영 · 송미링 · 임초은 · 장윤정
-            </div>
-          </div>
-
-          <div class="pt-2 flex items-center space-x-2">
-            <button onclick="openPdfModal('2조.pdf', '2조: 광채주의보 포트폴리오')" class="flex-1 py-3 px-4 rounded-xl bg-brand-borderLight/40 hover:bg-brand-mint hover:text-black border border-brand-mint/40 text-brand-textMain text-xs font-semibold tracking-wide transition flex items-center justify-center space-x-2 shadow-[0_0_12px_rgba(0,255,157,0.1)]">
-              <i class="fa-regular fa-eye"></i>
-              <span>포트폴리오 열람</span>
-            </button>
-            <a href="2조.pdf" target="_blank" class="p-3 rounded-xl bg-[#031d17] hover:border-brand-cyan border border-brand-cardBorder text-brand-cyan hover:text-white transition" title="새 탭에서 PDF 열기">
-              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-            </a>
-          </div>
-        </div>
-      </article>
-
-      <!-- 3조 : 아프로디테 (APHRODITE) -->
-      <article class="glass-card rounded-3xl overflow-hidden flex flex-col group border border-brand-cardBorder">
-        <!-- Video Banner -->
-        <div class="video-container rounded-t-3xl border-b border-brand-cardBorder/70">
-          <video id="video-team3" loop muted playsinline preload="metadata" class="w-full h-full object-cover">
-            <source src="3조3.mp4" type="video/mp4">
-            브라우저가 HTML5 비디오를 지원하지 않습니다.
-          </video>
-
-          <div class="absolute top-3 left-3 right-3 flex justify-between items-center pointer-events-none z-10">
-            <span class="bg-[#020e0b]/80 border border-brand-mint/40 text-brand-mint text-[11px] font-tech px-2.5 py-1 rounded-lg backdrop-blur-sm">
-              <i class="fa-solid fa-circle text-[8px] mr-1.5 animate-pulse text-brand-mint"></i>TEAM 03
-            </span>
-            <span class="bg-[#020e0b]/80 border border-brand-borderLight text-brand-cyan text-[10px] font-tech px-2 py-0.5 rounded-md">
-              3조3.mp4
-            </span>
-          </div>
-
-          <div class="absolute bottom-2.5 right-3 flex items-center space-x-1.5 z-20">
-            <button onclick="toggleVideoPlayback('video-team3', this)" class="w-8 h-8 rounded-lg bg-black/60 hover:bg-brand-mint hover:text-black text-brand-textMain border border-brand-cardBorder flex items-center justify-center backdrop-blur-md transition" title="재생 / 일시정지">
-              <i class="fa-solid fa-play text-xs"></i>
-            </button>
-            <button onclick="toggleVideoMute('video-team3', this)" class="w-8 h-8 rounded-lg bg-black/60 hover:bg-brand-mint hover:text-black text-brand-textMain border border-brand-cardBorder flex items-center justify-center backdrop-blur-md transition" title="음소거 해제 / 설정">
-              <i class="fa-solid fa-volume-xmark text-xs"></i>
-            </button>
-          </div>
-
-          <div id="fallback-team3" class="absolute inset-0 bg-[#031915] flex flex-col items-center justify-center p-4 text-center hidden">
-            <i class="fa-solid fa-video text-brand-mint text-2xl mb-2 opacity-60"></i>
-            <p class="text-xs text-brand-textMuted font-tech tracking-wide">3조3.mp4 로드 대기 중</p>
-          </div>
-        </div>
-
-        <!-- Card Body -->
-        <div class="p-6 flex-grow flex flex-col justify-between">
-          <div>
-            <div class="flex items-baseline justify-between mb-2">
-              <h2 class="text-2xl font-serifTitle font-bold text-white tracking-wide">아프로디테</h2>
-              <span class="text-xs font-tech text-brand-cyan tracking-wider">APHRODITE ESTHETIC</span>
-            </div>
-            <p class="text-xs text-brand-cyan mb-4 font-tech tracking-wide uppercase">10-Step Clinical Care System</p>
-            <p class="text-xs sm:text-sm text-brand-textMuted leading-relaxed mb-5">
-              피부분석부터 AI진단, 클렌징, 고주파, 메뉴얼테크닉, 초음파 및 모델링 마스크로 이어지는 하이엔드 10단계 에스테틱 프로토콜을 정립했습니다.
-            </p>
-
-            <div class="space-y-2 mb-6">
-              <div class="flex items-center text-xs text-brand-textMain/90 bg-[#041c17] p-2.5 rounded-xl border border-brand-cardBorder/60">
-                <i class="fa-solid fa-list-check text-brand-mint w-5"></i>
-                <span class="font-medium">프로그램:</span>
-                <span class="ml-1.5 text-brand-textMuted">10단계 풀코스 에스테틱 & 홈케어 처방</span>
-              </div>
-              <div class="text-[11px] text-brand-textMuted bg-[#041c17] p-2.5 rounded-xl border border-brand-cardBorder/60">
-                <span class="text-brand-textMain font-medium">연구원:</span> 황수빈 · 김은서 · 서정화 · 정예지 · 김다솜
-              </div>
-            </div>
-          </div>
-
-          <div class="pt-2 flex items-center space-x-2">
-            <button onclick="openPdfModal('3조.pdf', '3조: 아프로디테 에스테틱 포트폴리오')" class="flex-1 py-3 px-4 rounded-xl bg-brand-borderLight/40 hover:bg-brand-mint hover:text-black border border-brand-mint/40 text-brand-textMain text-xs font-semibold tracking-wide transition flex items-center justify-center space-x-2 shadow-[0_0_12px_rgba(0,255,157,0.1)]">
-              <i class="fa-regular fa-eye"></i>
-              <span>포트폴리오 열람</span>
-            </button>
-            <a href="3조.pdf" target="_blank" class="p-3 rounded-xl bg-[#031d17] hover:border-brand-cyan border border-brand-cardBorder text-brand-cyan hover:text-white transition" title="새 탭에서 PDF 열기">
-              <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-            </a>
-          </div>
-        </div>
-      </article>
-
-    </div>
-
-    <!-- Quick File Access Directory -->
-    <section class="mt-14 glass-card rounded-2xl p-6 border border-brand-cardBorder/80">
-      <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
-        <div>
-          <h3 class="font-serifTitle text-lg font-bold text-white flex items-center">
-            <i class="fa-solid fa-folder-open text-brand-mint mr-2.5"></i>
-            로컬 미디어 및 문서 연동 현황
-          </h3>
-          <p class="text-xs text-brand-textMuted mt-1">
-            동일 폴더 내 비디오 파일 (<span class="text-brand-cyan">1조1.mp4, 2조2.mp4, 3조3.mp4</span>) 및 문서 (<span class="text-brand-mint">1조.pdf, 2조.pdf, 3조.pdf</span>)가 자동 연동됩니다.
-          </p>
-        </div>
-        <div class="flex flex-wrap gap-2">
-          <a href="1조.pdf" download class="text-xs px-3 py-2 rounded-lg bg-[#021813] hover:bg-brand-mint hover:text-black border border-brand-cardBorder transition font-tech">
-            1조.pdf 다운로드
-          </a>
-          <a href="2조.pdf" download class="text-xs px-3 py-2 rounded-lg bg-[#021813] hover:bg-brand-mint hover:text-black border border-brand-cardBorder transition font-tech">
-            2조.pdf 다운로드
-          </a>
-          <a href="3조.pdf" download class="text-xs px-3 py-2 rounded-lg bg-[#021813] hover:bg-brand-mint hover:text-black border border-brand-cardBorder transition font-tech">
-            3조.pdf 다운로드
-          </a>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <div id="pdfModal" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-3 sm:p-6" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-    <div class="relative w-full max-w-5xl h-[88vh] bg-[#021310] border border-brand-mint/40 rounded-3xl overflow-hidden shadow-[0_0_50px_rgba(0,0,0,0.9)] flex flex-col">
-      <!-- Modal Header -->
-      <div class="h-16 px-6 border-b border-brand-cardBorder/80 bg-[#031d17] flex items-center justify-between">
-        <div class="flex items-center space-x-3">
-          <span class="w-3 h-3 rounded-full bg-brand-mint animate-pulse"></span>
-          <h4 id="modalTitle" class="text-sm sm:text-base font-serifTitle font-bold text-white tracking-wide">포트폴리오 문서 뷰어</h4>
-        </div>
-        <div class="flex items-center space-x-2">
-          <a id="modalExternalLink" href="#" target="_blank" class="px-3 py-1.5 rounded-lg bg-[#042820] hover:bg-brand-mint hover:text-black border border-brand-mint/30 text-xs font-tech text-brand-mint transition">
-            <i class="fa-solid fa-up-right-from-square mr-1"></i>새 창 열기
-          </a>
-          <button onclick="closePdfModal()" class="w-8 h-8 rounded-lg bg-[#042820] hover:bg-red-500/80 text-white flex items-center justify-center transition">
-            <i class="fa-solid fa-xmark text-sm"></i>
+        <!-- Theater & Lab Status Indicators -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <button id="theaterModeBtn" onclick="toggleTheaterMode()" 
+                  class="px-3.5 py-2 rounded-xl text-xs font-rajdhani font-semibold tracking-wider uppercase border border-brand-borderBright/60 bg-[#06241f]/70 text-brand-cyan hover:text-brand-mint hover:border-brand-mint transition-all flex items-center gap-1.5 active:scale-95"
+                  title="영화관 집중 조명 모드 전환">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+            </svg>
+            <span id="theaterModeLabel">THEATER DIMMER</span>
           </button>
+
+          <div class="flex items-center gap-2 px-3 py-2 rounded-xl bg-[#020c0a]/90 border border-brand-borderDark">
+            <span class="relative flex h-2.5 w-2.5">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-mint opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-mint"></span>
+            </span>
+            <span class="font-rajdhani text-xs font-semibold text-brand-mint tracking-wider hidden sm:inline">LAB READY</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="relative z-40 w-full flex-1 flex flex-col items-center justify-center mb-8">
+      
+      <!-- Laboratory Header & Projector Top Crown -->
+      <div class="w-full flex items-center justify-between px-2 mb-3">
+        <div class="flex items-center gap-3">
+          <div class="h-6 w-1 bg-gradient-to-b from-brand-mint to-brand-cyan rounded-full"></div>
+          <div>
+            <h1 class="font-cinzel text-xl sm:text-2xl lg:text-3xl font-bold tracking-wide text-brand-textMain flex items-center gap-2">
+              LUMINARAE <span class="font-pretendard text-base sm:text-lg text-brand-mint font-medium font-sans">기능경기대회 공식 상영관</span>
+            </h1>
+            <p class="text-xs sm:text-sm text-brand-textMute font-normal mt-0.5">
+              생명과학 & 뷰티 메디컬 융합 기능경기 공식 시연 기록물 [04.mp4]
+            </p>
+          </div>
+        </div>
+
+        <div class="hidden sm:flex flex-col items-end text-right">
+          <span class="font-rajdhani text-xs font-bold text-brand-gold tracking-widest uppercase">CINEMATIC ULTRA-HD SCREEN</span>
+          <span class="font-rajdhani text-xs text-brand-textMute">FPS: 60.0 // ENCODED HIGH-PROFILE</span>
         </div>
       </div>
 
-      <div class="pdf-toolbar">
-        <span id="pdfStatus" role="status" aria-live="polite"></span>
-        <button type="button" onclick="document.getElementById('pdfPicker').click()">PDF 파일 선택 / 변경</button>
-        <a id="pdfDownload" hidden download>PDF 다운로드</a>
-        <input id="pdfPicker" type="file" accept=".pdf,application/pdf" hidden>
+      <!-- Main Cinema Curved Stage Screen Container -->
+      <div class="w-full relative group">
+        
+        <!-- Ambient Cinema Screen Glow Box -->
+        <div id="ambientGlow" class="absolute -inset-1 rounded-3xl bg-gradient-to-r from-brand-borderBright via-brand-cyan to-brand-mint opacity-30 blur-xl transition-opacity duration-700 pointer-events-none"></div>
+
+        <!-- Cinema Screen Box Frame -->
+        <div class="relative w-full rounded-2xl sm:rounded-3xl overflow-hidden glass-card theater-glow border-2 border-brand-borderBright/80 bg-black">
+          
+          <!-- Top HUD Precision Rail -->
+          <div class="bg-[#031512]/95 border-b border-brand-borderDark px-4 py-2 flex items-center justify-between text-xs font-rajdhani text-brand-textMute tracking-wider">
+            <div class="flex items-center gap-2">
+              <span class="inline-block w-2 h-2 rounded-full bg-brand-cyan"></span>
+              <span>CINEMA SCREEN 01</span>
+              <span class="text-brand-borderBright">|</span>
+              <span class="text-brand-textMain">SOURCE : 04.mp4</span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span id="videoStatusBadge" class="text-brand-gold font-semibold uppercase">STANDBY (PAUSED)</span>
+              <span class="hidden sm:inline text-brand-mint">MANUAL LAUNCH MODE</span>
+            </div>
+          </div>
+
+          <!-- Video Wrapper (16:9 Cinema Aspect Ratio) -->
+          <div class="relative aspect-video w-full bg-[#010908] flex items-center justify-center overflow-hidden">
+            
+            <!-- Video Element (Autoplay disabled as requested) -->
+            <video 
+              id="featureVideo" 
+              class="w-full h-full object-contain cursor-pointer"
+              playsinline
+              controls
+              preload="metadata"
+              poster="https://placehold.co/1920x1080/031512/00ff9d?text=LUMINARAE+CINEMA+STAGE+-+04.MP4"
+            >
+              <!-- Primary Target Video Source -->
+              <source src="04.mp4" type="video/mp4">
+              <source src="04.mp" type="video/mp4">
+              이 브라우저는 HTML5 비디오 재생을 지원하지 않습니다.
+            </video>
+
+            <!-- Big Cinematic Play Overlay (Active only prior to playback) -->
+            <div id="playBackdropOverlay" 
+                 class="absolute inset-0 bg-gradient-to-t from-[#020c0a]/90 via-[#020c0a]/40 to-transparent flex flex-col items-center justify-center p-6 transition-all duration-500 cursor-pointer pointer-events-auto"
+                 onclick="triggerDirectPlay()">
+              
+              <!-- Circular Glowing Play Button with HUD Aim Rings -->
+              <div class="relative group/btn flex items-center justify-center w-24 h-24 sm:w-28 sm:h-28 rounded-full border border-brand-cyan/60 bg-[#041d18]/80 backdrop-blur-md shadow-[0_0_35px_rgba(0,255,157,0.35)] hover:shadow-[0_0_55px_rgba(44,245,226,0.6)] hover:border-brand-mint hover:scale-105 transition-all duration-300">
+                
+                <!-- HUD outer decorative notches -->
+                <div class="absolute inset-1 rounded-full border border-dashed border-brand-borderBright pointer-events-none"></div>
+                <div class="absolute -top-1.5 w-3 h-1 bg-brand-gold"></div>
+                <div class="absolute -bottom-1.5 w-3 h-1 bg-brand-gold"></div>
+
+                <!-- Play Icon SVG -->
+                <svg class="w-10 h-10 sm:w-12 sm:h-12 text-brand-mint ml-1.5 drop-shadow-[0_0_12px_rgba(0,255,157,0.8)]" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M8 5v14l11-7z"/>
+                </svg>
+              </div>
+
+              <!-- Cinematic Prompt Text -->
+              <div class="mt-5 text-center">
+                <span class="font-cinzel text-lg sm:text-xl font-bold tracking-wider text-brand-textMain block drop-shadow-md">
+                  CLICK TO INITIATE PLAYBACK
+                </span>
+                <span class="text-xs sm:text-sm text-brand-mint font-medium tracking-wide mt-1 block">
+                  화면 또는 재생 버튼을 누르면 기능경기대회 영상이 시작됩니다
+                </span>
+                <span class="mt-2 inline-block px-3 py-1 rounded-full bg-[#020c0a]/70 border border-brand-borderDark text-[11px] font-rajdhani text-brand-textMute">
+                  NO AUTOPLAY // USER CONFIRMATION REQUIRED
+                </span>
+              </div>
+            </div>
+
+            <!-- Notice Toast for File Path -->
+            <div id="videoNotice" class="absolute bottom-4 left-4 right-4 sm:left-6 sm:right-auto z-20 pointer-events-none opacity-0 transition-opacity duration-500">
+              <div class="glass-card px-3.5 py-2 rounded-xl border border-brand-borderBright text-xs text-brand-textMain flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-brand-gold"></span>
+                <span>'04.mp4' 파일이 프로젝트 동일 경로에 위치해야 정상 로드됩니다.</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Cinema Quick HUD Bar -->
+          <div class="bg-[#031512]/95 border-t border-brand-borderDark px-4 py-2.5 flex flex-wrap items-center justify-between gap-3 text-xs">
+            <div class="flex items-center gap-2">
+              <span class="text-brand-textMute font-rajdhani">THEATER AUDIO :</span>
+              <span class="text-brand-cyan font-rajdhani font-semibold">DIGITAL STEREO MATRIX</span>
+            </div>
+            
+            <div class="flex items-center gap-2 sm:gap-4 font-rajdhani">
+              <span class="text-brand-textMute">HOTKEYS : <kbd class="px-1.5 py-0.5 rounded bg-[#020c0a] border border-brand-borderDark text-brand-textMain">SPACE</kbd> 재생/일시정지</span>
+              <span class="text-brand-textMute hidden sm:inline"><kbd class="px-1.5 py-0.5 rounded bg-[#020c0a] border border-brand-borderDark text-brand-textMain">F</kbd> 전체화면</span>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Cinema Floor Mirror Reflection -->
+        <div class="w-11/12 mx-auto h-8 cinema-reflection rounded-b-3xl opacity-40"></div>
       </div>
-      <div id="pdfBody">
-        <iframe id="pdfFrame" src="about:blank" title="포트폴리오 PDF 뷰어" hidden></iframe>
+    </main>
+
+    <footer class="w-full space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        
+        <!-- Panel 1: Competition Dossier -->
+        <div class="glass-card rounded-2xl p-5 border border-brand-borderDark relative overflow-hidden">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-rajdhani text-xs font-bold text-brand-cyan uppercase tracking-widest">DOSSIER // 01</span>
+            <span class="text-[10px] font-rajdhani px-2 py-0.5 rounded bg-brand-borderDark text-brand-mint">VERIFIED</span>
+          </div>
+          <h3 class="font-cinzel text-base font-bold text-brand-textMain mb-1">대회 개요 및 세부 정보</h3>
+          <p class="text-xs text-brand-textMute leading-relaxed">
+            전국/지방 기능경기대회 공식 참가작 및 시연 과정의 고화질 아카이빙 비디오입니다. 정밀 테크놀로지와 표준 매뉴얼 준수 항목을 상영합니다.
+          </p>
+          <div class="mt-3 pt-3 border-t border-brand-borderDark/60 flex items-center justify-between text-xs font-rajdhani text-brand-textMute">
+            <span>MEDIA ID: 04.mp4</span>
+            <span class="text-brand-gold">RATING: OFFICIAL</span>
+          </div>
+        </div>
+
+        <!-- Panel 2: Laboratory Benchmark Metrics -->
+        <div class="glass-card rounded-2xl p-5 border border-brand-borderDark relative overflow-hidden">
+          <div class="flex items-center justify-between mb-2">
+            <span class="font-rajdhani text-xs font-bold text-brand-mint uppercase tracking-widest">METRICS // 02</span>
+            <span class="text-[10px] font-rajdhani px-2 py-0.5 rounded bg-[#041d18] border border-brand-mint text-brand-mint">ACTIVE SPEC</span>
+          </div>
+          <h3 class="font-cinzel text-base font-bold text-brand-textMain mb-1">정밀 연구소 분석 프로토콜</h3>
+          <div class="space-y-1.5 mt-2 text-xs">
+            <div class="flex justify-between text-brand-textMute">
+              <span>스펙트럼 분석</span>
+              <span class="text-brand-textMain font-rajdhani font-semibold">99.8% PRECISION</span>
+            </div>
+            <div class="w-full h-1 bg-[#020c0a] rounded-full overflow-hidden">
+              <div class="h-full bg-gradient-to-r from-brand-mint to-brand-cyan w-[99.8%]"></div>
+            </div>
+            <div class="flex justify-between text-brand-textMute pt-1">
+              <span>메디컬 스킨/바이오 적합도</span>
+              <span class="text-brand-gold font-rajdhani font-semibold">GRADE AAA+</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Panel 3: Cinema Control & Quick Action -->
+        <div class="glass-card rounded-2xl p-5 border border-brand-borderDark relative overflow-hidden flex flex-col justify-between">
+          <div>
+            <div class="flex items-center justify-between mb-2">
+              <span class="font-rajdhani text-xs font-bold text-brand-gold uppercase tracking-widest">CONTROL // 03</span>
+              <span class="text-[10px] font-rajdhani px-2 py-0.5 rounded bg-brand-borderDark text-brand-textMain">SYSTEM</span>
+            </div>
+            <h3 class="font-cinzel text-base font-bold text-brand-textMain mb-1">상영관 제어 및 복귀</h3>
+            <p class="text-xs text-brand-textMute leading-relaxed">
+              영상이 끝났거나 이전 메인 화면으로 복귀하려면 상단 또는 아래 버튼을 클릭하십시오.
+            </p>
+          </div>
+          <div class="mt-4 pt-3 border-t border-brand-borderDark/60 flex items-center gap-2">
+            <button onclick="handleGoBack()" class="w-full py-2 px-3 rounded-xl bg-gradient-to-r from-[#0f483e] to-[#1b685a] hover:from-[#1b685a] hover:to-brand-mint hover:text-black text-brand-textMain font-medium text-xs transition-all duration-300 flex items-center justify-center gap-1.5 shadow-md active:scale-98">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"/>
+              </svg>
+              <span>이전 페이지로 복귀</span>
+            </button>
+          </div>
+        </div>
+
       </div>
-    </div>
+
+      <!-- Copyright & System Watermark -->
+      <div class="text-center py-2 text-xs font-rajdhani text-brand-textMute tracking-wider">
+        <span>LUMINARAE BIO-LABORATORY ARCHIVES &copy; 2026. ALL COMPETITION ASSETS RESERVED.</span>
+      </div>
+    </footer>
+
   </div>
 
-  <footer class="border-t border-brand-cardBorder/60 bg-[#020a08] py-8 text-center text-xs text-brand-textMuted">
-    <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-3">
-      <div class="font-serifTitle tracking-widest text-white">LUMINARAE CLINICAL ESTHETIC RESEARCH</div>
-      <div>1조 루미아 · 2조 광채주의보 · 3조 아프로디테 포트폴리오 쇼케이스</div>
-      <div class="font-tech text-brand-mint">© 2026 HIGH-END DERMATOLOGY ACADEMY</div>
-    </div>
-  </footer>
-
   <script>
-    // 자동 재생 시도 (브라우저 정책상 muted 상태에서만 autoplay 지원)
-    window.addEventListener('DOMContentLoaded', () => {
-      ['video-team1', 'video-team2', 'video-team3'].forEach(id => {
-        const vid = document.getElementById(id);
-        if (vid) {
-          vid.muted = true;
-          vid.play().catch(err => {
-            // 자동 재생 제한 시 대체 UI 또는 수동 플레이 대기
-            console.log(`Video autoplay deferred for ${id}:`, err);
-          });
+    const video = document.getElementById('featureVideo');
+    const playOverlay = document.getElementById('playBackdropOverlay');
+    const videoStatusBadge = document.getElementById('videoStatusBadge');
+    const theaterCurtain = document.getElementById('theaterCurtain');
+    const theaterModeBtn = document.getElementById('theaterModeBtn');
+    const theaterModeLabel = document.getElementById('theaterModeLabel');
+    const ambientGlow = document.getElementById('ambientGlow');
+    const videoNotice = document.getElementById('videoNotice');
 
-          // 비디오 에러 핸들링 (영상 파일이 동일 디렉토리에 없을 경우 대체 화면 제공)
-          vid.addEventListener('error', () => {
-            const fallback = document.getElementById('fallback-' + id.replace('video-', ''));
-            if (fallback) fallback.classList.remove('hidden');
-          });
-        }
-      });
-    });
+    let isTheaterDimmed = false;
 
-    // 비디오 재생/일시정지 토글 함수
-    function toggleVideoPlayback(videoId, buttonEl) {
-      const vid = document.getElementById(videoId);
-      if (!vid) return;
-
-      const icon = buttonEl.querySelector('i');
-      if (vid.paused) {
-        vid.play().catch(() => {
-          if (icon) icon.className = 'fa-solid fa-play text-xs';
+    // Trigger video playback on overlay click
+    function triggerDirectPlay() {
+      if (video.paused) {
+        video.play().then(() => {
+          hideOverlay();
+          updateStatusPlaying();
+        }).catch(err => {
+          console.warn('Playback notice:', err);
+          // Show notice in case the user's local video 04.mp4 is still being loaded
+          showNotice();
+          video.play();
         });
-        if (icon) icon.className = 'fa-solid fa-pause text-xs';
       } else {
-        vid.pause();
-        if (icon) icon.className = 'fa-solid fa-play text-xs';
+        video.pause();
+        showOverlay();
+        updateStatusPaused();
       }
     }
 
-    // 비디오 음소거 토글 함수
-    function toggleVideoMute(videoId, buttonEl) {
-      const vid = document.getElementById(videoId);
-      if (!vid) return;
-
-      const icon = buttonEl.querySelector('i');
-      vid.muted = !vid.muted;
-      if (vid.muted) {
-        if (icon) icon.className = 'fa-solid fa-volume-xmark text-xs';
-      } else {
-        if (icon) icon.className = 'fa-solid fa-volume-high text-xs text-brand-mint';
-      }
+    function hideOverlay() {
+      playOverlay.classList.add('opacity-0', 'pointer-events-none');
     }
 
-    // 요청 번호로 이전 조의 비동기 응답이 현재 문서를 덮지 않도록 보호합니다.
-    let pdfRequest = 0;
-    let currentPdf = '';
-    let previousFocus = null;
-    let previousOverflow = '';
-    const selectedPdfs = new Map();
-    const pdfTitles = {'1조.pdf':'1조: 루미아 포트폴리오', '2조.pdf':'2조: 광채주의보 포트폴리오', '3조.pdf':'3조: 아프로디테 에스테틱 포트폴리오'};
+    function showOverlay() {
+      playOverlay.classList.remove('opacity-0', 'pointer-events-none');
+    }
 
-    function pdfStatus(message) {
-      document.getElementById('pdfStatus').textContent = message;
+    function updateStatusPlaying() {
+      videoStatusBadge.textContent = 'PLAYING (ON-AIR)';
+      videoStatusBadge.className = 'text-brand-mint font-semibold uppercase';
+      ambientGlow.classList.remove('opacity-30');
+      ambientGlow.classList.add('opacity-70');
     }
-    function showPdf(url, filename, message) {
-      const frame = document.getElementById('pdfFrame');
-      frame.src = url;
-      frame.hidden = false;
-      const link = document.getElementById('modalExternalLink');
-      link.href = url;
-      link.rel = 'noopener';
-      link.hidden = false;
-      const download = document.getElementById('pdfDownload');
-      download.href = url;
-      download.download = filename;
-      download.hidden = false;
-      pdfStatus(message || '문서를 연결했습니다. 미리보기가 표시되지 않으면 새 창 열기 또는 다운로드를 이용하세요.');
+
+    function updateStatusPaused() {
+      videoStatusBadge.textContent = 'STANDBY (PAUSED)';
+      videoStatusBadge.className = 'text-brand-gold font-semibold uppercase';
+      ambientGlow.classList.remove('opacity-70');
+      ambientGlow.classList.add('opacity-30');
     }
-    async function openPdfModal(pdfUrl, title) {
-      const modal = document.getElementById('pdfModal');
-      if (modal.classList.contains('hidden')) {
-        previousFocus = document.activeElement;
-        previousOverflow = document.body.style.overflow;
-      }
-      const request = ++pdfRequest;
-      currentPdf = pdfUrl;
-      document.getElementById('modalTitle').textContent = title;
-      document.getElementById('pdfFrame').src = 'about:blank';
-      document.getElementById('pdfFrame').hidden = true;
-      document.getElementById('modalExternalLink').hidden = true;
-      document.getElementById('pdfDownload').hidden = true;
-      modal.classList.remove('hidden');
-      document.body.style.overflow = 'hidden';
-      modal.querySelector('button').focus();
-      if (selectedPdfs.has(pdfUrl)) {
-        const saved = selectedPdfs.get(pdfUrl);
-        showPdf(saved.url, saved.name);
-        return;
-      }
-      // file://에서는 fetch가 제한되므로 동일 폴더 연결과 파일 선택을 함께 제공합니다.
-      if (location.protocol === 'file:') {
-        showPdf(new URL(pdfUrl, location.href).href, pdfUrl,
-          pdfUrl + ' 연결을 시도했습니다. 보이지 않으면 PDF 파일 선택 / 변경을 눌러 해당 조의 PDF를 선택하세요.');
-        return;
-      }
-      pdfStatus('PDF 파일을 확인하고 있습니다…');
-      const controller = new AbortController();
-      const timeout = setTimeout(() => controller.abort(), 12000);
-      try {
-        const response = await fetch(new URL(pdfUrl, location.href), {signal:controller.signal});
-        if (!response.ok) throw new Error('missing');
-        const blob = await response.blob();
-        const signature = await blob.slice(0, 1024).text();
-        if (!signature.includes('%PDF-')) throw new Error('invalid');
-        if (request !== pdfRequest) return;
-        const url = URL.createObjectURL(new Blob([blob], {type:'application/pdf'}));
-        selectedPdfs.set(pdfUrl, {url, name:pdfUrl});
-        showPdf(url, pdfUrl);
-      } catch (error) {
-        if (request === pdfRequest) pdfStatus(pdfUrl + '을 불러올 수 없습니다. PDF 파일 선택 / 변경을 눌러 해당 조의 PDF를 선택해 주세요.');
-      } finally { clearTimeout(timeout); }
-    }
-    document.getElementById('pdfPicker').addEventListener('change', async (event) => {
-      const file = event.target.files[0];
-      event.target.value = '';
-      if (!file) return;
-      const key = currentPdf;
-      const request = ++pdfRequest;
-      try {
-        const signature = await file.slice(0, 1024).text();
-        if (request !== pdfRequest) return;
-        if (!signature.includes('%PDF-')) {
-          pdfStatus('PDF 형식의 파일을 선택해 주세요. PPT 파일은 PDF로 저장한 뒤 선택해 주세요.');
-          return;
-        }
-        const old = selectedPdfs.get(key);
-        const url = URL.createObjectURL(new Blob([file], {type:'application/pdf'}));
-        selectedPdfs.set(key, {url, name:file.name});
-        showPdf(url, file.name, file.name + ' 연결 완료. 이 페이지를 닫거나 새로고침하면 파일을 다시 선택해 주세요.');
-        if (old) URL.revokeObjectURL(old.url);
-      } catch (error) {
-        if (request === pdfRequest) pdfStatus('파일을 읽지 못했습니다. PDF 파일을 다시 선택해 주세요.');
-      }
-    });
-    function closePdfModal() {
-      ++pdfRequest;
-      const modal = document.getElementById('pdfModal');
-      if (modal.classList.contains('hidden')) return;
-      document.getElementById('pdfFrame').src = 'about:blank';
-      modal.classList.add('hidden');
-      document.body.style.overflow = previousOverflow;
-      if (previousFocus) previousFocus.focus();
-    }
-    // 카드의 새 창 및 하단 다운로드도 같은 파일 확인 경로를 이용합니다.
-    document.querySelectorAll('a[href$="조.pdf"]').forEach(link => {
-      const filename = link.getAttribute('href');
-      link.addEventListener('click', event => {
-        const saved = selectedPdfs.get(filename);
-        if (saved) {
-          link.href = saved.url;
-          if (link.hasAttribute('download')) link.download = saved.name;
-        } else {
-          event.preventDefault();
-          openPdfModal(filename, pdfTitles[filename]);
-        }
-      });
+
+    // Video Event Listeners
+    video.addEventListener('play', () => {
+      hideOverlay();
+      updateStatusPlaying();
     });
 
-    // ESC 키로 모달 닫기
+    video.addEventListener('pause', () => {
+      showOverlay();
+      updateStatusPaused();
+    });
+
+    video.addEventListener('ended', () => {
+      showOverlay();
+      videoStatusBadge.textContent = 'TRANSMISSION COMPLETE';
+      videoStatusBadge.className = 'text-brand-cyan font-semibold uppercase';
+    });
+
+    video.addEventListener('error', () => {
+      showNotice();
+    });
+
+    function showNotice() {
+      videoNotice.classList.remove('opacity-0');
+      setTimeout(() => {
+        videoNotice.classList.add('opacity-0');
+      }, 5000);
+    }
+
+    // Theater Lights Dimmer Toggle
+    function toggleTheaterMode() {
+      isTheaterDimmed = !isTheaterDimmed;
+      if (isTheaterDimmed) {
+        theaterCurtain.classList.remove('opacity-0', 'pointer-events-none');
+        theaterCurtain.classList.add('opacity-90');
+        theaterModeLabel.textContent = 'LIGHTS ON';
+        theaterModeBtn.classList.add('bg-brand-mint', 'text-black', 'border-brand-mint');
+        theaterModeBtn.classList.remove('text-brand-cyan');
+      } else {
+        theaterCurtain.classList.remove('opacity-90');
+        theaterCurtain.classList.add('opacity-0', 'pointer-events-none');
+        theaterModeLabel.textContent = 'THEATER DIMMER';
+        theaterModeBtn.classList.remove('bg-brand-mint', 'text-black', 'border-brand-mint');
+        theaterModeBtn.classList.add('text-brand-cyan');
+      }
+    }
+
+    // Return to previous page navigation handler
+    function handleGoBack() {
+      if (window.history.length > 1) {
+        window.history.back();
+      } else {
+        // Fallback if opened directly in a new tab without history
+        window.location.href = './index.html';
+      }
+    }
+
+    // Keyboard Shortcuts (Space for Play/Pause, F for Fullscreen, ESC to restore)
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'Escape') closePdfModal();
-    });
+      // Ignore if user is somehow focusing an input
+      if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
 
-    // 배경 클릭 시 모달 닫기
-    document.getElementById('pdfModal').addEventListener('click', (e) => {
-      if (e.target.id === 'pdfModal') closePdfModal();
+      if (e.code === 'Space') {
+        e.preventDefault();
+        if (video.paused) {
+          video.play();
+        } else {
+          video.pause();
+        }
+      } else if (e.code === 'KeyF') {
+        e.preventDefault();
+        if (!document.fullscreenElement) {
+          if (video.requestFullscreen) {
+            video.requestFullscreen();
+          } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+          }
+        } else {
+          if (document.exitFullscreen) {
+            document.exitFullscreen();
+          }
+        }
+      }
     });
-
-    function openAllPdfsInfo() {
-      openPdfModal('1조.pdf', 'LUMINARAE 전체 포트폴리오 아카이브 (1조/2조/3조)');
-    }
   </script>
 </body>
 </html>
