@@ -100,26 +100,40 @@
       pointer-events: none;
     }
 
-    /* Media Frame Styling */
+    /* Media Frame Full-Height Matching Styling */
     .media-card {
       position: relative;
       background: #020c09;
       border: 1px solid rgba(16, 185, 129, 0.35);
       border-radius: 8px;
       overflow: hidden;
-      aspect-ratio: 16 / 10;
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+      height: 100%;
+      min-height: 240px;
     }
+
+    .media-card .img-wrapper {
+      flex: 1 1 0%;
+      min-height: 0;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #010a08;
+      overflow: hidden;
+    }
+
     .media-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      transition: transform 0.3s ease;
+      object-position: center;
+      display: block;
+      transition: transform 0.35s ease;
     }
+
     .media-card:hover img {
-      transform: scale(1.02);
+      transform: scale(1.03);
     }
 
     /* Custom Scrollbar */
@@ -178,7 +192,7 @@
           INDUSTRY LECTURE &amp; INTERVIEW
         </span>
       </div>
-      <a href="CURRICULUM.html" class="hidden sm:inline-flex items-center gap-2 text-xs font-mono text-emerald-400 hover:text-white transition-colors duration-200 border border-emerald-500/30 px-3 py-1.5 rounded bg-emerald-950/30 hover:bg-emerald-900/50">
+      <a href="CURRICULUM.html" class="inline-flex items-center gap-2 text-xs font-mono text-emerald-400 hover:text-white transition-colors duration-200 border border-emerald-500/30 px-3 py-1.5 rounded bg-emerald-950/30 hover:bg-emerald-900/50">
         <i class="fa-solid fa-arrow-left"></i> BACK TO CURRICULUM
       </a>
     </div>
@@ -204,18 +218,18 @@
         </div>
       </div>
 
-      <!-- Grid Content: Key Points & Photo Slots -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Equal-Height Grid: items-stretch keeps both columns identical in height -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         
-        <!-- Left 5 Cols: Descriptions (2번 파일 내용 반영) -->
-        <div class="lg:col-span-5 space-y-4">
-          <p class="text-sm font-mono text-emerald-400/90 tracking-wide border-l-2 border-emerald-500 pl-3">
+        <!-- Left Column: Descriptions (3 Cards) -->
+        <div class="lg:col-span-5 flex flex-col justify-between space-y-3">
+          <p class="text-xs font-mono text-emerald-400/90 tracking-wide border-l-2 border-emerald-500 pl-3">
             [ PROGRAM OBJECTIVE &amp; SUMMARY ]
           </p>
 
-          <div class="space-y-3 font-sans">
+          <div class="flex flex-col flex-1 justify-between gap-3 font-sans">
             <!-- Item 1 -->
-            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition">
+            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition flex-1 flex flex-col justify-center">
               <div class="flex items-start gap-3">
                 <i class="fa-solid fa-chalkboard-user text-emerald-400 text-lg mt-0.5"></i>
                 <div>
@@ -228,7 +242,7 @@
             </div>
 
             <!-- Item 2 -->
-            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition">
+            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition flex-1 flex flex-col justify-center">
               <div class="flex items-start gap-3">
                 <i class="fa-solid fa-handshake text-emerald-400 text-lg mt-0.5"></i>
                 <div>
@@ -241,13 +255,13 @@
             </div>
 
             <!-- Item 3 -->
-            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition">
+            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition flex-1 flex flex-col justify-center">
               <div class="flex items-start gap-3">
                 <i class="fa-solid fa-network-wired text-emerald-400 text-lg mt-0.5"></i>
                 <div>
                   <h4 class="text-emerald-300 font-semibold text-sm mb-1">산업 현장 연결형 취업 네트워크</h4>
                   <p class="text-xs text-gray-300 leading-relaxed">
-                    교육 환경과 실제 산업 현장을 즉각적으로 잇는 파이프라인을 구축하여 안정적인 사후 취업 지원 체계를 정립합니다.
+                    산업 현장을 학교로 연결하는 강력한 취업 네트워크를 구축하여 지속적이고 체계적인 취업 지원 체계를 정립합니다.
                   </p>
                 </div>
               </div>
@@ -255,38 +269,40 @@
           </div>
         </div>
 
-        <!-- Right 7 Cols: Image Slots (08-1.png, 08-2.png) -->
-        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Slot 1 -->
-          <div class="space-y-1.5">
+        <!-- Right Column: Images (08-1.png, 08-2.png) - Stretches to exact left column height -->
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 h-full">
+          <!-- Slot 1: 08-1.png -->
+          <div class="flex flex-col h-full space-y-1.5">
             <div class="flex items-center justify-between text-[11px] font-mono text-emerald-400">
               <span>PHOTO REF : 08-1.png</span>
-              <span class="text-gray-400">EXPLANATION SESSION A</span>
+              <span class="text-gray-400">SESSION A</span>
             </div>
-            <div class="media-card group">
-              <!-- img 태그: 08-1.png 연동 -->
-              <img src="08-1.png" alt="기업 초청 설명회 현장 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-              <div class="w-full h-full p-4 flex flex-col items-center justify-center text-center bg-black/70 text-emerald-400/80 hidden">
-                <i class="fa-regular fa-image text-3xl mb-2 text-emerald-500"></i>
-                <span class="font-mono text-xs font-bold text-white">08-1.png</span>
-                <span class="text-[11px] text-gray-400 mt-1">이곳에 08-1.png 사진 파일이 표시됩니다</span>
+            <div class="media-card flex-1">
+              <div class="img-wrapper">
+                <img src="08-1.png" alt="기업 초청 설명회 현장 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="w-full h-full p-4 flex-col items-center justify-center text-center bg-black/70 text-emerald-400/80 hidden">
+                  <i class="fa-regular fa-image text-3xl mb-2 text-emerald-500"></i>
+                  <span class="font-mono text-xs font-bold text-white">08-1.png</span>
+                  <span class="text-[11px] text-gray-400 mt-1">이곳에 08-1.png 사진 파일이 표시됩니다</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Slot 2 -->
-          <div class="space-y-1.5">
+          <!-- Slot 2: 08-2.png -->
+          <div class="flex flex-col h-full space-y-1.5">
             <div class="flex items-center justify-between text-[11px] font-mono text-emerald-400">
               <span>PHOTO REF : 08-2.png</span>
-              <span class="text-gray-400">EXPLANATION SESSION B</span>
+              <span class="text-gray-400">SESSION B</span>
             </div>
-            <div class="media-card group">
-              <!-- img 태그: 08-2.png 연동 -->
-              <img src="08-2.png" alt="기업 초청 설명회 현장 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-              <div class="w-full h-full p-4 flex flex-col items-center justify-center text-center bg-black/70 text-emerald-400/80 hidden">
-                <i class="fa-regular fa-image text-3xl mb-2 text-emerald-500"></i>
-                <span class="font-mono text-xs font-bold text-white">08-2.png</span>
-                <span class="text-[11px] text-gray-400 mt-1">이곳에 08-2.png 사진 파일이 표시됩니다</span>
+            <div class="media-card flex-1">
+              <div class="img-wrapper">
+                <img src="08-2.png" alt="기업 초청 설명회 현장 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="w-full h-full p-4 flex-col items-center justify-center text-center bg-black/70 text-emerald-400/80 hidden">
+                  <i class="fa-regular fa-image text-3xl mb-2 text-emerald-500"></i>
+                  <span class="font-mono text-xs font-bold text-white">08-2.png</span>
+                  <span class="text-[11px] text-gray-400 mt-1">이곳에 08-2.png 사진 파일이 표시됩니다</span>
+                </div>
               </div>
             </div>
           </div>
@@ -316,50 +332,50 @@
         </div>
       </div>
 
-      <!-- Grid Content: Key Points & Photo Slots -->
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      <!-- Equal-Height Grid: items-stretch keeps both columns identical in height -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">
         
-        <!-- Left 5 Cols: Descriptions (3번 파일 내용 반영) -->
-        <div class="lg:col-span-5 space-y-4">
-          <p class="text-sm font-mono text-emerald-400/90 tracking-wide border-l-2 border-emerald-500 pl-3">
+        <!-- Left Column: Descriptions (3 Cards) -->
+        <div class="lg:col-span-5 flex flex-col justify-between space-y-3">
+          <p class="text-xs font-mono text-emerald-400/90 tracking-wide border-l-2 border-emerald-500 pl-3">
             [ INTERVIEW PROTOCOL &amp; RECRUITMENT ]
           </p>
 
-          <div class="space-y-3 font-sans">
+          <div class="flex flex-col flex-1 justify-between gap-3 font-sans">
             <!-- Item 1 -->
-            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition">
+            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition flex-1 flex flex-col justify-center">
               <div class="flex items-start gap-3">
                 <i class="fa-solid fa-user-tie text-emerald-400 text-lg mt-0.5"></i>
                 <div>
                   <h4 class="text-emerald-300 font-semibold text-sm mb-1">현장과 동일한 수준의 모의 면접 진행</h4>
                   <p class="text-xs text-gray-300 leading-relaxed">
-                    기업 인사담당자 및 임원진을 면접관으로 초빙하여 실제 기업 채용 면접과 100% 동일한 프로세스 및 긴장감 속에서 평가를 진행합니다.
+                    기업 담당자를 초청하여 실제 현장과 동일한 수준의 모의 면접 환경을 완벽하게 재현하여 실시합니다.
                   </p>
                 </div>
               </div>
             </div>
 
             <!-- Item 2 -->
-            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition">
+            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition flex-1 flex flex-col justify-center">
               <div class="flex items-start gap-3">
                 <i class="fa-solid fa-comments text-emerald-400 text-lg mt-0.5"></i>
                 <div>
-                  <h4 class="text-emerald-300 font-semibold text-sm mb-1">1:1 실시간 맞춤형 정밀 피드백</h4>
+                  <h4 class="text-emerald-300 font-semibold text-sm mb-1">1:1 맞춤형 실시간 피드백</h4>
                   <p class="text-xs text-gray-300 leading-relaxed">
-                    최신 채용 기준에 맞춘 구체적인 태도, 답변 스킬, 포트폴리오 적합도 피드백을 실시간으로 전달하여 실전 적응력과 자신감을 완비합니다.
+                    기업의 최신 채용 기준이 반영된 1:1 맞춤형 피드백을 실시간으로 제공하여 실전 면접에 대한 적응력과 자신감을 극대화합니다.
                   </p>
                 </div>
               </div>
             </div>
 
             <!-- Item 3 -->
-            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition">
+            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition flex-1 flex flex-col justify-center">
               <div class="flex items-start gap-3">
                 <i class="fa-solid fa-award text-emerald-400 text-lg mt-0.5"></i>
                 <div>
-                  <h4 class="text-emerald-300 font-semibold text-sm mb-1">즉각적인 현장 채용 연계 성과</h4>
+                  <h4 class="text-emerald-300 font-semibold text-sm mb-1">즉각적인 현장 채용 및 취업 아웃풋</h4>
                   <p class="text-xs text-gray-300 leading-relaxed">
-                    우수 수료생에 대한 면접 현장 즉시 채용 및 기업 우선 채용 선발 티켓을 연계하여 가시적이고 확실한 취업 아웃풋을 달성합니다.
+                    즉각적인 현장 채용으로 연계하는 확실하고 강력한 취업 성과 아웃풋을 창출합니다.
                   </p>
                 </div>
               </div>
@@ -367,38 +383,40 @@
           </div>
         </div>
 
-        <!-- Right 7 Cols: Image Slots (08-3.png, 08-4.png) -->
-        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <!-- Slot 3 -->
-          <div class="space-y-1.5">
+        <!-- Right Column: Images (08-3.png, 08-4.png) - Stretches to exact left column height -->
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4 h-full">
+          <!-- Slot 3: 08-3.png -->
+          <div class="flex flex-col h-full space-y-1.5">
             <div class="flex items-center justify-between text-[11px] font-mono text-emerald-400">
               <span>PHOTO REF : 08-3.png</span>
-              <span class="text-gray-400">MOCK INTERVIEW PANEL 1</span>
+              <span class="text-gray-400">PANEL 1</span>
             </div>
-            <div class="media-card group">
-              <!-- img 태그: 08-3.png 연동 -->
-              <img src="08-3.png" alt="실전 모의 면접 현장 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-              <div class="w-full h-full p-4 flex flex-col items-center justify-center text-center bg-black/70 text-emerald-400/80 hidden">
-                <i class="fa-regular fa-image text-3xl mb-2 text-emerald-500"></i>
-                <span class="font-mono text-xs font-bold text-white">08-3.png</span>
-                <span class="text-[11px] text-gray-400 mt-1">이곳에 08-3.png 사진 파일이 표시됩니다</span>
+            <div class="media-card flex-1">
+              <div class="img-wrapper">
+                <img src="08-3.png" alt="실전 모의 면접 현장 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="w-full h-full p-4 flex-col items-center justify-center text-center bg-black/70 text-emerald-400/80 hidden">
+                  <i class="fa-regular fa-image text-3xl mb-2 text-emerald-500"></i>
+                  <span class="font-mono text-xs font-bold text-white">08-3.png</span>
+                  <span class="text-[11px] text-gray-400 mt-1">이곳에 08-3.png 사진 파일이 표시됩니다</span>
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Slot 4 -->
-          <div class="space-y-1.5">
+          <!-- Slot 4: 08-4.png -->
+          <div class="flex flex-col h-full space-y-1.5">
             <div class="flex items-center justify-between text-[11px] font-mono text-emerald-400">
               <span>PHOTO REF : 08-4.png</span>
-              <span class="text-gray-400">MOCK INTERVIEW PANEL 2</span>
+              <span class="text-gray-400">PANEL 2</span>
             </div>
-            <div class="media-card group">
-              <!-- img 태그: 08-4.png 연동 -->
-              <img src="08-4.png" alt="실전 모의 면접 현장 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-              <div class="w-full h-full p-4 flex flex-col items-center justify-center text-center bg-black/70 text-emerald-400/80 hidden">
-                <i class="fa-regular fa-image text-3xl mb-2 text-emerald-500"></i>
-                <span class="font-mono text-xs font-bold text-white">08-4.png</span>
-                <span class="text-[11px] text-gray-400 mt-1">이곳에 08-4.png 사진 파일이 표시됩니다</span>
+            <div class="media-card flex-1">
+              <div class="img-wrapper">
+                <img src="08-4.png" alt="실전 모의 면접 현장 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                <div class="w-full h-full p-4 flex-col items-center justify-center text-center bg-black/70 text-emerald-400/80 hidden">
+                  <i class="fa-regular fa-image text-3xl mb-2 text-emerald-500"></i>
+                  <span class="font-mono text-xs font-bold text-white">08-4.png</span>
+                  <span class="text-[11px] text-gray-400 mt-1">이곳에 08-4.png 사진 파일이 표시됩니다</span>
+                </div>
               </div>
             </div>
           </div>
