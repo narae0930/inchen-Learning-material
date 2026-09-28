@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LUMINARAE | 08. 기업 특강 및 면접</title>
+  <!-- Google Fonts & Font Awesome -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Noto+Sans+KR:wght@300;400;500;700&family=Rajdhani:wght@500;600;700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cyber: {
+              bg: '#02120e',
+              deep: '#041d17',
+              panel: 'rgba(5, 34, 27, 0.65)',
+              border: '#0d4a3a',
+              glow: '#00ffb3',
+              accent: '#10b981',
+              cyan: '#06b6d4',
+              dim: '#6ee7b7',
+              text: '#e2f7f0',
+              muted: '#7fa398'
+            }
+          },
+          fontFamily: {
+            cinzel: ['Cinzel', 'serif'],
+            rajdhani: ['Rajdhani', 'sans-serif'],
+            mono: ['Space Grotesk', 'monospace'],
+            sans: ['Noto Sans KR', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #02120e;
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 255, 179, 0.08) 0%, transparent 60%),
+        linear-gradient(rgba(0, 255, 179, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 255, 179, 0.03) 1px, transparent 1px);
+      background-size: 100% 100%, 40px 40px, 40px 40px;
+      color: #e2f7f0;
+      font-family: 'Noto Sans KR', sans-serif;
+    }
+
+    /* HUD Corner Brackets */
+    .hud-box {
+      position: relative;
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      background: rgba(4, 28, 22, 0.65);
+      backdrop-filter: blur(12px);
+    }
+    .hud-box::before, .hud-box::after {
+      content: '';
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-color: #00ffb3;
+      pointer-events: none;
+    }
+    .hud-box::before {
+      top: -1px;
+      left: -1px;
+      border-top: 2px solid #00ffb3;
+      border-left: 2px solid #00ffb3;
+    }
+    .hud-box::after {
+      bottom: -1px;
+      right: -1px;
+      border-bottom: 2px solid #00ffb3;
+      border-right: 2px solid #00ffb3;
+    }
+
+    .hud-corner-tr {
+      position: absolute;
+      top: -1px;
+      right: -1px;
+      width: 10px;
+      height: 10px;
+      border-top: 2px solid #00ffb3;
+      border-right: 2px solid #00ffb3;
+      pointer-events: none;
+    }
+    .hud-corner-bl {
+      position: absolute;
+      bottom: -1px;
+      left: -1px;
+      width: 10px;
+      height: 10px;
+      border-bottom: 2px solid #00ffb3;
+      border-left: 2px solid #00ffb3;
+      pointer-events: none;
+    }
+
+    /* Media Frame Styling */
+    .media-card {
+      position: relative;
+      background: #020c09;
+      border: 1px solid rgba(16, 185, 129, 0.35);
+      border-radius: 8px;
+      overflow: hidden;
+      aspect-ratio: 16 / 10;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .media-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.3s ease;
+    }
+    .media-card:hover img {
+      transform: scale(1.02);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #02120e;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #0d4a3a;
+      border-radius: 3px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #00ffb3;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-emerald-500 selection:text-black">
+
+  <!-- TOP STATUS BAR -->
+  <header class="w-full pt-8 pb-4 text-center px-4">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-emerald-500/30 bg-emerald-950/40 text-[11px] font-mono tracking-widest text-emerald-400 mb-3 shadow-[0_0_15px_rgba(0,255,179,0.15)]">
+      <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+      SYSTEM ACTIVE · BIO-MEDICAL ARCHIVE V4.2 · MODULE 08
+    </div>
+
+    <!-- MAIN BRAND TITLE -->
+    <h1 class="text-4xl md:text-5xl lg:text-6xl font-cinzel tracking-[0.25em] text-white font-bold drop-shadow-[0_0_20px_rgba(0,255,179,0.3)]">
+      L U M I N A R A E
+    </h1>
+    
+    <p class="font-cinzel italic text-emerald-400 text-sm md:text-base tracking-[0.2em] mt-1 font-semibold">
+      CLINICAL CAREER PROTOCOL
+    </p>
+
+    <!-- BADGE -->
+    <div class="mt-3">
+      <span class="inline-block px-4 py-1 rounded-full border border-emerald-500/40 bg-black/40 text-xs md:text-sm text-emerald-300 font-sans tracking-wide">
+        <i class="fa-solid fa-shield-halved mr-1.5 text-emerald-400"></i> 인천직업전문학교 · CLINICAL DERMA PORTFOLIO
+      </span>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex-grow space-y-12">
+
+    <!-- SUB-NAV / BREADCRUMB -->
+    <div class="flex items-center justify-between border-b border-emerald-900/60 pb-4">
+      <div class="flex items-center gap-3">
+        <span class="w-2.5 h-2.5 bg-emerald-400 rounded-sm"></span>
+        <h2 class="text-xl md:text-2xl font-rajdhani font-bold tracking-wider text-white">
+          MODULE 08. 기업 특강 및 면접
+        </h2>
+        <span class="text-xs font-mono text-emerald-500/80 px-2 py-0.5 border border-emerald-500/30 rounded">
+          INDUSTRY LECTURE &amp; INTERVIEW
+        </span>
+      </div>
+      <a href="CURRICULUM.html" class="hidden sm:inline-flex items-center gap-2 text-xs font-mono text-emerald-400 hover:text-white transition-colors duration-200 border border-emerald-500/30 px-3 py-1.5 rounded bg-emerald-950/30 hover:bg-emerald-900/50">
+        <i class="fa-solid fa-arrow-left"></i> BACK TO CURRICULUM
+      </a>
+    </div>
+
+    <!-- SECTION 1: 기업 초청 취업 설명회 -->
+    <section class="hud-box p-6 md:p-8 rounded-xl shadow-xl">
+      <span class="hud-corner-tr"></span>
+      <span class="hud-corner-bl"></span>
+
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-emerald-900/60 pb-4 mb-6 gap-2">
+        <div>
+          <div class="text-xs font-mono text-emerald-400 tracking-widest uppercase mb-1">
+            SEC 08-A // INDUSTRY INSIGHT &amp; NETWORKING
+          </div>
+          <h3 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
+            <span class="w-1.5 h-6 bg-emerald-400 rounded-full inline-block"></span>
+            기업 취업 설명회 <span class="text-lg md:text-xl text-emerald-400 font-normal">| 기업 초청 취업 설명회 개최</span>
+          </h3>
+        </div>
+        <div class="text-xs font-mono text-emerald-500/70">
+          ARCHIVE CODE: INC-CORP-2026
+        </div>
+      </div>
+
+      <!-- Grid Content: Key Points & Photo Slots -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left 5 Cols: Descriptions (2번 파일 내용 반영) -->
+        <div class="lg:col-span-5 space-y-4">
+          <p class="text-sm font-mono text-emerald-400/90 tracking-wide border-l-2 border-emerald-500 pl-3">
+            [ PROGRAM OBJECTIVE &amp; SUMMARY ]
+          </p>
+
+          <div class="space-y-3 font-sans">
+            <!-- Item 1 -->
+            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition">
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-chalkboard-user text-emerald-400 text-lg mt-0.5"></i>
+                <div>
+                  <h4 class="text-emerald-300 font-semibold text-sm mb-1">생생한 채용 트렌드 및 실무 정보</h4>
+                  <p class="text-xs text-gray-300 leading-relaxed">
+                    기업 실무 및 인사 담당자가 직접 교육장을 방문하여 최신 뷰티·더마 메디컬 업계 채용 트렌드와 직무별 핵심 요구 역량을 가감 없이 제공합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition">
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-handshake text-emerald-400 text-lg mt-0.5"></i>
+                <div>
+                  <h4 class="text-emerald-300 font-semibold text-sm mb-1">직접적인 네트워킹 &amp; 취업 성공률 극대화</h4>
+                  <p class="text-xs text-gray-300 leading-relaxed">
+                    훈련생과 현업 실무진 간 질의응답 및 1:1 교류 기회를 마련하여 취업에 대한 막연한 불안감을 해소하고 성공률을 대폭 향상시킵니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition">
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-network-wired text-emerald-400 text-lg mt-0.5"></i>
+                <div>
+                  <h4 class="text-emerald-300 font-semibold text-sm mb-1">산업 현장 연결형 취업 네트워크</h4>
+                  <p class="text-xs text-gray-300 leading-relaxed">
+                    교육 환경과 실제 산업 현장을 즉각적으로 잇는 파이프라인을 구축하여 안정적인 사후 취업 지원 체계를 정립합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 7 Cols: Image Slots (08-1.png, 08-2.png) -->
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Slot 1 -->
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] font-mono text-emerald-400">
+              <span>PHOTO REF : 08-1.png</span>
+              <span class="text-gray-400">EXPLANATION SESSION A</span>
+            </div>
+            <div class="media-card group">
+              <!-- img 태그: 08-1.png 연동 -->
+              <img src="08-1.png" alt="기업 초청 설명회 현장 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="w-full h-full p-4 flex flex-col items-center justify-center text-center bg-black/70 text-emerald-400/80 hidden">
+                <i class="fa-regular fa-image text-3xl mb-2 text-emerald-500"></i>
+                <span class="font-mono text-xs font-bold text-white">08-1.png</span>
+                <span class="text-[11px] text-gray-400 mt-1">이곳에 08-1.png 사진 파일이 표시됩니다</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slot 2 -->
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] font-mono text-emerald-400">
+              <span>PHOTO REF : 08-2.png</span>
+              <span class="text-gray-400">EXPLANATION SESSION B</span>
+            </div>
+            <div class="media-card group">
+              <!-- img 태그: 08-2.png 연동 -->
+              <img src="08-2.png" alt="기업 초청 설명회 현장 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="w-full h-full p-4 flex flex-col items-center justify-center text-center bg-black/70 text-emerald-400/80 hidden">
+                <i class="fa-regular fa-image text-3xl mb-2 text-emerald-500"></i>
+                <span class="font-mono text-xs font-bold text-white">08-2.png</span>
+                <span class="text-[11px] text-gray-400 mt-1">이곳에 08-2.png 사진 파일이 표시됩니다</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 2: 실전 모의 면접 및 현장 채용 -->
+    <section class="hud-box p-6 md:p-8 rounded-xl shadow-xl">
+      <span class="hud-corner-tr"></span>
+      <span class="hud-corner-bl"></span>
+
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-emerald-900/60 pb-4 mb-6 gap-2">
+        <div>
+          <div class="text-xs font-mono text-emerald-400 tracking-widest uppercase mb-1">
+            SEC 08-B // PRACTICAL EXPERIENCE &amp; DIRECT RECRUITING
+          </div>
+          <h3 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
+            <span class="w-1.5 h-6 bg-emerald-400 rounded-full inline-block"></span>
+            기업 모의 면접 <span class="text-lg md:text-xl text-emerald-400 font-normal">| 실전 모의 면접 및 현장 채용</span>
+          </h3>
+        </div>
+        <div class="text-xs font-mono text-emerald-500/70">
+          EVALUATION STATUS: ACTIVE
+        </div>
+      </div>
+
+      <!-- Grid Content: Key Points & Photo Slots -->
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+        
+        <!-- Left 5 Cols: Descriptions (3번 파일 내용 반영) -->
+        <div class="lg:col-span-5 space-y-4">
+          <p class="text-sm font-mono text-emerald-400/90 tracking-wide border-l-2 border-emerald-500 pl-3">
+            [ INTERVIEW PROTOCOL &amp; RECRUITMENT ]
+          </p>
+
+          <div class="space-y-3 font-sans">
+            <!-- Item 1 -->
+            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition">
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-user-tie text-emerald-400 text-lg mt-0.5"></i>
+                <div>
+                  <h4 class="text-emerald-300 font-semibold text-sm mb-1">현장과 동일한 수준의 모의 면접 진행</h4>
+                  <p class="text-xs text-gray-300 leading-relaxed">
+                    기업 인사담당자 및 임원진을 면접관으로 초빙하여 실제 기업 채용 면접과 100% 동일한 프로세스 및 긴장감 속에서 평가를 진행합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 2 -->
+            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition">
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-comments text-emerald-400 text-lg mt-0.5"></i>
+                <div>
+                  <h4 class="text-emerald-300 font-semibold text-sm mb-1">1:1 실시간 맞춤형 정밀 피드백</h4>
+                  <p class="text-xs text-gray-300 leading-relaxed">
+                    최신 채용 기준에 맞춘 구체적인 태도, 답변 스킬, 포트폴리오 적합도 피드백을 실시간으로 전달하여 실전 적응력과 자신감을 완비합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Item 3 -->
+            <div class="bg-black/30 p-4 rounded-lg border border-emerald-900/50 hover:border-emerald-500/50 transition">
+              <div class="flex items-start gap-3">
+                <i class="fa-solid fa-award text-emerald-400 text-lg mt-0.5"></i>
+                <div>
+                  <h4 class="text-emerald-300 font-semibold text-sm mb-1">즉각적인 현장 채용 연계 성과</h4>
+                  <p class="text-xs text-gray-300 leading-relaxed">
+                    우수 수료생에 대한 면접 현장 즉시 채용 및 기업 우선 채용 선발 티켓을 연계하여 가시적이고 확실한 취업 아웃풋을 달성합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right 7 Cols: Image Slots (08-3.png, 08-4.png) -->
+        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <!-- Slot 3 -->
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] font-mono text-emerald-400">
+              <span>PHOTO REF : 08-3.png</span>
+              <span class="text-gray-400">MOCK INTERVIEW PANEL 1</span>
+            </div>
+            <div class="media-card group">
+              <!-- img 태그: 08-3.png 연동 -->
+              <img src="08-3.png" alt="실전 모의 면접 현장 1" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="w-full h-full p-4 flex flex-col items-center justify-center text-center bg-black/70 text-emerald-400/80 hidden">
+                <i class="fa-regular fa-image text-3xl mb-2 text-emerald-500"></i>
+                <span class="font-mono text-xs font-bold text-white">08-3.png</span>
+                <span class="text-[11px] text-gray-400 mt-1">이곳에 08-3.png 사진 파일이 표시됩니다</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Slot 4 -->
+          <div class="space-y-1.5">
+            <div class="flex items-center justify-between text-[11px] font-mono text-emerald-400">
+              <span>PHOTO REF : 08-4.png</span>
+              <span class="text-gray-400">MOCK INTERVIEW PANEL 2</span>
+            </div>
+            <div class="media-card group">
+              <!-- img 태그: 08-4.png 연동 -->
+              <img src="08-4.png" alt="실전 모의 면접 현장 2" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+              <div class="w-full h-full p-4 flex flex-col items-center justify-center text-center bg-black/70 text-emerald-400/80 hidden">
+                <i class="fa-regular fa-image text-3xl mb-2 text-emerald-500"></i>
+                <span class="font-mono text-xs font-bold text-white">08-4.png</span>
+                <span class="text-[11px] text-gray-400 mt-1">이곳에 08-4.png 사진 파일이 표시됩니다</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SECTION 3: 현장 동영상 아카이브 (08.mp4 연동) -->
+    <section class="hud-box p-6 md:p-8 rounded-xl shadow-xl">
+      <span class="hud-corner-tr"></span>
+      <span class="hud-corner-bl"></span>
+
+      <!-- Section Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between border-b border-emerald-900/60 pb-4 mb-6 gap-2">
+        <div>
+          <div class="text-xs font-mono text-emerald-400 tracking-widest uppercase mb-1">
+            SEC 08-C // RECORDED ARCHIVE FOOTAGE
+          </div>
+          <h3 class="text-2xl md:text-3xl font-bold text-white flex items-center gap-3">
+            <span class="w-1.5 h-6 bg-emerald-400 rounded-full inline-block"></span>
+            현장 실황 아카이브 비디오
+          </h3>
+        </div>
+        <div class="flex items-center gap-2 text-xs font-mono text-emerald-400">
+          <span class="inline-block w-2 h-2 rounded-full bg-red-500 animate-ping"></span>
+          FEED LINKED: 08.mp4
+        </div>
+      </div>
+
+      <!-- Video Player Frame -->
+      <div class="w-full max-w-4xl mx-auto">
+        <div class="relative bg-black rounded-lg border border-emerald-500/40 p-2 shadow-[0_0_30px_rgba(0,255,179,0.1)]">
+          <div class="flex items-center justify-between px-3 py-1.5 bg-emerald-950/40 rounded border-b border-emerald-900/50 mb-2 text-[11px] font-mono text-emerald-400">
+            <span class="flex items-center gap-1.5">
+              <i class="fa-solid fa-film text-xs"></i> 08.mp4 (실전 특강 &amp; 면접 풀영상)
+            </span>
+            <span class="text-gray-400">1080P FHD STREAM</span>
+          </div>
+
+          <!-- Video Element (08.mp4) -->
+          <div class="relative aspect-video rounded overflow-hidden bg-[#010806] flex items-center justify-center">
+            <video 
+              controls 
+              preload="metadata"
+              class="w-full h-full object-contain"
+            >
+              <source src="08.mp4" type="video/mp4">
+              브라우저가 비디오 태그를 지원하지 않습니다.
+            </video>
+          </div>
+
+          <div class="flex items-center justify-between text-[11px] font-mono text-emerald-500/70 mt-2 px-1">
+            <span>FILE IDENTIFIER: /MEDIA/ARCHIVE/08.mp4</span>
+            <span>SYSTEM ENCRYPTED BIO-PLAYBACK</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER STATUS BAR -->
+  <footer class="w-full border-t border-emerald-950 bg-black/60 backdrop-blur-md py-4 px-6 mt-12">
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between text-xs font-mono text-emerald-500/80 gap-4">
+      <div class="flex items-center gap-3">
+        <span class="font-bold text-emerald-400">LUMINARAE DERMA LAB</span>
+        <span class="hidden sm:inline text-emerald-900">|</span>
+        <span class="hidden sm:inline">ENCRYPTED CLINICAL DIRECTORY</span>
+      </div>
+
+      <!-- ECG Line Graphic -->
+      <div class="hidden lg:flex items-center gap-2 text-emerald-400/50">
+        <svg class="w-32 h-6" viewBox="0 0 100 20" fill="none" stroke="currentColor">
+          <polyline points="0,10 30,10 35,2 40,18 45,5 50,15 55,10 100,10" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="text-[10px]">99.9% READY</span>
+      </div>
+
+      <div class="flex items-center gap-4">
+        <span>PORTFOLIO ACCESS MODULES: 101.HTML ~ 108.HTML</span>
+        <a href="CURRICULUM.html" class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/50 hover:bg-emerald-500 hover:text-black transition-all font-bold">
+          <i class="fa-solid fa-list-check text-[10px]"></i> CURRICULUM
+        </a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
