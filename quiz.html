@@ -330,8 +330,26 @@ h3.uppercase{font-family:Cinzel,serif;letter-spacing:.22em;font-weight:500!impor
 
         // --- 메인 홈 화면으로 리셋 ---
         window.goHome = () => {
+            // 시작 화면에서 홈을 누르면 이 페이지로 들어오기 전 화면으로 돌아갑니다.
+            if (state.mode === 'home') {
+                if (window.history.length > 1) {
+                    window.history.back();
+                } else {
+                    const notice = document.getElementById('homeNotice');
+                    if (notice) notice.textContent = '현재 홈 화면입니다.';
+                }
+                return;
+            }
             state.mode = 'home';
+            state.questions = [];
+            state.currentQuestionIndex = 0;
+            state.score = 0;
+            state.selectedAnswer = null;
+            state.answerStatus = null;
+            state.quizFinished = false;
+            state.showHint = false;
             render();
+            window.scrollTo(0, 0);
         };
 
         // --- 캐릭터 말풍선 및 반응 애니메이션 렌더러 ---
@@ -402,7 +420,7 @@ h3.uppercase{font-family:Cinzel,serif;letter-spacing:.22em;font-weight:500!impor
                         <p class="text-slate-500 font-medium italic">"사랑하는 30기 원패스 화이팅!"</p>
                     </div>
                     <div class="flex gap-2">
-                        <button onclick="goHome()" class="px-4 py-2 rounded-lg text-sm font-medium transition-all ${state.mode === 'home' ? 'bg-pink-500 text-white shadow-md' : 'bg-white text-slate-600 border border-pink-100'}">홈</button>
+                        <button type="button" onclick="goHome()" class="px-4 py-2 rounded-lg text-sm font-medium transition-all ${state.mode === 'home' ? 'bg-pink-500 text-white shadow-md' : 'bg-white text-slate-600 border border-pink-100'}">홈</button>
                     </div>
                 </header>
             `;
@@ -412,6 +430,7 @@ h3.uppercase{font-family:Cinzel,serif;letter-spacing:.22em;font-weight:500!impor
                     <div class="min-h-screen p-4 md:p-8">
                         <div class="max-w-4xl mx-auto">
                             ${headerHTML}
+                            <p id="homeNotice" role="status" aria-live="polite" class="text-sm text-slate-500 mb-3"></p>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                                 <div class="bg-white p-8 rounded-2xl shadow-sm border border-pink-100 text-center">
                                     <div class="w-16 h-16 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center mx-auto mb-4">
