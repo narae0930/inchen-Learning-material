@@ -282,7 +282,7 @@
             <span>AUTHENTIC ARCHIVE DISPLAY // SECTION 05</span>
           </div>
           <h2 class="font-serifTitle text-2xl sm:text-3xl font-bold text-white">
-            피부미용 마스터 자격 인증 : <span class="text-neonMint font-sans">자격증 05.png</span>
+            피부미용 마스터 자격 인증 : <span class="text-neonMint font-sans">05.png</span>
           </h2>
           <p class="text-textMuteGreen text-sm mt-1">
             이력서에 탑재되는 정식 등록 민간자격증 및 국가자격 통합 와이드 증명 규격입니다.
@@ -292,7 +292,7 @@
         <div class="flex items-center gap-3">
           <div class="px-3.5 py-1.5 rounded-xl bg-emeraldBorder/40 border border-emeraldBorder text-xs font-techCode text-neonMint flex items-center gap-2">
             <span class="w-2 h-2 rounded-full bg-neonMint"></span>
-            FILE: 자격증 05.png
+            FILE: 05.png
           </div>
           <button onclick="toggleWideView()" class="px-3.5 py-1.5 rounded-xl bg-neonCyan/10 hover:bg-neonCyan/20 border border-neonCyan/40 text-neonCyan text-xs font-techCode font-semibold transition-all flex items-center gap-1.5">
             <i class="fa-solid fa-arrows-left-right"></i>
@@ -316,14 +316,20 @@
         <!-- Wide Certificate Canvas Wrapper -->
         <div id="certContainer" class="relative w-full rounded-2xl overflow-hidden border border-emeraldBorder bg-[#020c0a] flex items-center justify-center min-h-[320px] sm:min-h-[460px] p-2 transition-all duration-300">
           
-          <!-- Image Element seamlessly pointing to '자격증 05.png' with detailed placeholder fallback -->
+          <!-- Image Element seamlessly pointing to '05.png' with detailed placeholder fallback -->
           <img 
             id="certificateImage"
-            src="자격증 05.png" 
-            alt="자격증 05.png 피부미용 자격증 원본" 
+            src="./05.png" 
+            alt="05.png 피부미용 자격증 원본" 
             class="w-full h-auto object-contain max-h-[560px] rounded-xl shadow-2xl transition-all duration-300"
-            onerror="this.onerror=null; this.src='https://placehold.co/1300x520/031512/00ff9d?text=%EC%9E%90%EA%B2%A9%EC%A6%9D+05.png+%ED%94%BC%EB%B6%80%EB%AF%B8%EC%9 contemporary+%EC%99%80%EC%9D%B4%EB%93%9C+%EC%97%B0%EB%8F%99+%EC%98%81%EC%97%AD+(Aroma+%26+Clinic+Coordinators)';"
+            onload="document.getElementById('certificateImageError').hidden=true; this.style.display='block';" onerror="this.style.display='none'; document.getElementById('certificateImageError').hidden=false;"
           />
+
+          <p id="certificateImageError" hidden role="status" style="padding:24px;text-align:center;color:#e3f7f2;line-height:1.8;">
+            05.png 이미지를 찾을 수 없습니다.<br>
+            이 HTML 파일과 같은 폴더에 <strong>05.png</strong> 파일을 넣고 다시 열어주세요.<br>
+            파일 이름과 확장자(대소문자 포함)가 정확히 일치해야 합니다.
+          </p>
 
           <!-- Live Watermark Tag -->
           <div class="absolute bottom-5 right-5 pointer-events-none flex items-center gap-2 px-3.5 py-1.5 rounded-lg bg-[#020c0a]/85 backdrop-blur-md border border-emeraldBorder text-xs font-techCode text-neonMint">
@@ -593,7 +599,7 @@
           <span class="w-2 h-2 rounded-full bg-neonMint"></span>
           SECURE ENCRYPTION
         </span>
-        <span>ATTACHMENT: 자격증 05.png</span>
+        <span>ATTACHMENT: 05.png</span>
         <span class="text-textWhiteMint">© 2026 LUMINARAE PROTOCOL. ALL RIGHTS RESERVED.</span>
       </div>
     </div>
